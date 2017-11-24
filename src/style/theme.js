@@ -7,7 +7,7 @@ primaryColor #E91E63
 
 darkPrimaryColor #C2185B
 
-LightPrimaryColor #F8BBD0
+lightPrimaryColor #F8BBD0
 
 secondaryColor #FF9800
 
@@ -17,7 +17,7 @@ black #212121
 
 darkGrey #757575
 
-Grey #BDBDBD
+grey #BDBDBD
 
 */
 
@@ -31,7 +31,7 @@ class theme {
       case 'darkPrimaryColor':
         choice = this.renderTheme.palette.primary[700];
       break;
-      case 'LightPrimaryColor':
+      case 'lightPrimaryColor':
         choice = this.renderTheme.palette.primary[100];
       break;
       case 'secondaryColor':
@@ -46,7 +46,7 @@ class theme {
       case 'darkGrey':
         choice = '#757575';
       break;
-      case 'Grey':
+      case 'grey':
         choice = '#BDBDBD';
       break;
       default:
