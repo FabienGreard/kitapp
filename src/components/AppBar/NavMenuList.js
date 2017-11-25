@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 //material-ui import
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import InboxIcon from 'material-ui-icons/Inbox';
-import DraftsIcon from 'material-ui-icons/Drafts';
+import DevicesIcon from 'material-ui-icons/Devices';
+import BuildIcon from 'material-ui-icons/Build';
 import { withStyles } from 'material-ui/styles';
 import Divider from 'material-ui/Divider';
 import Typography from 'material-ui/Typography';
@@ -36,25 +36,34 @@ const MenuTitle = ({classes, theme}) => (
 );
 
 class NavMenuList extends Component {
+  createMarkup = (html) => {
+    return {__html: this.htmlencode(html)};
+  }
+
+  htmlencode = (html) => {
+    return html.replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  }
+
   render() {
     const { classes, theme, handleChangeOnMessage } = this.props;
+
+    const navName = [
+      { name: 'Machines', icon: DevicesIcon },
+      { name: 'Compétences', icon: BuildIcon },
+    ];
     return (
       <div className={classes.menuList}>
         <MenuTitle theme={theme} classes={classes}/>
         <Divider />
         <List>
-          <ListItem button onClick={() => handleChangeOnMessage("Inbox")}>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Inbox" />
-          </ListItem>
-          <ListItem button onClick={() => handleChangeOnMessage("Drafts")}>
-          <ListItemIcon>
-            <DraftsIcon  />
-          </ListItemIcon>
-          <ListItemText primary="Drafts" />
-          </ListItem>
+          {navName.map((item, i) => (
+            <ListItem key={i} button onClick={() => handleChangeOnMessage(item.name)}>
+              <ListItemIcon>
+                {React.createElement(item.icon)}
+              </ListItemIcon>
+              <ListItemText primary={item.name} />
+            </ListItem>
+          ))}
         </List>
       </div>
     );
