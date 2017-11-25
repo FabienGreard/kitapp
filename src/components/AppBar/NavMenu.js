@@ -22,6 +22,13 @@ class NavMenu extends Component {
     this.props.handleChangeOnMessage(message);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevProps.isMenu){
+      //fix drawer outline
+       document.getElementsByClassName('MuiDrawer-paperAnchorLeft-61')[0].style.outline = 0;
+    }
+  }
+
   render() {
     const { theme, isMenu, message, handleChangeOnMessage } = this.props;
     const onOpen = this.onOpen;

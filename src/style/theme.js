@@ -49,6 +49,9 @@ class theme {
       case 'grey':
         choice = '#BDBDBD';
       break;
+      case 'none':
+        choice = '';
+      break;
       default:
         choice = 'inherit';
       break;

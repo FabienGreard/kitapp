@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 //material-ui import
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
@@ -26,6 +27,10 @@ const styles = context => ({
     paddingTop: 0,
     padding: 6
   },
+  link: {
+    textDecoration: 'none',
+    outline: 0,
+  },
 });
 
 const MenuTitle = ({classes, theme}) => (
@@ -48,21 +53,23 @@ class NavMenuList extends Component {
     const { classes, theme, handleChangeOnMessage } = this.props;
 
     const navName = [
-      { name: 'Machines', icon: DevicesIcon },
-      { name: 'Compétences', icon: BuildIcon },
+      { name: 'Machines', icon: DevicesIcon, link: 'engine' },
+      { name: 'Compétences', icon: BuildIcon, link: 'skill' },
     ];
     return (
       <div className={classes.menuList}>
         <MenuTitle theme={theme} classes={classes}/>
         <Divider />
         <List>
-          {navName.map((item, i) => (
-            <ListItem key={i} button onClick={() => handleChangeOnMessage(item.name)}>
-              <ListItemIcon>
-                {React.createElement(item.icon)}
-              </ListItemIcon>
-              <ListItemText primary={item.name} />
-            </ListItem>
+          {navName.map((item) => (
+            <Link key={item.name} className={classes.link} style={theme.getRowStyle('', 'none')} to={item.link}>
+              <ListItem button onClick={() => handleChangeOnMessage(item.name)}>
+                <ListItemIcon>
+                  {React.createElement(item.icon)}
+                </ListItemIcon>
+                <ListItemText primary={item.name} />
+              </ListItem>
+            </Link>
           ))}
         </List>
       </div>

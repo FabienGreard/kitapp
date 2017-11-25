@@ -30,10 +30,10 @@ class AccountMenu extends Component {
     const onClose = this.onClose;
     return(
       <div>
-        <IconButton  style={theme.getRowStyle('white', '')} aria-owns={isAccountMenu ? 'menu-account' : null} onClick={onOpen}>
+        <IconButton style={theme.getRowStyle('white', '')} aria-owns={isAccountMenu ? 'menu-account' : null} onClick={onOpen}>
           <AccountCircle  />
         </IconButton>
-        <AccountMenuList message={message} handleChangeOnMessage={handleChangeOnMessage} anchorElAccountMenu={anchorElAccountMenu}  isAccountMenu={isAccountMenu} onClose={onClose}/>
+        <AccountMenuList style={theme.getRowStyle('white', '')} message={message} theme={theme} handleChangeOnMessage={handleChangeOnMessage} anchorElAccountMenu={anchorElAccountMenu}  isAccountMenu={isAccountMenu} onClose={onClose}/>
       </div>
     )
   }
