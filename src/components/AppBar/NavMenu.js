@@ -23,7 +23,7 @@ class NavMenu extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!prevProps.isMenu){
+    if (!prevProps.isMenu && document.getElementsByClassName('MuiDrawer-paperAnchorLeft-61')[0]){
       //fix drawer outline
        document.getElementsByClassName('MuiDrawer-paperAnchorLeft-61')[0].style.outline = 0;
     }
