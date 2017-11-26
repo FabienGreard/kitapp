@@ -50,7 +50,7 @@ class NavMenuList extends Component {
   }
 
   render() {
-    const { classes, theme, handleChangeOnMessage } = this.props;
+    const { classes, theme } = this.props;
 
     const navName = [
       { name: 'Machines', icon: DevicesIcon, link: 'engine' },
@@ -63,7 +63,7 @@ class NavMenuList extends Component {
         <List>
           {navName.map((item) => (
             <Link key={item.name} className={classes.link} style={theme.getRowStyle('', 'none')} to={item.link}>
-              <ListItem button onClick={() => handleChangeOnMessage(item.name)}>
+              <ListItem button>
                 <ListItemIcon>
                   {React.createElement(item.icon)}
                 </ListItemIcon>

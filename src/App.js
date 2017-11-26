@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 
 //material-ui
 import theme from './style/theme';
@@ -12,32 +14,71 @@ class App extends Component {
     super(props);
     this.state = {
       theme: new theme(),
-      message: "KitApp",
+      message: "KitApp - " + this.switch(this.props.location.pathname),
       isLoggedIn: false,
     };
-  }
 
-  componentDidMount() {
     //Fix document margin style
     document.body.style.margin = '0px';
   }
 
-  handleChangeOnMessage = (message) => {
+  componentDidUpdate(nextProps, nextState){
+    if (!nextState.isLoggedIn && nextProps.location.pathname !== this.props.location.pathname) {
+      this.setState({
+        message : 'KitApp - ' + this.switch(this.props.location.pathname),
+      });
+    }
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextState.isLoggedIn && nextProps.location.pathname !== this.props.location.pathname) {
+      this.setState({
+        message : 'KitApp - ' + this.switch(nextProps.location.pathname),
+      });
+    }
+  }
+
+  switch = (pathname) => {
+    switch(pathname.toLowerCase()){
+      case '/login':
+        return 'Connexion';
+      case '/register':
+        return 'Inscription';
+      case '/engine':
+        return 'Machines';
+      case '/account':
+        return 'compte';
+      case '/order':
+        return 'Commandes';
+      case '/skill':
+        return 'Compétences';
+      default:
+        return 'KitApp';
+    }
+  }
+
+  handleChangeOnAuth = (auth) =>{
     this.setState({
-      message : message
+      isLoggedIn : auth
     });
   }
 
   render() {
-    const { theme, message } = this.state;
-    const handleChangeOnMessage = this.handleChangeOnMessage;
+    const { theme, isLoggedIn, message } = this.state;
+    const handleChangeOnAuth = this.handleChangeOnAuth;
     return(
       <MuiThemeProvider theme={theme.renderTheme}>
-        <AppBar handleChangeOnMessage={handleChangeOnMessage} theme={theme} message={message}/>
-        <Router/>
+        <AppBar isLoggedIn={isLoggedIn} message={message} handleChangeOnAuth={handleChangeOnAuth} theme={theme}/>
+        <Router isLoggedIn={isLoggedIn}/>
       </MuiThemeProvider>
     )
   }
 }
 
-export default App;
+App.propTypes = {
+  match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
+}
+
+export default withRouter(App);

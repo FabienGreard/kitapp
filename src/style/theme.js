@@ -23,40 +23,28 @@ grey #BDBDBD
 
 class theme {
   switchStyle = (type) =>{
-    let choice = "";
     switch(type){
       case 'primaryColor':
-        choice = this.renderTheme.palette.primary[500];
-      break;
+        return this.renderTheme.palette.primary[500];
       case 'darkPrimaryColor':
-        choice = this.renderTheme.palette.primary[700];
-      break;
+        return this.renderTheme.palette.primary[700];
       case 'lightPrimaryColor':
-        choice = this.renderTheme.palette.primary[100];
-      break;
+        return this.renderTheme.palette.primary[100];
       case 'secondaryColor':
-        choice = this.renderTheme.palette.secondary[500];
-      break;
+        return this.renderTheme.palette.secondary[500];
       case 'white':
-        choice = '#FFFFFF';
-      break;
+        return '#FFFFFF';
       case 'black':
-        choice = '#212121';
-      break;
+        return '#212121';
       case 'darkGrey':
-        choice = '#757575';
-      break;
+        return '#757575';
       case 'grey':
-        choice = '#BDBDBD';
-      break;
+        return '#BDBDBD';
       case 'none':
-        choice = '';
-      break;
+        return '';
       default:
-        choice = 'inherit';
-      break;
+        return 'inherit';
     }
-    return choice;
   }
   getRowStyle = (color, bgColor) => {
     return {

@@ -19,7 +19,7 @@ class AccountMenuList extends Component {
   }
 
   render() {
-    const { handleChangeOnMessage, classes, anchorElAccountMenu, message, theme } = this.props;
+    const { classes, anchorElAccountMenu, handleChangeOnAuth, theme } = this.props;
 
     const isAccountMenu = Boolean(anchorElAccountMenu);
 
@@ -35,7 +35,7 @@ class AccountMenuList extends Component {
         <Menu id="menu-account" anchorEl={anchorElAccountMenu}  open={isAccountMenu} onRequestClose={onClose}>
           {textMenu.map((textMenu) => (
             <Link key={textMenu.name} className={classes.link} style={theme.getRowStyle('', 'none')} to={textMenu.link}>
-              <MenuItem selected={message === textMenu.name} onClick={() => handleChangeOnMessage(textMenu.name)}>
+              <MenuItem onClick={() => { textMenu.name === 'Se Déconnecter' && handleChangeOnAuth(false)}}>
               {textMenu.name}
               </MenuItem>
             </Link>
@@ -48,8 +48,6 @@ class AccountMenuList extends Component {
 
 AccountMenuList.propTypes = {
   theme: PropTypes.object.isRequired,
-  message: PropTypes.string.isRequired,
-  handleChangeOnMessage: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
   anchorElAccountMenu: PropTypes.object,
   isAccountMenu: PropTypes.bool,

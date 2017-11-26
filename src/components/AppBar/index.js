@@ -48,8 +48,8 @@ class AppBar extends Component {
     this.setState({ isMenu: false });
   };
 
-  handleChangeOnMessage = (message) => {
-    this.props.handleChangeOnMessage(message);
+  handleChangeOnAuth = (auth) => {
+    this.props.handleChangeOnAuth(auth);
   }
 
   render() {
@@ -63,16 +63,20 @@ class AppBar extends Component {
     const handleMenu = this.handleMenu;
     const handleMenuRequestClose = this.handleMenuRequestClose;
 
-    const { theme, message, classes, handleChangeOnMessage } = this.props;
+    //auth function
+    const handleChangeOnAuth= this.handleChangeOnAuth;
+
+    const { theme, message, classes, isLoggedIn } = this.props;
     return (
       <SimpleBar theme={theme}>
         <div className={classes.menuButton}>
-          <NavMenu message={message} theme={theme} isMenu={isMenu} handleChangeOnMessage={handleChangeOnMessage} handleMenu={handleMenu} handleMenuRequestClose={handleMenuRequestClose}/>
+          <NavMenu theme={theme} isMenu={isMenu} handleMenu={handleMenu} handleMenuRequestClose={handleMenuRequestClose}/>
         </div>
         <div className={classes.flex}>
           <Dialog theme={theme} message={message}/>
         </div>
-        <AccountMenu handleChangeOnMessage={handleChangeOnMessage} message={message} theme={theme} anchorElAccountMenu={anchorElAccountMenu} handleAccountMenu={handleAccountMenu} handleAccountMenuRequestClose={handleAccountMenuRequestClose}/>
+        { isLoggedIn &&
+        <AccountMenu handleChangeOnAuth={handleChangeOnAuth} theme={theme} anchorElAccountMenu={anchorElAccountMenu} handleAccountMenu={handleAccountMenu} handleAccountMenuRequestClose={handleAccountMenuRequestClose}/>}
       </SimpleBar>
     );
   }
@@ -82,7 +86,7 @@ AppBar.propTypes = {
   theme: PropTypes.object.isRequired,
   message: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
-  handleChangeOnMessage: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 export default withStyles(styles)(AppBar);

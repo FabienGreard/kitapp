@@ -18,10 +18,6 @@ class NavMenu extends Component {
     this.props.handleMenuRequestClose();
   }
 
-  handleChangeOnMessage = (message) => {
-    this.props.handleChangeOnMessage(message);
-  }
-
   componentDidUpdate(prevProps, prevState) {
     if (!prevProps.isMenu && document.getElementsByClassName('MuiDrawer-paperAnchorLeft-61')[0]){
       //fix drawer outline
@@ -30,7 +26,7 @@ class NavMenu extends Component {
   }
 
   render() {
-    const { theme, isMenu, message, handleChangeOnMessage } = this.props;
+    const { theme, isMenu } = this.props;
     const onOpen = this.onOpen;
     const onClose = this.onClose;
     return(
@@ -40,7 +36,7 @@ class NavMenu extends Component {
         </IconButton>
         <Drawer open={isMenu} onRequestClose={onClose}>
           <div tabIndex={0} role="button" onClick={onClose} onKeyDown={onClose}>
-            <NavMenuList handleChangeOnMessage={handleChangeOnMessage} message={message} theme={theme}/>
+            <NavMenuList theme={theme}/>
           </div>
         </Drawer>
       </div>

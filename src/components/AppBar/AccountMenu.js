@@ -17,14 +17,16 @@ class AccountMenu extends Component {
     this.props.handleAccountMenuRequestClose();
   }
 
-  handleChangeOnMessage = (message) => {
-    this.props.handleChangeOnMessage(message);
+  handleChangeOnAuth = (auth) => {
+    this.props.handleChangeOnAuth(auth);
   }
 
   render() {
-    const { theme, anchorElAccountMenu, message, handleChangeOnMessage} = this.props;
+    const { theme, anchorElAccountMenu } = this.props;
 
     const isAccountMenu = Boolean(anchorElAccountMenu);
+
+    const handleChangeOnAuth= this.handleChangeOnAuth;
 
     const onOpen = this.onOpen;
     const onClose = this.onClose;
@@ -33,15 +35,13 @@ class AccountMenu extends Component {
         <IconButton style={theme.getRowStyle('white', '')} aria-owns={isAccountMenu ? 'menu-account' : null} onClick={onOpen}>
           <AccountCircle  />
         </IconButton>
-        <AccountMenuList style={theme.getRowStyle('white', '')} message={message} theme={theme} handleChangeOnMessage={handleChangeOnMessage} anchorElAccountMenu={anchorElAccountMenu}  isAccountMenu={isAccountMenu} onClose={onClose}/>
+        <AccountMenuList handleChangeOnAuth={handleChangeOnAuth} style={theme.getRowStyle('white', '')} theme={theme} anchorElAccountMenu={anchorElAccountMenu} isAccountMenu={isAccountMenu} onClose={onClose}/>
       </div>
     )
   }
 }
 
 AccountMenu.propTypes = {
-  message: PropTypes.string.isRequired,
-  handleChangeOnMessage: PropTypes.func.isRequired,
   theme: PropTypes.object.isRequired,
   anchorElAccountMenu: PropTypes.object,
   isAccountMenu: PropTypes.bool,
