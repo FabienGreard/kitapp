@@ -69,7 +69,7 @@ class App extends Component {
     return(
       <MuiThemeProvider theme={theme.renderTheme}>
         <AppBar isLoggedIn={isLoggedIn} message={message} handleChangeOnAuth={handleChangeOnAuth} theme={theme}/>
-        <Router isLoggedIn={isLoggedIn}/>
+        <Router isLoggedIn={isLoggedIn} theme={theme}/>
       </MuiThemeProvider>
     )
   }

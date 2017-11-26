@@ -1,5 +1,5 @@
 import { createMuiTheme } from 'material-ui/styles';
-import { red, pink, orange } from 'material-ui/colors';
+import { red, pink, lime } from 'material-ui/colors';
 
 /*helper
 
@@ -58,7 +58,7 @@ class theme {
         ...pink,
       },
       secondary: {
-        ...orange,
+        ...lime,
       },
     },
     status: {

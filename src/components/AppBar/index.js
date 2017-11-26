@@ -70,7 +70,7 @@ class AppBar extends Component {
     return (
       <SimpleBar theme={theme}>
         <div className={classes.menuButton}>
-          <NavMenu theme={theme} isMenu={isMenu} handleMenu={handleMenu} handleMenuRequestClose={handleMenuRequestClose}/>
+          { isLoggedIn && <NavMenu theme={theme} isMenu={isMenu} handleMenu={handleMenu} handleMenuRequestClose={handleMenuRequestClose}/>}
         </div>
         <div className={classes.flex}>
           <Dialog theme={theme} message={message}/>
