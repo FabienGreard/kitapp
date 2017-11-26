@@ -20,6 +20,9 @@ class App extends Component {
 
     //Fix document margin style
     document.body.style.margin = '0px';
+
+    //Add a background color
+    document.body.style.background = '#fafafa';
   }
 
   componentDidUpdate(nextProps, nextState){

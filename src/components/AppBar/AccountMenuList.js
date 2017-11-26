@@ -35,7 +35,7 @@ class AccountMenuList extends Component {
         <Menu id="menu-account" anchorEl={anchorElAccountMenu}  open={isAccountMenu} onRequestClose={onClose}>
           {textMenu.map((textMenu) => (
             <Link key={textMenu.name} className={classes.link} style={theme.getRowStyle('', 'none')} to={textMenu.link}>
-              <MenuItem onClick={() => { textMenu.name === 'Se Déconnecter' && handleChangeOnAuth(false)}}>
+              <MenuItem onClick={() => { onClose(); textMenu.name === 'Se Déconnecter' && handleChangeOnAuth(false)}}>
               {textMenu.name}
               </MenuItem>
             </Link>

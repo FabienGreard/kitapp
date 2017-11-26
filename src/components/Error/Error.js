@@ -24,7 +24,7 @@ class Error extends Component {
 
   render() {
     let { location, classes } = this.props;
-    let timer = 10; //secs before redirect && loading
+    let timer = 3; //secs before redirect && loading
     return (
       <div className={classes.page}>
         <Loading timer={timer} color="accent"/>
