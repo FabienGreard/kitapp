@@ -23,7 +23,7 @@ const Router = ({isLoggedIn}) => (
   </Switch>
 );
 
-const PrivateRoute = ({ component: Component, ...rest, isLoggedIn }) => (
+const PrivateRoute = ({ isLoggedIn, component: Component, ...rest }) => (
   <Route {...rest} render={props  => (
     isLoggedIn ? (
       <Component {...props}/>
@@ -48,6 +48,7 @@ Router.propTypes = {
 
 PrivateRoute.propTypes = {
   isLoggedIn : PropTypes.bool.isRequired,
+  component : PropTypes.func.isRequired,
 }
 
 NoMatch.propTypes = {
