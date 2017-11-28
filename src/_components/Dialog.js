@@ -32,6 +32,6 @@ Dialog.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const DialogWithStyle = withStyles(styles)(Dialog);
+const DialogWithStyles = withStyles(styles)(Dialog);
 
-export { DialogWithStyle as Dialog }
+export { DialogWithStyles as Dialog }

@@ -1,15 +1,15 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import Account from './Account/index'
-import Engine from './Engine/index'
-import Guard from './Guard/index';
-import Login from './Login/index';
-import Order from './Order/index';
-import Register from './Register/index';
-import Skill from './Skill/index';
-import { Error } from './Error/index';
-import { PrivateRoute } from './_components/index';
+import Account from '../Account/index'
+import Engine from '../Engine/index'
+import Guard from '../Guard/index';
+import Login from '../Login/index';
+import Order from '../Order/index';
+import Register from '../Register/index';
+import Skill from '../Skill/index';
+import { Error } from '../Error';
+import { PrivateRoute } from '../_components';
 
 const Router = () => (
   <Switch >
@@ -24,4 +24,4 @@ const Router = () => (
   </Switch>
 );
 
-export default Router;
+export { Router };
