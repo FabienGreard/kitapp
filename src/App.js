@@ -12,7 +12,7 @@ import { MuiThemeProvider } from 'material-ui/styles';
 class App extends Component {
   constructor(props){
     super(props);
-
+    
     //listen on url change
     history.listen((location, action) => {
       // clear alert on location change

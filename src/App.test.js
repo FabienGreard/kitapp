@@ -6,10 +6,6 @@ import { Provider } from 'react-redux';
 import { store, history  } from './_helpers';
 import { App } from './App';
 
-global.window = {}
-import localStorage from 'mock-local-storage'
-window.localStorage = global.localStorage
-
 it('renders without crashing', () => {
   const div = document.createElement('div');
   ReactDOM.render(

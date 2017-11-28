@@ -17,13 +17,10 @@ class Register extends React.Component {
             },
             submitted: false
         };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange(event) {
-        const { name, value } = event.target;
+    handleChange = (e) => {
+        const { name, value } = e.target;
         const { user } = this.state;
         this.setState({
             user: {
@@ -33,8 +30,8 @@ class Register extends React.Component {
         });
     }
 
-    handleSubmit(event) {
-        event.preventDefault();
+    handleSubmit = (e) => {
+        e.preventDefault();
 
         this.setState({ submitted: true });
         const { user } = this.state;
