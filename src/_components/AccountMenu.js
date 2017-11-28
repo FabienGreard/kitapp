@@ -4,9 +4,11 @@ import { Link } from 'react-router-dom';
 
 import { theme } from '../_helpers';
 
-//material-ui import
+//material-ui-icon import
 import IconButton from 'material-ui/IconButton';
 import AccountCircle from 'material-ui-icons/AccountCircle';
+
+//material-ui import
 import Menu, { MenuItem } from 'material-ui/Menu';
 import { withStyles } from 'material-ui/styles';
 

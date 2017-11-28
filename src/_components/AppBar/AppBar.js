@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 //material-ui import
 import { withStyles } from 'material-ui/styles';
 
-import { SimpleBar, Dialog, AccountMenu, Menu } from '../_components';
-
+import { SimpleBar, Dialog, AccountMenu, Menu } from '../';
 
 //styles
 const styles = context => ({
@@ -48,17 +47,17 @@ class AppBar extends Component {
   };
 
   render() {
-    const { anchorElAccountMenu, isMenu } = this.state;
+    let { anchorElAccountMenu, isMenu } = this.state;
 
     //AccountMenu consts
-    const handleAccountMenu = this.handleAccountMenu;
-    const handleAccountMenuRequestClose = this.handleAccountMenuRequestClose;
+    let handleAccountMenu = this.handleAccountMenu;
+    let handleAccountMenuRequestClose = this.handleAccountMenuRequestClose;
 
     //NavMenu consts
-    const handleMenu = this.handleMenu;
-    const handleMenuRequestClose = this.handleMenuRequestClose;
+    let handleMenu = this.handleMenu;
+    let handleMenuRequestClose = this.handleMenuRequestClose;
 
-    const { message, classes, isLoggedIn } = this.props;
+    let { message, classes, isLoggedIn } = this.props;
     return (
       <SimpleBar>
         <div className={classes.menuButton}>
