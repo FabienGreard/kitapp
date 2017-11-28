@@ -22,10 +22,6 @@ grey #BDBDBD
 */
 
 class theme {
-  constructor(){
-    console.log("instance");
-  }
-
   switchStyle = (type) =>{
     switch(type){
       case 'primaryColor':

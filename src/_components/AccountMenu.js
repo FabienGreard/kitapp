@@ -31,8 +31,8 @@ class AccountMenu extends Component {
     let { anchorElAccountMenu, classes } = this.props;
     let isAccountMenu = Boolean(anchorElAccountMenu);
 
-    let onOpen = this.onOpen; //handle click on Avatar 'open'
-    let onClose = this.onClose; //handle click on Avatar 'close'
+    let onOpen = this.onOpen; //Handle click on Avatar 'open'
+    let onClose = this.onClose; //Handle click on Avatar 'close'
 
     const textMenu = [
       { name: 'Mon Profile', link: '/account'},

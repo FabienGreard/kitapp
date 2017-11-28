@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 //material-ui import
 import { withStyles } from 'material-ui/styles';
 
-import { SimpleBar, Dialog, AccountMenu } from '../_components';
-import NavMenu from './NavMenu';
+import { SimpleBar, Dialog, AccountMenu, Menu } from '../_components';
+
 
 //styles
 const styles = context => ({
@@ -62,7 +62,7 @@ class AppBar extends Component {
     return (
       <SimpleBar>
         <div className={classes.menuButton}>
-          { isLoggedIn && <NavMenu isMenu={isMenu} handleMenu={handleMenu} handleMenuRequestClose={handleMenuRequestClose}/>}
+          { isLoggedIn && <Menu isMenu={isMenu} handleMenu={handleMenu} handleMenuRequestClose={handleMenuRequestClose}/>}
         </div>
         <div className={classes.flex}>
           <Dialog message={message}/>
