@@ -1,3 +1,4 @@
+export * from './localStorage';
 export * from './authorization';
 export * from './history';
 export * from './store';

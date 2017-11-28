@@ -1,6 +1,7 @@
 import { userConstants } from '../_constants';
+import { loadState } from '../_helpers';
 
-let user = JSON.parse(localStorage.getItem('user'));
+let user = loadState();
 const initialState = user ? { isLoggedIn: true, user } : {};
 
 export function authentication(state = initialState, action) {
