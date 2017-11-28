@@ -2,11 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 
-import { loadState } from '../_helpers';
-
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props  => (
-    loadState() ? (
+    JSON.parse(localStorage.getItem('user')) ? (
       <Component {...props}/>
     ) : (
       <Redirect to={{

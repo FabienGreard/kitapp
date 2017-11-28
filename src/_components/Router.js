@@ -1,15 +1,16 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
+import { PrivateRoute } from './';
+
 import Account from '../modules/Account/index'
 import Engine from '../modules/Engine/index'
 import Guard from '../modules/Guard/index';
-import Login from '../modules/Login/index';
+import { Login } from '../modules/Login';
 import Order from '../modules/Order/index';
-import Register from '../modules/Register/index';
+import { Register } from '../modules/Register';
 import Skill from '../modules/Skill/index';
 import { Error } from '../modules/Error';
-import { PrivateRoute } from '../_components';
 
 const Router = () => (
   <Switch >

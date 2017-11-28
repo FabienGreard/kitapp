@@ -62,9 +62,9 @@ class AccountMenu extends Component {
 
 AccountMenu.propTypes = {
   classes: PropTypes.object.isRequired,
-  anchorElAccountMenu: PropTypes.object.isRequired,
   handleAccountMenuRequestClose: PropTypes.func.isRequired,
   handleAccountMenu: PropTypes.func.isRequired,
+  anchorElAccountMenu: PropTypes.object,
 };
 
 const AccountMenuWithStyles = withStyles(styles)(AccountMenu);

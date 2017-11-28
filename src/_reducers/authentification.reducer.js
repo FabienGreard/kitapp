@@ -1,7 +1,6 @@
 import { userConstants } from '../_constants';
-import { loadState } from '../_helpers';
 
-let user = loadState();
+let user = JSON.parse(localStorage.getItem('user'));
 const initialState = user ? { isLoggedIn: true, user } : {};
 
 export function authentication(state = initialState, action) {
@@ -9,12 +8,12 @@ export function authentication(state = initialState, action) {
     case userConstants.LOGIN_REQUEST:
       return {
         isLoggedIn: true,
-        user: action.user
+        user: action
       };
     case userConstants.LOGIN_SUCCESS:
       return {
         isLoggedIn: true,
-        user: action.user
+        user: action
       };
     case userConstants.LOGIN_FAILURE:
       return {};

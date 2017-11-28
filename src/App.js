@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { history, theme, Router } from './_helpers';
+import { history, theme } from './_helpers';
 import { alertActions } from './_actions';
-import { AppBar } from './_components'
+import { AppBar, Router } from './_components'
 
 //material-ui
 import { MuiThemeProvider } from 'material-ui/styles';

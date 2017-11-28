@@ -40,7 +40,8 @@ Loading.propTypes = {
 };
 
 Loading.defaultProps = {
-  timer : 1,
+  timer: 1,
+  color: "accent"
 };
 
 export { Loading }
