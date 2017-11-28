@@ -1,44 +1,40 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
+
+import { history, theme } from './_helpers';
+import { alertActions } from './_actions';
 
 //material-ui
-import theme from './style/theme';
 import { MuiThemeProvider } from 'material-ui/styles';
 
 import Router from './Router';
-import AppBar from './components/AppBar/index'
+import AppBar from './AppBar/index'
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      theme: new theme(),
-      message: "KitApp - " + this.switch(this.props.location.pathname),
+      message: "KitApp - " + this.switch(history.location.pathname),
       isLoggedIn: false,
     };
+
+    //listen on url change
+    history.listen((location, action) => {
+            // clear alert on location change
+            props.dispatch(alertActions.clear());
+
+            //set message
+            this.setState({
+              message : 'KitApp - ' + this.switch(location.pathname),
+            });
+        });
 
     //Fix document margin style
     document.body.style.margin = '0px';
 
     //Add a background color
     document.body.style.background = '#fafafa';
-  }
-
-  componentDidUpdate(nextProps, nextState){
-    if (!nextState.isLoggedIn && nextProps.location.pathname !== this.props.location.pathname) {
-      this.setState({
-        message : 'KitApp - ' + this.switch(this.props.location.pathname),
-      });
-    }
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if (nextState.isLoggedIn && nextProps.location.pathname !== this.props.location.pathname) {
-      this.setState({
-        message : 'KitApp - ' + this.switch(nextProps.location.pathname),
-      });
-    }
   }
 
   switch = (pathname) => {
@@ -67,21 +63,27 @@ class App extends Component {
   }
 
   render() {
-    const { theme, isLoggedIn, message } = this.state;
+    const { isLoggedIn, message } = this.state;
     const handleChangeOnAuth = this.handleChangeOnAuth;
     return(
       <MuiThemeProvider theme={theme.renderTheme}>
-        <AppBar isLoggedIn={isLoggedIn} message={message} handleChangeOnAuth={handleChangeOnAuth} theme={theme}/>
-        <Router isLoggedIn={isLoggedIn} theme={theme}/>
+        <AppBar isLoggedIn={isLoggedIn} message={message} handleChangeOnAuth={handleChangeOnAuth}/>
+        <Router/>
       </MuiThemeProvider>
     )
   }
 }
 
 App.propTypes = {
-  match: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
+  alert: PropTypes.object.isRequired,
 }
 
-export default withRouter(App);
+function mapStateToProps(state) {
+    const { alert } = state;
+    return {
+        alert,
+    };
+}
+
+const connectedApp = connect(mapStateToProps)(App);
+export { connectedApp as App };

@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 //material-ui import
 import { withStyles } from 'material-ui/styles';
 
-import SimpleBar from './SimpleBar';
+import { theme } from '../_helpers';
+import { SimpleBar, Dialog } from '../_components';
 import AccountMenu from './AccountMenu';
-import Dialog from './Dialog';
 import NavMenu from './NavMenu';
 
 //styles
@@ -66,9 +66,9 @@ class AppBar extends Component {
     //auth function
     const handleChangeOnAuth= this.handleChangeOnAuth;
 
-    const { theme, message, classes, isLoggedIn } = this.props;
+    const { message, classes, isLoggedIn } = this.props;
     return (
-      <SimpleBar theme={theme}>
+      <SimpleBar>
         <div className={classes.menuButton}>
           { isLoggedIn && <NavMenu theme={theme} isMenu={isMenu} handleMenu={handleMenu} handleMenuRequestClose={handleMenuRequestClose}/>}
         </div>
@@ -83,7 +83,6 @@ class AppBar extends Component {
 }
 
 AppBar.propTypes = {
-  theme: PropTypes.object.isRequired,
   message: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,

@@ -1,50 +1,27 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
-import Account from './components/Account/index'
-import Engine from './components/Engine/index'
-import Guard from './components/Guard/index';
-import Login from './components/Login/index';
-import Order from './components/Order/index';
-import Register from './components/Register/index';
-import Skill from './components/Skill/index';
-import { Error } from './components/Error/index';
+import Account from './Account/index'
+import Engine from './Engine/index'
+import Guard from './Guard/index';
+import Login from './Login/index';
+import Order from './Order/index';
+import Register from './Register/index';
+import Skill from './Skill/index';
+import { Error } from './Error/index';
+import { PrivateRoute } from './_components/index';
 
-const Router = ({isLoggedIn, theme}) => (
+const Router = () => (
   <Switch >
-    <PrivateRoute isLoggedIn={isLoggedIn} exact path='/' component={Guard}/>
+    <PrivateRoute exact path='/' component={Guard}/>
     <Route exact path='/login' component={Login}/>
     <Route exact path='/register' component={Register}/>
-    <PrivateRoute isLoggedIn={isLoggedIn} path='/engine' component={Engine}/>
-    <PrivateRoute isLoggedIn={isLoggedIn} path='/account' component={Account}/>
-    <PrivateRoute isLoggedIn={isLoggedIn} path='/order' component={Order}/>
-    <PrivateRoute isLoggedIn={isLoggedIn} path='/skill' component={Skill}/>
+    <PrivateRoute path='/engine' component={Engine}/>
+    <PrivateRoute path='/account' component={Account}/>
+    <PrivateRoute path='/order' component={Order}/>
+    <PrivateRoute path='/skill' component={Skill}/>
     <Route render={(props)=><Error {...props}/>}/>
   </Switch>
 );
-
-const PrivateRoute = ({ isLoggedIn, component: Component, ...rest }) => (
-  <Route {...rest} render={props  => (
-    isLoggedIn ? (
-      <Component {...props}/>
-    ) : (
-      <Redirect to={{
-        pathname: '/login',
-        state: { from: props.location }
-      }}/>
-    )
-  )}/>
-)
-
-Router.propTypes = {
-  isLoggedIn : PropTypes.bool.isRequired,
-  theme: PropTypes.object.isRequired,
-}
-
-PrivateRoute.propTypes = {
-  isLoggedIn : PropTypes.bool.isRequired,
-  component : PropTypes.func.isRequired,
-}
 
 export default Router;

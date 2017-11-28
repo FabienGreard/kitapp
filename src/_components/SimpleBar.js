@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { theme } from '../_helpers';
+
 //material-ui import
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
@@ -8,7 +10,7 @@ import Toolbar from 'material-ui/Toolbar';
 //SimpleBar render the kitapp bar
 class SimpleBar extends Component {
   render() {
-    const { theme, children } = this.props;
+    let { children } = this.props;
     return (
       <AppBar position="static" style={theme.getRowStyle('', 'primaryColor',)}>
         <Toolbar>
@@ -21,7 +23,6 @@ class SimpleBar extends Component {
 
 SimpleBar.propTypes = {
   children: PropTypes.array.isRequired,
-  theme : PropTypes.object.isRequired,
 };
 
-export default SimpleBar;
+export { SimpleBar };

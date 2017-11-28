@@ -25,8 +25,8 @@ class Loading extends Component {
   }
 
   render() {
-    const { timer } = this.state;
-    const { color } = this.props;
+    let { timer } = this.state;
+    let { color } = this.props;
     return (
       <LinearProgress mode="determinate" value={timer} color={color} />
     );

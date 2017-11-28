@@ -22,6 +22,10 @@ grey #BDBDBD
 */
 
 class theme {
+  constructor(){
+    console.log("instance");
+  }
+
   switchStyle = (type) =>{
     switch(type){
       case 'primaryColor':
@@ -67,4 +71,6 @@ class theme {
   });
 }
 
-export default theme;
+const themeInstance = new theme();
+
+export { themeInstance as theme }

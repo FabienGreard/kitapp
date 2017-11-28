@@ -27,8 +27,8 @@ class RedirectWithTime extends Component {
 
   render() {
     // pathname must be something like /login or /register
-    const { pathname, location, text }  = this.props;
-    const { timer } = this.state;
+    let { pathname, location, text }  = this.props;
+    let { timer } = this.state;
     return (
       <div>
         {text && <Typography type="caption"> Redirection dans : {timer} !</Typography>}
