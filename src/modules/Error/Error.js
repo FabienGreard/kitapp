@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { RedirectWithTime, Loading } from '../../_components';
+
 //material-ui import
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
-
-import { RedirectWithTime, Loading } from '../_components/index';
 
 //styles
 const styles = context => ({

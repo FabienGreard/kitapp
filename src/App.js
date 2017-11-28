@@ -4,11 +4,10 @@ import { connect } from 'react-redux';
 
 import { history, theme, Router } from './_helpers';
 import { alertActions } from './_actions';
+import { AppBar } from './_components'
 
 //material-ui
 import { MuiThemeProvider } from 'material-ui/styles';
-
-import { AppBar } from './AppBar'
 
 class App extends Component {
   constructor(props){
