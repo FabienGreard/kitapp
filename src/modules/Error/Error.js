@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { RedirectWithTime, Loading } from '../../_components';
 
-//material-ui import
+//Material-ui import
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
@@ -26,7 +26,7 @@ class Error extends Component {
     let { location, classes } = this.props;
     let timer = 3; //secs before redirect && loading
     return (
-      <div className={classes.page}>
+      <div>
         <Loading timer={timer} color="accent"/>
         <div className={classes.root}>
           <Grid container spacing={40}>

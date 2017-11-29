@@ -6,13 +6,13 @@ import { history, theme } from './_helpers';
 import { alertActions } from './_actions';
 import { AppBar, Router } from './_components'
 
-//material-ui
+//material-ui import
 import { MuiThemeProvider } from 'material-ui/styles';
 
 class App extends Component {
   constructor(props){
     super(props);
-    
+
     //listen on url change
     history.listen((location, action) => {
       // clear alert on location change

@@ -1,8 +1,84 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { userActions } from '../../_actions';
+import { Loading, Dialog } from '../../_components';
+import { theme } from '../../_helpers';
+
+//material-ui import
+import IconButton from 'material-ui/IconButton';
+import Button from 'material-ui/Button';
+import { withStyles } from 'material-ui/styles';
+import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
+import Visibility from 'material-ui-icons/Visibility';
+import VisibilityOff from 'material-ui-icons/VisibilityOff';
+import Paper from 'material-ui/Paper';
+import Grid from 'material-ui/Grid';
+
+//material-ui-icon import
+import Send from 'material-ui-icons/Send';
+
+//material-ui-form import
+import { FormControl, FormGroup } from 'material-ui/Form';
+
+const styles = context => ({
+  root: {
+    zIndex: -1,
+    padding: 20,
+    position: 'absolute',
+    top: '64px',
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+  paper: {
+    padding: 16,
+    display: 'flex',
+    flexWrap: 'wrap',
+    margin: 'auto',
+    maxWidth: '350px',
+  },
+  container: {
+    height: '100%',
+  },
+  item: {
+    margin: 'auto',
+  },
+  formControl: {
+    margin: context.spacing.unit,
+  },
+  formGroup: {
+    margin: context.spacing.unit,
+    width: '100%',
+  },
+  withoutLabel: {
+    marginTop: context.spacing.unit * 3,
+  },
+  button: {
+    margin: context.spacing.unit,
+  },
+  textLink: {
+    margin: 'auto',
+    marginTop: 0,
+    marginBottom: 0,
+    textDecoration: 'none',
+    color: '#757575',
+    '&:hover': {
+       color: '#E91E63',
+       textDecoration: 'underline',
+    }
+  },
+  title: {
+    margin: 'auto',
+    marginTop: 0,
+    marginBottom: 0,
+  },
+  rightIcon: {
+    marginLeft: context.spacing.unit,
+  },
+});
 
 class Login extends React.Component {
     constructor(props) {
@@ -14,6 +90,7 @@ class Login extends React.Component {
         this.state = {
             email: '',
             password: '',
+            showPassword : false,
             submitted: false
         };
     }
@@ -34,46 +111,78 @@ class Login extends React.Component {
         }
     }
 
+    handleClickShowPasssword = (e) => {
+      this.setState({ showPassword: !this.state.showPassword });
+    }
+
+    handleMouseDownPassword = (e) => {
+      e.preventDefault();
+    }
+
     render() {
-        const { loggingIn } = this.props;
-        const { email, password, submitted } = this.state;
+        let { isLoggedIn, classes } = this.props;
+        let { email, password, submitted, showPassword } = this.state;
+
+        let handleMouseDownPassword = this.handleMouseDownPassword;
+        let handleClickShowPasssword = this.handleClickShowPasssword;
+        let handleChange = this.handleChange;
         return (
-            <div className="col-md-6 col-md-offset-3">
-                <h2>Login</h2>
-                <form name="form" onSubmit={this.handleSubmit}>
-                    <div className={'form-group' + (submitted && !email ? ' has-error' : '')}>
-                        <label htmlFor="email">email</label>
-                        <input type="text" className="form-control" name="email" value={email} onChange={this.handleChange} />
-                        {submitted && !email &&
-                            <div className="help-block">email is required</div>
-                        }
-                    </div>
-                    <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
-                        <label htmlFor="password">Password</label>
-                        <input type="password" className="form-control" name="password" value={password} onChange={this.handleChange} />
-                        {submitted && !password &&
-                            <div className="help-block">Password is required</div>
-                        }
-                    </div>
-                    <div className="form-group">
-                        <button className="btn btn-primary">Login</button>
-                        {loggingIn &&
-                            <img alt="loader" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                        }
-                        <Link to="/register" className="btn btn-link">Register</Link>
-                    </div>
-                </form>
+          <div>
+            { isLoggedIn && <Loading className={classes.formControl} mode="query"/>}
+            <div className={classes.root}>
+              <Grid container spacing={40} className={classes.container}>
+                <Grid item xs className={classes.item}>
+                  <Paper className={classes.paper}>
+                    <FormGroup className={classes.formGroup}>
+                      <Dialog className={classes.title} message="Se connecter !" style={theme.getRowStyle('darkGrey', '')} type="headline"/>
+                    </FormGroup>
+                    <FormControl fullWidth className={classes.formControl}>
+                      <InputLabel htmlFor="email">Email</InputLabel>
+                      <Input name="email" type="email" value={email} onChange={handleChange} />
+                      {submitted && !email &&
+                        <Dialog message="Email is required" style={theme.getRowStyle('primaryColor', '')} type="caption"/>
+                      }
+                    </FormControl>
+                    <FormControl fullWidth className={classes.formControl}>
+                      <InputLabel htmlFor="password">Password</InputLabel>
+                      <Input name="password" type={showPassword ? 'text' : 'password'} value={password} onChange={handleChange} endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton onClick={handleClickShowPasssword} onMouseDown={handleMouseDownPassword}>
+                          {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>}/>
+                      {submitted && !password &&
+                        <Dialog message="Password is required" style={theme.getRowStyle('primaryColor', '')} type="caption"/>
+                      }
+                    </FormControl>
+                    <FormGroup className={classes.formGroup}>
+                      <Button className={classes.button} raised color="primary" onClick={this.handleSubmit}>
+                        Connexion
+                        <Send className={classes.rightIcon}/>
+                      </Button>
+                      <Link to="/register" className={classes.textLink}>S'enregistrer ?</Link>
+                    </FormGroup>
+                  </Paper>
+                </Grid>
+              </Grid>
             </div>
+          </div>
         );
     }
 }
 
 function mapStateToProps(state) {
-    const { loggingIn } = state.authentication;
+    const { isLoggedIn } = state.authentication;
     return {
-        loggingIn
+        isLoggedIn
     };
 }
 
+Login.propTypes = {
+  classes: PropTypes.object.isRequired,
+  isLoggedIn: PropTypes.bool,
+}
+
 const connectedLogin = connect(mapStateToProps)(Login);
-export { connectedLogin as Login };
+const connectedLoginWithStyles = withStyles(styles)(connectedLogin);
+export { connectedLoginWithStyles as Login };

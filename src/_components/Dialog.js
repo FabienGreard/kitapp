@@ -4,34 +4,23 @@ import PropTypes from 'prop-types';
 import { theme } from '../_helpers';
 
 //material-ui import
-import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 
-//styles
-const styles = context => ({
-  title: {
-    marginLeft: 24,
-  },
-});
-
 //Render a simple Dialog
-class Dialog extends Component {
-  render() {
-    let { message, classes } = this.props;
-    return (
-      <div>
-        <Typography type="title" className={classes.title} style={theme.getRowStyle('white', '')}>{message}</Typography>
-      </div>
-    );
-  }
-
-}
+const Dialog = ({message, style, type, className}) => (
+  <Typography className={className} type={type} style={style}>{message}</Typography>
+);
 
 Dialog.propTypes = {
   message: PropTypes.string.isRequired,
-  classes: PropTypes.object.isRequired,
+  className: PropTypes.object.isRequired,
+  style: PropTypes.object,
+  type: PropTypes.string,
 };
 
-const DialogWithStyles = withStyles(styles)(Dialog);
+Dialog.defaultProps = {
+  type: "title",
+  style: theme.getRowStyle('white', ''),
+};
 
-export { DialogWithStyles as Dialog }
+export { Dialog }

@@ -2,15 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { SimpleBar, Dialog, AccountMenu, Menu } from '../';
+
 //material-ui import
 import { withStyles } from 'material-ui/styles';
-
-import { SimpleBar, Dialog, AccountMenu, Menu } from '../';
 
 //styles
 const styles = context => ({
   flex: {
     flex: 1,
+  },
+  title: {
+    marginLeft: 24,
   },
   menuButton: {
     marginLeft: -12,
@@ -64,7 +67,7 @@ class AppBar extends Component {
           { isLoggedIn && <Menu isMenu={isMenu} handleMenu={handleMenu} handleMenuRequestClose={handleMenuRequestClose}/>}
         </div>
         <div className={classes.flex}>
-          <Dialog message={message}/>
+          <Dialog className={classes.title} message={message}/>
         </div>
         { isLoggedIn &&
         <AccountMenu anchorElAccountMenu={anchorElAccountMenu} handleAccountMenu={handleAccountMenu} handleAccountMenuRequestClose={handleAccountMenuRequestClose}/>}

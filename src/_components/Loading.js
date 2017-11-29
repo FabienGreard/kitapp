@@ -26,9 +26,9 @@ class Loading extends Component {
 
   render() {
     let { timer } = this.state;
-    let { color } = this.props;
+    let { color, mode } = this.props;
     return (
-      <LinearProgress mode="determinate" value={timer} color={color} />
+      <LinearProgress mode={mode} value={timer} color={color} />
     );
   }
 
@@ -37,11 +37,13 @@ class Loading extends Component {
 Loading.propTypes = {
   timer: PropTypes.number.isRequired,
   color: PropTypes.string.isRequired,
+  mode: PropTypes.string.isRequired,
 };
 
 Loading.defaultProps = {
   timer: 1,
-  color: "accent"
+  color: "accent",
+  mode: "determinate"
 };
 
 export { Loading }
