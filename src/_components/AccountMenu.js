@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import { theme } from '../_helpers';
+import { userActions } from '../_actions';
 
 //material-ui-icon import
 import IconButton from 'material-ui/IconButton';
@@ -30,7 +32,7 @@ class AccountMenu extends Component {
   }
 
   render() {
-    let { anchorElAccountMenu, classes } = this.props;
+    let { anchorElAccountMenu, classes, dispatch } = this.props;
     let isAccountMenu = Boolean(anchorElAccountMenu);
 
     let onOpen = this.onOpen; //Handle click on Avatar 'open'
@@ -49,7 +51,9 @@ class AccountMenu extends Component {
         <Menu id="menu-account" anchorEl={anchorElAccountMenu}  open={isAccountMenu} onRequestClose={onClose}>
           {textMenu.map((textMenu) => (
             <Link key={textMenu.name} className={classes.link} style={theme.getRowStyle('', 'none')} to={textMenu.link}>
-              <MenuItem onClick={() => onClose()}>
+              <MenuItem onClick={() => {
+                onClose();
+                textMenu.name === "Se Déconnecter" && dispatch(userActions.logout());}}>
               {textMenu.name}
               </MenuItem>
             </Link>
@@ -65,7 +69,16 @@ AccountMenu.propTypes = {
   handleAccountMenuRequestClose: PropTypes.func.isRequired,
   handleAccountMenu: PropTypes.func.isRequired,
   anchorElAccountMenu: PropTypes.object,
+  isLoggedIn: PropTypes.bool,
 };
 
+function mapStateToProps(state) {
+    const { isLoggedIn } = state.authentication;
+    return {
+        isLoggedIn,
+    };
+}
+
 const AccountMenuWithStyles = withStyles(styles)(AccountMenu);
-export { AccountMenuWithStyles as AccountMenu };
+const connectedAccountMenuWithStyles = connect(mapStateToProps)(AccountMenuWithStyles);
+export { connectedAccountMenuWithStyles as AccountMenu };

@@ -17,6 +17,7 @@ class App extends Component {
     history.listen((location, action) => {
       // clear alert on location change
       props.dispatch(alertActions.clear());
+
     });
 
     //Fix document margin style
@@ -61,9 +62,10 @@ App.propTypes = {
 }
 
 function mapStateToProps(state) {
-    const { alert } = state;
+    const { alert, authentication } = state;
     return {
         alert,
+        authentication
     };
 }
 

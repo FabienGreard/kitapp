@@ -85,6 +85,7 @@ function mapStateToProps(state) {
         isLoggedIn,
     };
 }
+
 const connectedApp = connect(mapStateToProps)(AppBar);
 const AppBarWithStyles = withStyles(styles)(connectedApp);
 export { AppBarWithStyles as AppBar }

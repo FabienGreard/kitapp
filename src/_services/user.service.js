@@ -1,4 +1,4 @@
-import { authHeader } from '../_helpers';
+import { authHeader, url } from '../_helpers';
 
 export const userService = {
     login,
@@ -10,14 +10,13 @@ export const userService = {
     delete: _delete
 };
 
-function login(username, password) {
+function login(email, password) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ email, password })
     };
-
-    return fetch('/users/authenticate', requestOptions)
+    return fetch(url() + '/auth/login', requestOptions)
         .then(response => {
             if (!response.ok) {
                 return Promise.reject(response.statusText);
@@ -47,7 +46,7 @@ function getAll() {
         headers: authHeader()
     };
 
-    return fetch('/users', requestOptions).then(handleResponse);
+    return fetch(url() + '/users', requestOptions).then(handleResponse);
 }
 
 function getById(id) {
@@ -56,7 +55,7 @@ function getById(id) {
         headers: authHeader()
     };
 
-    return fetch('/users/' + id, requestOptions).then(handleResponse);
+    return fetch(url() + '/users/' + id, requestOptions).then(handleResponse);
 }
 
 function register(user) {
@@ -66,7 +65,7 @@ function register(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch('/users/register', requestOptions).then(handleResponse);
+    return fetch(url() + '/auth/register', requestOptions).then(handleResponse);
 }
 
 function update(user) {
@@ -76,7 +75,7 @@ function update(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch('/users/' + user.id, requestOptions).then(handleResponse);
+    return fetch(url() + '/users/' + user.id, requestOptions).then(handleResponse);
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -86,7 +85,7 @@ function _delete(id) {
         headers: authHeader()
     };
 
-    return fetch('/users/' + id, requestOptions).then(handleResponse);
+    return fetch(url() + '/users/' + id, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
