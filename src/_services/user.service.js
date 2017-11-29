@@ -17,21 +17,24 @@ function login(email, password) {
         body: JSON.stringify({ email, password })
     };
     return fetch(url() + '/auth/login', requestOptions)
-        .then(response => {
-            if (!response.ok) {
-                return Promise.reject(response.statusText);
-            }
+        .then(response =>
+          response.json().then(json => ({
+            ok: response.ok,
+            json
+          })
+        ))
+        .then(({ ok, json }) => {
 
-            return response.json();
-        })
-        .then(user => {
+          if(!ok){
+            return Promise.reject(json.error);
+          }
             // login successful if there's a jwt token in the response
-            if (user && user.token) {
+            if (json.user && json.user.token) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('user', JSON.stringify(user));
+                localStorage.setItem('user', JSON.stringify(json.user));
             }
 
-            return user;
+            return json.user;
         });
 }
 

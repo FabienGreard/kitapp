@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { history, theme } from './_helpers';
 import { alertActions } from './_actions';
-import { AppBar, Router } from './_components'
+import { AppBar, Router, Alert } from './_components'
 
 //material-ui import
 import { MuiThemeProvider } from 'material-ui/styles';
@@ -47,10 +47,12 @@ class App extends Component {
   }
 
   render() {
+    let { alert } = this.props;
     let message = 'KitApp - ' + this.switch(history.location.pathname);
     return(
       <MuiThemeProvider theme={theme.renderTheme}>
         <AppBar message={message}/>
+        <Alert alert={alert}/>
         <Router/>
       </MuiThemeProvider>
     )
@@ -62,10 +64,9 @@ App.propTypes = {
 }
 
 function mapStateToProps(state) {
-    const { alert, authentication } = state;
+    const { alert } = state;
     return {
-        alert,
-        authentication
+        alert
     };
 }
 

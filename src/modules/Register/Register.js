@@ -19,7 +19,6 @@ import Grid from 'material-ui/Grid';
 
 //material-ui-icon import
 import Send from 'material-ui-icons/Send';
-import Backspace from 'material-ui-icons/Backspace';
 
 //material-ui-form import
 import { FormControl, FormGroup } from 'material-ui/Form';

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { theme } from '../_helpers';
@@ -13,7 +13,7 @@ const Dialog = ({message, style, type, className}) => (
 
 Dialog.propTypes = {
   message: PropTypes.string.isRequired,
-  className: PropTypes.object.isRequired,
+  className: PropTypes.string,
   style: PropTypes.object,
   type: PropTypes.string,
 };
