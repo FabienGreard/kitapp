@@ -30,8 +30,10 @@ class Alert extends Component {
     this.state = { open: false };
   }
 
-  componentWillReceiveProps() {
-    this.setState({ open: true });
+  componentWillReceiveProps(nextProps) {
+    if(typeof nextProps.alert.message !== 'undefined'){
+      this.setState({ open: true });
+    }
   }
 
   handleClickOpen = () => {

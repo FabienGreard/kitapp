@@ -34,6 +34,7 @@ const styles = context => ({
     right: 0,
   },
   paper: {
+    position: 'relative',
     padding: 16,
     display: 'flex',
     flexWrap: 'wrap',
@@ -71,9 +72,17 @@ const styles = context => ({
     }
   },
   title: {
-    margin: 'auto',
-    marginTop: 0,
-    marginBottom: 0,
+    position: 'absolute',
+    width: '100%',
+    padding: '10px 0',
+    marginBottom: 10,
+    top: 0,
+    left: 0,
+    textAlign: 'center',
+  },
+  firstInputControl: {
+    margin: context.spacing.unit,
+    marginTop: context.spacing.unit + 20,
   },
   rightIcon: {
     marginLeft: context.spacing.unit,
@@ -134,9 +143,9 @@ class Login extends React.Component {
                 <Grid item xs className={classes.item}>
                   <Paper className={classes.paper}>
                     <FormGroup className={classes.formGroup}>
-                      <Dialog className={classes.title} message="Se connecter !" style={theme.getRowStyle('darkGrey', '')} type="headline"/>
+                      <Dialog className={classes.title} message="Se connecter !" style={theme.getRowStyle('white', 'primaryColor')} type="headline"/>
                     </FormGroup>
-                    <FormControl fullWidth className={classes.formControl}>
+                    <FormControl fullWidth className={classes.firstInputControl}>
                       <InputLabel htmlFor="email">Email</InputLabel>
                       <Input name="email" type="email" value={email} onChange={handleChange} />
                       {submitted && !email &&

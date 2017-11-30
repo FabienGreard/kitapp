@@ -28,11 +28,11 @@ function login(email, password) {
           if(!ok){
             return Promise.reject(json.error);
           }
-            // login successful if there's a jwt token in the response
-            if (json.user && json.user.token) {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('user', JSON.stringify(json.user));
-            }
+          // login successful if there's a jwt token in the response
+          if (json.user && json.token) {
+              // store user details and jwt token in local storage to keep user logged in between page refreshes
+              localStorage.setItem('user', JSON.stringify({user: json.user, token: json.token}));
+          }
 
             return json.user;
         });
@@ -49,7 +49,11 @@ function getAll() {
         headers: authHeader()
     };
 
-    return fetch(url() + '/users', requestOptions).then(handleResponse);
+    return fetch(url() + '/users', requestOptions).then(response => response.json().then(json => ({
+      ok: response.ok,
+      json
+    })
+  )).then(handleResponse);
 }
 
 function getById(id) {
@@ -58,7 +62,11 @@ function getById(id) {
         headers: authHeader()
     };
 
-    return fetch(url() + '/users/' + id, requestOptions).then(handleResponse);
+    return fetch(url() + '/users/' + id, requestOptions).then(response => response.json().then(json => ({
+      ok: response.ok,
+      json
+    })
+  )).then(handleResponse);
 }
 
 function register(user) {
@@ -68,7 +76,11 @@ function register(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(url() + '/auth/register', requestOptions).then(handleResponse);
+    return fetch(url() + '/auth/register', requestOptions).then(response => response.json().then(json => ({
+      ok: response.ok,
+      json
+    })
+  )).then(handleResponse);
 }
 
 function update(user) {
@@ -78,7 +90,11 @@ function update(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(url() + '/users/' + user.id, requestOptions).then(handleResponse);
+    return fetch(url() + '/users/' + user.id, requestOptions).then(response => response.json().then(json => ({
+      ok: response.ok,
+      json
+    })
+  )).then(handleResponse);
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -88,13 +104,17 @@ function _delete(id) {
         headers: authHeader()
     };
 
-    return fetch(url() + '/users/' + id, requestOptions).then(handleResponse);
+    return fetch(url() + '/users/' + id, requestOptions).then(response => response.json().then(json => ({
+      ok: response.ok,
+      json
+    })
+  )).then(handleResponse);
 }
 
-function handleResponse(response) {
-    if (!response.ok) {
-        return Promise.reject(response.statusText);
+function handleResponse({ok, json}) {
+    if (!ok) {
+        return Promise.reject(json.error);
     }
 
-    return response.json();
+    return json;
 }
