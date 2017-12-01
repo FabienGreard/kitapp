@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import { theme } from '../_helpers';
 
@@ -9,6 +10,7 @@ import IconButton from 'material-ui/IconButton';
 import DevicesIcon from 'material-ui-icons/Devices';
 import BuildIcon from 'material-ui-icons/Build';
 import MenuIcon from 'material-ui-icons/Menu';
+import SettingsIcon from 'material-ui-icons/Settings';
 
 //material-ui import
 import { withStyles } from 'material-ui/styles';
@@ -38,6 +40,9 @@ const styles = context => ({
     textDecoration: 'none',
     outline: 0,
   },
+  adminListText: {
+    padding: '0 16px',
+  },
 });
 
 //Render the navigation menu on the kitapp bar
@@ -58,15 +63,21 @@ class Menu extends Component {
   }
 
   render() {
-    const { isMenu, classes } = this.props;
+    const { isMenu, classes, role } = this.props;
 
     const onOpen = this.onOpen; //Handle click on menu 'open'
     let onClose = this.onClose; //Handle click on menu 'close'
 
     const navName = [
-      { name: 'Machines', icon: DevicesIcon, link: 'engine' },
-      { name: 'Compétences', icon: BuildIcon, link: 'skill' },
+      { name: 'Machines', icon: DevicesIcon, link: '/engine' },
+      { name: 'Compétences', icon: BuildIcon, link: '/skill' },
     ];
+
+    const navAdminName = [
+      { name: 'Utilisateurs', icon: SettingsIcon, link: '/admin/users' },
+      { name: 'Machines', icon: SettingsIcon, link: '/admin/engines' }
+    ];
+
     return(
       <div>
         <IconButton  style={theme.getRowStyle('white', '')} onClick={onOpen} aria-label="Menu">
@@ -75,8 +86,10 @@ class Menu extends Component {
         <Drawer open={isMenu} onRequestClose={onClose}>
           <div tabIndex={0} role="button" onClick={onClose} onKeyDown={onClose}>
             <div className={classes.menuTitleContainer}>
-              <Typography type="headline" className={classes.menuTitle} style={theme.getRowStyle('darkGrey', '')}>KitApp</Typography>
-              <Typography type="caption" className={classes.menuSubTitle} style={theme.getRowStyle('grey', '')}>v.1.0.0</Typography>
+              <Link className={classes.link} style={theme.getRowStyle('', 'none')} to="/">
+                <Typography type="headline" className={classes.menuTitle} style={theme.getRowStyle('darkGrey', '')}>KitApp</Typography>
+                <Typography type="caption" className={classes.menuSubTitle} style={theme.getRowStyle('grey', '')}>v.1.0.0</Typography>
+              </Link>
             </div>
             <Divider />
             <List>
@@ -91,6 +104,27 @@ class Menu extends Component {
                 </Link>
               ))}
             </List>
+            { role !== "Member" && (
+              <div>
+                <div className={classes.menuTitleContainer} style={theme.getRowStyle('', 'darkPrimaryColor')}>
+                  <Typography type="headline" className={classes.menuTitle} style={theme.getRowStyle('white', '')}>Admin</Typography>
+                </div>
+                <div style={theme.getRowStyle('white', 'darkPrimaryColor')}>
+                  {navAdminName.map((item) => (
+                    <Link key={item.name} className={classes.link} style={theme.getRowStyle('', 'none')} to={item.link}>
+                      <ListItem button>
+                        <ListItemIcon style={theme.getRowStyle('white', 'none')}>
+                          {React.createElement(item.icon)}
+                        </ListItemIcon>
+                        <ListItemText primary={
+                          <span style={theme.getRowStyle('white', 'none')}>{item.name}</span>
+                        } />
+                      </ListItem>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </Drawer>
       </div>
@@ -103,7 +137,16 @@ Menu.propTypes = {
   isMenu: PropTypes.bool.isRequired,
   handleMenuRequestClose: PropTypes.func.isRequired,
   handleMenu: PropTypes.func.isRequired,
+  role: PropTypes.string,
 };
 
-const MenuWithStyles = withStyles(styles)(Menu);
-export { MenuWithStyles as Menu };
+function mapStateToProps(state) {
+    const { role } = state.authentication.user.user;
+    return {
+        role,
+    };
+}
+
+const connectedMenu = connect(mapStateToProps)(Menu);
+const connectedMenuWithStyles = withStyles(styles)(connectedMenu);
+export { connectedMenuWithStyles as Menu };

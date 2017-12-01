@@ -29,26 +29,32 @@ class App extends Component {
 
   switch = (pathname) => {
     switch(pathname.toLowerCase()){
+      case '/':
+        return '';
       case '/login':
-        return 'Connexion';
+        return '- Connexion';
       case '/register':
-        return 'Inscription';
+        return '- Inscription';
       case '/engine':
-        return 'Machines';
+        return '- Machines';
       case '/account':
-        return 'compte';
+        return '- compte';
       case '/order':
-        return 'Commandes';
+        return '- Commandes';
       case '/skill':
-        return 'Compétences';
+        return '- Compétences';
+      case '/admin/users':
+        return '- Admin - Utilisateurs';
+      case '/admin/engines':
+        return '- Admin - Machines';
       default:
-        return 'KitApp';
+        return '';
     }
   }
 
   render() {
     let { alert } = this.props;
-    let message = 'KitApp - ' + this.switch(history.location.pathname);
+    let message = 'KitApp ' + this.switch(history.location.pathname);
     return(
       <MuiThemeProvider theme={theme.renderTheme}>
         <AppBar message={message}/>
