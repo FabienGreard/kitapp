@@ -145,6 +145,7 @@ class Register extends React.Component {
         let handleMouseDownPassword = this.handleMouseDownPassword;
         let handleClickShowPasssword = this.handleClickShowPasssword;
         let handleChange = this.handleChange;
+        let handleSubmit = this.handleSubmit;
         return (
           <div>
             { registering && <Loading className={classes.formControl} mode="query"/>}
@@ -152,49 +153,51 @@ class Register extends React.Component {
               <Grid container spacing={40} className={classes.container}>
                 <Grid item xs className={classes.item}>
                   <Paper className={classes.paper}>
-                    <FormGroup className={classes.formGroup}>
-                      <Dialog className={classes.title} message="S'enregistrer !" style={theme.getRowStyle('white', 'primaryColor')} type="headline"/>
-                    </FormGroup>
-                    <FormControl fullWidth className={classes.firstInputControl}>
-                      <InputLabel htmlFor="lastName">Nom</InputLabel>
-                      <Input name="lastName" type="lastName" value={user.lastName} onChange={handleChange} />
-                      {submitted && !user.lastName &&
-                        <Dialog message="lastName is required" style={theme.getRowStyle('primaryColor', '')} type="caption"/>
-                      }
-                    </FormControl>
-                    <FormControl fullWidth className={classes.formControl}>
-                      <InputLabel htmlFor="firstName">Prénom</InputLabel>
-                      <Input name="firstName" type="firstName" value={user.firstName} onChange={handleChange} />
-                      {submitted && !user.firstName &&
-                        <Dialog message="firstName is required" style={theme.getRowStyle('primaryColor', '')} type="caption"/>
-                      }
-                    </FormControl>
-                    <FormControl fullWidth className={classes.formControl}>
-                      <InputLabel htmlFor="email">Email</InputLabel>
-                      <Input name="email" type="email" value={user.email} onChange={handleChange} />
-                      {submitted && !user.email &&
-                        <Dialog message="Email is required" style={theme.getRowStyle('primaryColor', '')} type="caption"/>
-                      }
-                    </FormControl>
-                    <FormControl fullWidth className={classes.formControl}>
-                      <InputLabel htmlFor="password">Password</InputLabel>
-                      <Input name="password" type={showPassword ? 'text' : 'password'} value={user.password} onChange={handleChange} endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton onClick={handleClickShowPasssword} onMouseDown={handleMouseDownPassword}>
-                          {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>}/>
-                      {submitted && !user.password &&
-                        <Dialog message="Password is required" style={theme.getRowStyle('primaryColor', '')} type="caption"/>
-                      }
-                    </FormControl>
-                    <FormGroup className={classes.formGroup}>
-                      <Button className={classes.button} raised color="primary" onClick={this.handleSubmit}>
-                        Inscriptions
-                        <Send className={classes.rightIcon}/>
-                      </Button>
-                      <Link to="/login" className={classes.textLink}>Se connecter ?</Link>
-                    </FormGroup>
+                    <form onSubmit={handleSubmit}>
+                      <FormGroup className={classes.formGroup}>
+                        <Dialog className={classes.title} message="S'enregistrer !" style={theme.getRowStyle('white', 'primaryColor')} type="headline"/>
+                      </FormGroup>
+                      <FormControl fullWidth className={classes.firstInputControl}>
+                        <InputLabel htmlFor="lastName">Nom</InputLabel>
+                        <Input name="lastName" type="lastName" value={user.lastName} onChange={handleChange} />
+                        {submitted && !user.lastName &&
+                          <Dialog message="lastName is required" style={theme.getRowStyle('primaryColor', '')} type="caption"/>
+                        }
+                      </FormControl>
+                      <FormControl fullWidth className={classes.formControl}>
+                        <InputLabel htmlFor="firstName">Prénom</InputLabel>
+                        <Input name="firstName" type="firstName" value={user.firstName} onChange={handleChange} />
+                        {submitted && !user.firstName &&
+                          <Dialog message="firstName is required" style={theme.getRowStyle('primaryColor', '')} type="caption"/>
+                        }
+                      </FormControl>
+                      <FormControl fullWidth className={classes.formControl}>
+                        <InputLabel htmlFor="email">Email</InputLabel>
+                        <Input name="email" type="email" value={user.email} onChange={handleChange} />
+                        {submitted && !user.email &&
+                          <Dialog message="Email is required" style={theme.getRowStyle('primaryColor', '')} type="caption"/>
+                        }
+                      </FormControl>
+                      <FormControl fullWidth className={classes.formControl}>
+                        <InputLabel htmlFor="password">Password</InputLabel>
+                        <Input name="password" type={showPassword ? 'text' : 'password'} value={user.password} onChange={handleChange} endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton onClick={handleClickShowPasssword} onMouseDown={handleMouseDownPassword}>
+                            {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>}/>
+                        {submitted && !user.password &&
+                          <Dialog message="Password is required" style={theme.getRowStyle('primaryColor', '')} type="caption"/>
+                        }
+                      </FormControl>
+                      <FormGroup className={classes.formGroup}>
+                        <Button className={classes.button} type="submit" raised color="primary">
+                          Inscriptions
+                          <Send className={classes.rightIcon}/>
+                        </Button>
+                        <Link to="/login" className={classes.textLink}>Se connecter ?</Link>
+                      </FormGroup>
+                    </form>
                   </Paper>
                 </Grid>
               </Grid>

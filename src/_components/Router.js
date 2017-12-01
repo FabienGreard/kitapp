@@ -22,7 +22,7 @@ const Router = () => (
     <PrivateRoute path='/account' component={Account}/>
     <PrivateRoute path='/order' component={Order}/>
     <PrivateRoute path='/skill' component={Skill}/>
-    <PrivateRoute path='/admin/users' isAdmin={true} component={EnginesAdmin}/>
+    <PrivateRoute path='/admin/users' isAdmin={true} component={UsersAdmin}/>
     <PrivateRoute path='/admin/engines' isAdmin={true} component={EnginesAdmin}/>
     <Route render={(props)=><Error {...props}/>}/>
   </Switch>

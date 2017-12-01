@@ -66,10 +66,10 @@ function getAll() {
 
         userService.getAll()
             .then(
-                users => dispatch(success(users)),
+                users => { dispatch(success(users)) },
                 error => {
                     dispatch(failure(error));
-                    dispatch(alertActions.error(error))
+                    //dispatch(alertActions.error(error));
                 }
             );
     };

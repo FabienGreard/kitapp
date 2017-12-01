@@ -8,6 +8,9 @@ import { connect } from 'react-redux';
       let {role, isAdmin, isLoggedIn, component: Component, ...rest} = this.props;
       let admin = isAdmin && role !== "Member" ? true : false;
       let pathname = isLoggedIn ? "/" : "/login"
+      /*mobile test / dev override
+      admin = true;
+      isLoggedIn = true;*/
       return(
         <Route {...rest} render={props => (
           isLoggedIn && !isAdmin ? (

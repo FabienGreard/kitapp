@@ -49,11 +49,14 @@ function getAll() {
         headers: authHeader()
     };
 
-    return fetch(url() + '/users', requestOptions).then(response => response.json().then(json => ({
-      ok: response.ok,
-      json
-    })
-  )).then(handleResponse);
+    return fetch(url() + '/users/all', requestOptions).then(response =>
+      response.json().then(json => ({
+        ok: response.ok,
+        error: "Mauvais token",
+        json
+      })
+    ))
+    .then(handleResponse);
 }
 
 function getById(id) {
@@ -62,11 +65,14 @@ function getById(id) {
         headers: authHeader()
     };
 
-    return fetch(url() + '/users/' + id, requestOptions).then(response => response.json().then(json => ({
-      ok: response.ok,
-      json
-    })
-  )).then(handleResponse);
+    return fetch(url() + '/users/' + id, requestOptions).then(response =>
+      response.json().then(json => ({
+        ok: response.ok,
+        error: "Mauvais token",
+        json
+      })
+    ))
+    .then(handleResponse);
 }
 
 function register(user) {
@@ -76,11 +82,13 @@ function register(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(url() + '/auth/register', requestOptions).then(response => response.json().then(json => ({
-      ok: response.ok,
-      json
-    })
-  )).then(handleResponse);
+    return fetch(url() + '/auth/register', requestOptions).then(response =>
+      response.json().then(json => ({
+        ok: response.ok,
+        json
+      })
+    ))
+    .then(handleResponse);
 }
 
 function update(user) {
@@ -90,11 +98,13 @@ function update(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(url() + '/users/' + user.id, requestOptions).then(response => response.json().then(json => ({
-      ok: response.ok,
-      json
-    })
-  )).then(handleResponse);
+    return fetch(url() + '/users/' + user.id, requestOptions).then(response =>
+      response.json().then(json => ({
+        ok: response.ok,
+        json
+      })
+    ))
+    .then(handleResponse);
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -104,16 +114,18 @@ function _delete(id) {
         headers: authHeader()
     };
 
-    return fetch(url() + '/users/' + id, requestOptions).then(response => response.json().then(json => ({
-      ok: response.ok,
-      json
-    })
-  )).then(handleResponse);
+    return fetch(url() + '/users/' + id, requestOptions).then(response =>
+      response.json().then(json => ({
+        ok: response.ok,
+        json
+      })
+    ))
+    .then(handleResponse);
 }
 
-function handleResponse({ok, json}) {
+function handleResponse({ok, error = "ok", json}) {
     if (!ok) {
-        return Promise.reject(json.error);
+        return Promise.reject(error ? error : json.error);
     }
 
     return json;
