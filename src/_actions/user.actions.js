@@ -8,6 +8,7 @@ export const userActions = {
     logout,
     register,
     getAll,
+    update,
     delete: _delete
 };
 
@@ -66,10 +67,11 @@ function getAll() {
 
         userService.getAll()
             .then(
-                users => { dispatch(success(users)) },
+                users => { dispatch(success(users.users));
+                },
                 error => {
                     dispatch(failure(error));
-                    //dispatch(alertActions.error(error));
+                    dispatch(alertActions.error(error));
                 }
             );
     };
@@ -90,12 +92,34 @@ function _delete(id) {
                     dispatch(success(id));
                 },
                 error => {
-                    dispatch(failure(id, error));
+                    dispatch(failure(error));
+                    dispatch(alertActions.error(error));
                 }
             );
     };
 
     function request(id) { return { type: userConstants.DELETE_REQUEST, id } }
     function success(id) { return { type: userConstants.DELETE_SUCCESS, id } }
-    function failure(id, error) { return { type: userConstants.DELETE_FAILURE, id, error } }
+    function failure(error) { return { type: userConstants.DELETE_FAILURE, error } }
+  }
+
+  function update(user) {
+    return dispatch => {
+        dispatch(request(user));
+
+        userService.update(user)
+            .then(
+                user => {
+                    dispatch(success(user.user));
+                },
+                error => {
+                    dispatch(failure(error));
+                    dispatch(alertActions.error(error));
+                }
+            );
+    };
+
+    function request(user) { return { type: userConstants.UPDATE_REQUEST, user} }
+    function success(user) { return { type: userConstants.UPDATE_SUCCESS, user } }
+    function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
   }

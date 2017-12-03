@@ -7,6 +7,10 @@ export * from './AccountMenu';
 export * from './Menu';
 export * from './Router';
 export * from './Alert';
+export * from './TableHead';
+export * from './TableToolbar';
+export * from './TableBody';
 
 //wrapper
 export * from './AppBar';
+export * from './AppTable';

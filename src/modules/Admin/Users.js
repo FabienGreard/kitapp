@@ -3,91 +3,84 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { userActions } from '../../_actions';
-import { Loading, Dialog } from '../../_components';
-import { theme } from '../../_helpers';
+import { Loading, AppTable } from '../../_components';
 
 //Material-ui import
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 
 //styles
 const styles = context => ({
   root: {
       padding: 20,
-    },
-    paper: {
-      padding: 16,
-      textAlign: 'left',
-    },
-    paperContent: {
-      padding: 16,
-      overflow: 'auto',
-    },
-    table: {
-      minWidth: 700,
+      marginTop: context.spacing.unit * 3,
     },
 });
 
-
-  const getUserInfo = (user) => {
-    return {
+const getUserInfo = (users) => {
+  let usersInfo = [];
+  users.map((user) => {
+    return usersInfo.push({
       id: user._id,
-      firstName: user.profile.firstName,
-      lastName: user.profile.lastName,
+      firstName: user.profile.firstName[0].toUpperCase() + user.profile.firstName.substring(1),
+      lastName: user.profile.lastName[0].toUpperCase() + user.profile.lastName.substring(1),
       email: user.email,
       role: user.role
-    }
-  };
+    })
+  });
+  return usersInfo.sort((a, b) => ( a.email < b.email ? -1 : 1));
+};
 
 class UsersAdmin extends Component {
   constructor(props) {
     super(props);
     this.props.dispatch(userActions.getAll());
+
+    this.state = {
+      data: []
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.items !== this.props.items && typeof nextProps.items !== 'undefined'){
+      this.setState({
+        data: getUserInfo(nextProps.items)
+      });
+    }
+  }
+
+  updateUser = (e, user) => {
+    this.props.dispatch(userActions.update(user));
+  }
+
+  deleteUser = (e, id) => {
+    this.props.dispatch(userActions.delete(id));
   }
 
   render() {
-    let { users, classes, loading } = this.props;
+    let { classes, loading } = this.props;
+    let { data } = this.state;
 
+    const columnData = [
+      { id: 'email', numeric: false, disablePadding: true, label: 'Email' },
+      { id: 'firstName', numeric: false, disablePadding: true, label: 'Prénom' },
+      { id: 'lastName', numeric: false, disablePadding: true, label: 'Nom' },
+      { id: 'role', numeric: false, disablePadding: true, label: 'Rôle' },
+    ];
+
+    const deleteUser = this.deleteUser;
+    const updateUser = this.updateUser;
     return (
       <div>
         { loading &&
           <Loading mode="query"/>
         }
         <div className={classes.root}>
-          <Grid container spacing={24} className={classes.container}>
-            <Grid item xs={12} className={classes.item}>
-              <Paper className={classes.paper}>
-                <Dialog className={classes.title} message="Utilisateurs" style={theme.getRowStyle('darkGrey', 'none')} type="title"/>
-              </Paper>
-            </Grid>
-            <Grid item xs className={classes.item}>
-              <Paper className={classes.paperContent}>
-                <Table className={classes.table}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Email</TableCell>
-                    <TableCell >Prénom</TableCell>
-                    <TableCell >Nom</TableCell>
-                    <TableCell >Role</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {Object.keys(users).length !== 0 &&
-                    users.map(
-                      (user) => (
-                        <TableRow key={getUserInfo(user).id}>
-                          <TableCell>{getUserInfo(user).email}</TableCell>
-                          <TableCell>{getUserInfo(user).firstName}</TableCell>
-                          <TableCell>{getUserInfo(user).lastName}</TableCell>
-                          <TableCell>{getUserInfo(user).role}</TableCell>
-                        </TableRow>
-                      )
-                    )
-                  }
-                </TableBody>
-                </Table>
+          <Grid container spacing={24}>
+            <Grid item xs>
+              <Paper>
+                <AppTable tableName="Utilisateurs" columnData={columnData} data={data} update={updateUser} delete={deleteUser}/>
               </Paper>
             </Grid>
           </Grid>
@@ -100,14 +93,15 @@ class UsersAdmin extends Component {
 
 UsersAdmin.propTypes = {
   users: PropTypes.array,
+  loading: PropTypes.bool,
   classes: PropTypes.object.isRequired,
 }
 
 function mapStateToProps(state) {
   const { loading } = state.users
-    const { users } = typeof state.users.items !== 'undefined' ? state.users.items : { users: [] };
+    const { items } = typeof state.users !== 'undefined' ? state.users : { items: [] };
     return {
-        users,
+        items,
         loading
     };
 }

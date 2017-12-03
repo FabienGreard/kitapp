@@ -123,9 +123,9 @@ function _delete(id) {
     .then(handleResponse);
 }
 
-function handleResponse({ok, error = "ok", json}) {
+function handleResponse({ok, error = "", json}) {
     if (!ok) {
-        return Promise.reject(error ? error : json.error);
+        return Promise.reject(error !== "" ? error : json.error);
     }
 
     return json;
