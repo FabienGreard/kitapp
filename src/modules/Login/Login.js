@@ -159,7 +159,7 @@ class Login extends React.Component {
                         <Input name="password" type={showPassword ? 'text' : 'password'} value={password} onChange={handleChange} endAdornment={
                         <InputAdornment position="end">
                           <IconButton onClick={handleClickShowPasssword} onMouseDown={handleMouseDownPassword}>
-                            {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                            {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
                           </IconButton>
                         </InputAdornment>}/>
                         {submitted && !password &&

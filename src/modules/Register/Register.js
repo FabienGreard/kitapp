@@ -183,7 +183,7 @@ class Register extends React.Component {
                         <Input name="password" type={showPassword ? 'text' : 'password'} value={user.password} onChange={handleChange} endAdornment={
                         <InputAdornment position="end">
                           <IconButton onClick={handleClickShowPasssword} onMouseDown={handleMouseDownPassword}>
-                            {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                            {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
                           </IconButton>
                         </InputAdornment>}/>
                         {submitted && !user.password &&
