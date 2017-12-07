@@ -9,7 +9,8 @@ export const userActions = {
     register,
     getAll,
     update,
-    delete: _delete
+    delete: _delete,
+    resetPsswd
 };
 
 function login(username, password) {
@@ -122,4 +123,26 @@ function _delete(id) {
     function request(user) { return { type: userConstants.UPDATE_REQUEST, user} }
     function success(user) { return { type: userConstants.UPDATE_SUCCESS, user } }
     function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
+  }
+
+  function resetPsswd(email) {
+    return dispatch => {
+        dispatch(request(email));
+
+        userService.resetPsswd(email)
+            .then(
+                user => {
+                    dispatch(success(email));
+                    dispatch(alertActions.success("Email envoyé à " + email));
+                },
+                error => {
+                    dispatch(failure(error));
+                    dispatch(alertActions.error(error));
+                }
+            );
+    };
+
+    function request(emailemail) { return { type: userConstants.PSSWD_REQUEST, email} }
+    function success(email) { return { type: userConstants.PSSWD_SUCCESS, email } }
+    function failure(error) { return { type: userConstants.PSSWD_FAILURE, error } }
   }

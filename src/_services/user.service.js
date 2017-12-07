@@ -7,7 +7,8 @@ export const userService = {
     getAll,
     getById,
     update,
-    delete: _delete
+    delete: _delete,
+    resetPsswd
 };
 
 function login(email, password) {
@@ -83,6 +84,22 @@ function register(user) {
     };
 
     return fetch(url() + '/auth/register', requestOptions).then(response =>
+      response.json().then(json => ({
+        ok: response.ok,
+        json
+      })
+    ))
+    .then(handleResponse);
+}
+
+function resetPsswd(email) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({email: email})
+    };
+
+    return fetch(url() + '/users/resetPassword', requestOptions).then(response =>
       response.json().then(json => ({
         ok: response.ok,
         json

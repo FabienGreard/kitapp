@@ -16,6 +16,7 @@ import Visibility from 'material-ui-icons/Visibility';
 import VisibilityOff from 'material-ui-icons/VisibilityOff';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
+import Typography from 'material-ui/Typography';
 
 //material-ui-icon import
 import Send from 'material-ui-icons/Send';
@@ -66,6 +67,7 @@ const styles = context => ({
     marginBottom: 0,
     textDecoration: 'none',
     color: '#757575',
+    cursor: 'pointer',
     '&:hover': {
        color: '#E91E63',
        textDecoration: 'underline',
@@ -195,7 +197,7 @@ class Register extends React.Component {
                           Inscriptions
                           <Send className={classes.rightIcon}/>
                         </Button>
-                        <Link to="/login" className={classes.textLink}>Se connecter ?</Link>
+                        <Link to="/login" className={classes.textLink}><Typography className={classes.textLink}>Se connecter ?</Typography></Link>
                       </FormGroup>
                     </form>
                   </Paper>

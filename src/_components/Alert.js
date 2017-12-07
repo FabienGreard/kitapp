@@ -29,14 +29,43 @@ class Alert extends Component {
     super(props);
     this.state = {
       open: false,
-      transition: Transition
+      transition: Transition,
+      timer: 6,
     };
   }
 
   componentWillReceiveProps(nextProps) {
     if(typeof nextProps.alert.message !== 'undefined'){
-      this.setState({ open: true });
+      this.handleClickOpen();
+      if(this.state.timer === 6){
+        this.setState({
+          timerLoginAttempt: 5
+        }, () => {
+          this.timerID = setInterval(() => this.countDown(), 1000);
+        });
+      }
+    }else{
+      this.handleRequestClose();
+      clearInterval(this.timerID);
     }
+  }
+
+  countDown(){
+    this.setState((prevState) => ({
+      timer: prevState.timer - 1
+    }));
+
+    if(this.state.timer === 0){
+      this.setState((prevState) => ({
+        timer: 6
+      }));
+      this.handleRequestClose();
+      clearInterval(this.timerID);
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
   }
 
   handleClickOpen = () => {

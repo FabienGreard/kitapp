@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { userActions } from '../../_actions';
-import { Loading, Dialog } from '../../_components';
+import { userActions, alertActions } from '../../_actions';
+import { Loading, Dialog, ResetPassword } from '../../_components';
 import { theme } from '../../_helpers';
 
 //material-ui import
@@ -16,7 +16,7 @@ import Visibility from 'material-ui-icons/Visibility';
 import VisibilityOff from 'material-ui-icons/VisibilityOff';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
-
+import Typography from 'material-ui/Typography';
 //material-ui-icon import
 import Send from 'material-ui-icons/Send';
 
@@ -66,6 +66,7 @@ const styles = context => ({
     marginBottom: 0,
     textDecoration: 'none',
     color: '#757575',
+    cursor: 'pointer',
     '&:hover': {
        color: '#E91E63',
        textDecoration: 'underline',
@@ -90,35 +91,50 @@ const styles = context => ({
 });
 
 class Login extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+      super(props);
 
-        // reset login status
-        this.props.dispatch(userActions.logout());
+      // reset login status
+      this.props.dispatch(userActions.logout());
 
-        this.state = {
-            email: '',
-            password: '',
-            showPassword : false,
-            submitted: false
-        };
+      this.state = {
+          email: '',
+          password: '',
+          showPassword : false,
+          submitted: false,
+          countLoginAttempt: 0,
+          timerLoginAttempt: 30,
+          resetPassword: false,
+      };
+  }
+
+  handleChange = (e) => {
+      const { name, value } = e.target;
+      this.setState({ [name]: value });
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    this.setState({
+      submitted: true
+    });
+
+    const { email, password } = this.state;
+    const { dispatch } = this.props;
+    if(this.state.countLoginAttempt < 3){
+
+      if (email && password) {
+          this.setState((prevState) => ({
+            countLoginAttempt: prevState.countLoginAttempt + 1,
+          }));
+          dispatch(userActions.login(email, password));
+      }
+    }else{
+      dispatch(alertActions.error(" ( "+ this.state.countLoginAttempt +" ) Tentatives maximum atteinte, veuillez attendre " + this.state.timerLoginAttempt + " secondes."));
+      this.resetLoginAttempt();
     }
-
-    handleChange = (e) => {
-        const { name, value } = e.target;
-        this.setState({ [name]: value });
-    }
-
-    handleSubmit = (e) => {
-        e.preventDefault();
-
-        this.setState({ submitted: true });
-        const { email, password } = this.state;
-        const { dispatch } = this.props;
-        if (email && password) {
-            dispatch(userActions.login(email, password));
-        }
-    }
+  }
 
     handleClickShowPasssword = (e) => {
       this.setState({ showPassword: !this.state.showPassword });
@@ -128,16 +144,64 @@ class Login extends React.Component {
       e.preventDefault();
     }
 
+    resetLoginAttempt = () => {
+      if(this.state.timerLoginAttempt === 30){
+        this.setState({
+          timerLoginAttempt: 29
+        }, () => {
+          this.timerID = setInterval(() => this.countDown(), 1000);
+        });
+      }
+    }
+
+    countDown = () => {
+      if(!this.state.timerLoginAttempt){
+        this.setState((prevState) => ({
+          countLoginAttempt: 0,
+          timerLoginAttempt: 30
+        }));
+        clearInterval(this.timerID);
+        this.props.dispatch(alertActions.clear());
+      }else{
+        this.setState((prevState) => ({
+          timerLoginAttempt: prevState.timerLoginAttempt - 1
+        }));
+      }
+    }
+
+    componentWillUnmount() {
+      clearInterval(this.timerID);
+    }
+
+    handleRequestResetPasswordClose = (email = false) => {
+      if(email){
+        this.props.dispatch(userActions.resetPsswd(email));
+      }
+
+      this.setState({
+        resetPassword: false
+      });
+    }
+
+    handleRequestResetPasswordOpen = () =>{
+      this.setState({
+        resetPassword: true
+      });
+    }
+
     render() {
         let { isLoggedIn, classes } = this.props;
-        let { email, password, submitted, showPassword } = this.state;
+        let { email, password, submitted, showPassword, resetPassword } = this.state;
 
-        let handleMouseDownPassword = this.handleMouseDownPassword;
-        let handleClickShowPasssword = this.handleClickShowPasssword;
-        let handleChange = this.handleChange;
-        let handleSubmit = this.handleSubmit;
+        const handleMouseDownPassword = this.handleMouseDownPassword;
+        const handleClickShowPasssword = this.handleClickShowPasssword;
+        const handleChange = this.handleChange;
+        const handleSubmit = this.handleSubmit;
+        const handleRequestResetPasswordClose = this.handleRequestResetPasswordClose;
+        const handleRequestResetPasswordOpen = this.handleRequestResetPasswordOpen;
         return (
           <div>
+            <ResetPassword open={resetPassword} handleRequestClose={handleRequestResetPasswordClose}/>
             { isLoggedIn && <Loading className={classes.formControl} mode="query"/>}
             <div className={classes.root}>
               <Grid container spacing={40} className={classes.container}>
@@ -171,7 +235,8 @@ class Login extends React.Component {
                           Connexion
                           <Send className={classes.rightIcon}/>
                         </Button>
-                        <Link to="/register" className={classes.textLink}>S'enregistrer ?</Link>
+                        <Link to="/register" className={classes.textLink}><Typography className={classes.textLink}>S'enregistrer ?</Typography></Link>
+                        <Typography onClick={handleRequestResetPasswordOpen} className={classes.textLink}>Mot de passe perdu ?</Typography>
                       </FormGroup>
                     </form>
                   </Paper>
