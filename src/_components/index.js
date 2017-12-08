@@ -11,6 +11,7 @@ export * from './TableHead';
 export * from './TableToolbar';
 export * from './TableBody';
 export * from './ResetPassword';
+export * from './NumberFormatCustom';
 
 //wrapper
 export * from './AppBar';

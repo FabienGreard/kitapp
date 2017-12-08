@@ -36,6 +36,7 @@
     "react": "^16.1.1",
     "react-dev-utils": "^4.2.1",
     "react-dom": "^16.1.1",
+    "react-number-format": "^3.0.3",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
@@ -62,7 +63,8 @@
       "src/**/*.{js,jsx,mjs}"
     ],
     "setupFiles": [
-      "<rootDir>/config/polyfills.js", "jest-localstorage-mock"
+      "<rootDir>/config/polyfills.js",
+      "jest-localstorage-mock"
     ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",

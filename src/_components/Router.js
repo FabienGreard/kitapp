@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import { PrivateRoute } from './';
 
-import Account from '../modules/Account/index'
+import { Account } from '../modules/Account'
 import Engine from '../modules/Engine/index'
 import { Dashboard } from '../modules/Dashboard/index';
 import { Login } from '../modules/Login';

@@ -28,7 +28,7 @@ class Loading extends Component {
     let { timer } = this.state;
     let { color, mode } = this.props;
     return (
-      <LinearProgress mode={mode} value={timer} color={color} />
+      <LinearProgress style={{marginBottom: '-5px'}} mode={mode} value={timer} color={color} />
     );
   }
 

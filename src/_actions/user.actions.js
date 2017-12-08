@@ -8,6 +8,7 @@ export const userActions = {
     logout,
     register,
     getAll,
+    getById,
     update,
     delete: _delete,
     resetPsswd
@@ -123,6 +124,27 @@ function _delete(id) {
     function request(user) { return { type: userConstants.UPDATE_REQUEST, user} }
     function success(user) { return { type: userConstants.UPDATE_SUCCESS, user } }
     function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
+  }
+
+  function getById(id) {
+    return dispatch => {
+        dispatch(request(id));
+
+        userService.getById(id)
+            .then(
+                user => {
+                    dispatch(success(user.user));
+                },
+                error => {
+                    dispatch(failure(error));
+                    dispatch(alertActions.error(error));
+                }
+            );
+    };
+
+    function request(user) { return { type: userConstants.GETBYID_REQUEST, user} }
+    function success(user) { return { type: userConstants.GETBYID_SUCCESS, user } }
+    function failure(error) { return { type: userConstants.GETBYID_FAILURE, error } }
   }
 
   function resetPsswd(email) {

@@ -53,7 +53,7 @@ function getAll() {
     return fetch(url() + '/users/all', requestOptions).then(response =>
       response.json().then(json => ({
         ok: response.ok,
-        error: "Mauvais token",
+        error: "Mauvais token, Reconnectez vous.",
         json
       })
     ))
@@ -69,7 +69,7 @@ function getById(id) {
     return fetch(url() + '/users/' + id, requestOptions).then(response =>
       response.json().then(json => ({
         ok: response.ok,
-        error: "Mauvais token",
+        error: "Mauvais token, Reconnectez vous.",
         json
       })
     ))
