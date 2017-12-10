@@ -42,6 +42,10 @@ const styles = context => ({
     margin: 'auto',
     maxWidth: '350px',
   },
+  form: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
   container: {
     height: '100%',
   },
@@ -208,20 +212,20 @@ class Login extends React.Component {
               <Grid container spacing={40} className={classes.container}>
                 <Grid item xs className={classes.item}>
                   <Paper className={classes.paper}>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} className={classes.form} autoComplete="login">
                       <FormGroup className={classes.formGroup}>
                         <Dialog className={classes.title} message="Se connecter !" style={theme.getRowStyle('white', 'primaryColor')} type="headline"/>
                       </FormGroup>
                       <FormControl fullWidth className={classes.firstInputControl}>
                         <InputLabel htmlFor="email">Email</InputLabel>
-                        <Input name="email" type="email" autoComplete="username" value={email} onChange={handleChange} />
+                        <Input name="email" type="email" autoComplete="login-email" value={email} onChange={handleChange} />
                         {submitted && !email &&
                           <Dialog message="Email is required" style={theme.getRowStyle('primaryColor', '')} type="caption"/>
                         }
                       </FormControl>
                       <FormControl fullWidth className={classes.formControl}>
                         <InputLabel htmlFor="password">Password</InputLabel>
-                        <Input name="password" type={showPassword ? 'text' : 'password'} value={password} autoComplete="password" onChange={handleChange} endAdornment={
+                        <Input name="password" type={showPassword ? 'text' : 'password'} value={password} autoComplete={"login-password"} onChange={handleChange} endAdornment={
                         <InputAdornment position="end">
                           <IconButton onClick={handleClickShowPasssword} onMouseDown={handleMouseDownPassword}>
                             {this.state.showPassword ? <Visibility /> : <VisibilityOff />}

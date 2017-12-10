@@ -42,6 +42,10 @@ const styles = context => ({
     margin: 'auto',
     maxWidth: '350px',
   },
+  form: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
   container: {
     height: '100%',
   },
@@ -155,34 +159,34 @@ class Register extends React.Component {
               <Grid container spacing={40} className={classes.container}>
                 <Grid item xs className={classes.item}>
                   <Paper className={classes.paper}>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} className={classes.form} autoComplete="register">
                       <FormGroup className={classes.formGroup}>
                         <Dialog className={classes.title} message="S'enregistrer !" style={theme.getRowStyle('white', 'primaryColor')} type="headline"/>
                       </FormGroup>
                       <FormControl fullWidth className={classes.firstInputControl}>
                         <InputLabel htmlFor="lastName">Nom</InputLabel>
-                        <Input name="lastName" type="lastName" value={user.lastName} onChange={handleChange} />
+                        <Input name="lastName" type="text" value={user.lastName} onChange={handleChange} />
                         {submitted && !user.lastName &&
                           <Dialog message="lastName is required" style={theme.getRowStyle('primaryColor', '')} type="caption"/>
                         }
                       </FormControl>
                       <FormControl fullWidth className={classes.formControl}>
                         <InputLabel htmlFor="firstName">Prénom</InputLabel>
-                        <Input name="firstName" type="firstName" value={user.firstName} onChange={handleChange} />
+                        <Input name="firstName" type="text" value={user.firstName} onChange={handleChange} />
                         {submitted && !user.firstName &&
                           <Dialog message="firstName is required" style={theme.getRowStyle('primaryColor', '')} type="caption"/>
                         }
                       </FormControl>
                       <FormControl fullWidth className={classes.formControl}>
                         <InputLabel htmlFor="email">Email</InputLabel>
-                        <Input name="email" type="email" value={user.email} onChange={handleChange} />
+                        <Input name="email" readOnly onFocus={(e) => e.target.readOnly = false} autoComplete="register-email" type="email" value={user.email} onChange={handleChange} />
                         {submitted && !user.email &&
                           <Dialog message="Email is required" style={theme.getRowStyle('primaryColor', '')} type="caption"/>
                         }
                       </FormControl>
                       <FormControl fullWidth className={classes.formControl}>
                         <InputLabel htmlFor="password">Password</InputLabel>
-                        <Input name="password" type={showPassword ? 'text' : 'password'} value={user.password} onChange={handleChange} endAdornment={
+                        <Input name="password" readOnly onFocus={(e) => e.target.readOnly = false}  autoComplete={'register-password'} type={showPassword ? 'text' : 'password'} value={user.password} onChange={handleChange} endAdornment={
                         <InputAdornment position="end">
                           <IconButton onClick={handleClickShowPasssword} onMouseDown={handleMouseDownPassword}>
                             {this.state.showPassword ? <Visibility /> : <VisibilityOff />}

@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import { Popup } from './';
+
 //material-ui import
 import { withStyles } from 'material-ui/styles';
 import Toolbar from 'material-ui/Toolbar';
@@ -44,7 +46,7 @@ const styles = context => ({
 class TableToolbar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { anchorElRoleMenu: null };
+    this.state = { anchorElRoleMenu: null, open: false };
   }
 
     handleRole = (e, role) => {
@@ -60,9 +62,17 @@ class TableToolbar extends React.Component {
       this.setState({ anchorElRoleMenu: null });
     }
 
+    handleClickOpen = () => {
+      this.setState({ open: true });
+    };
+
+    handleRequestClose = () => {
+      this.setState({ open: false });
+    };
+
   render() {
     let { numSelected, classes, tableName, handleClickFiltrer, handleClickDelete } = this.props;
-    let { anchorElRoleMenu } = this.state;
+    let { anchorElRoleMenu, open } = this.state;
 
     const textMenu = [
       { name: 'Member'},
@@ -73,52 +83,57 @@ class TableToolbar extends React.Component {
     let isRoleMenu = Boolean(anchorElRoleMenu);
 
     const handleRole = this.handleRole;
-    const onOpen = this.onOpen; //Handle click on Avatar 'open'
-    const onClose = this.onClose; //Handle click on Avatar 'close'
+    const onOpen = this.onOpen; //Handle click on role 'open'
+    const onClose = this.onClose; //Handle click on role 'close'
+    const handleClickOpen = this.handleClickOpen; //Handle click on Avatar 'close'
+    const handleRequestClose = this.handleRequestClose;
     return(
-      <Toolbar
-        className={classNames(classes.root, {
-          [classes.highlight]: numSelected > 0,
-        })}
-      >
-        <div className={classes.title}>
-          {numSelected > 0 ? (
-            <Typography type="subheading">{numSelected} selected</Typography>
-          ) : (
-            <Typography type="title">{tableName}</Typography>
-          )}
-        </div>
-        <div className={classes.spacer} />
-        <div className={classes.actions}>
-          {numSelected > 0 ? (
-            <div className={classes.tooltip}>
-              <Tooltip title="role">
-                <IconButton aria-owns={isRoleMenu ? 'menu-role' : null} onClick={onOpen}>
-                  <VerifiedUserIcon/>
+      <div>
+        <Popup open={open} action={handleClickDelete} handleRequestClose={handleRequestClose} title={"Supprimer ?"} message={"Attention, cette action ne peut être annulée."}/>
+        <Toolbar
+          className={classNames(classes.root, {
+            [classes.highlight]: numSelected > 0,
+          })}
+        >
+          <div className={classes.title}>
+            {numSelected > 0 ? (
+              <Typography type="subheading">{numSelected} selected</Typography>
+            ) : (
+              <Typography type="title">{tableName}</Typography>
+            )}
+          </div>
+          <div className={classes.spacer} />
+          <div className={classes.actions}>
+            {numSelected > 0 ? (
+              <div className={classes.tooltip}>
+                <Tooltip title="role">
+                  <IconButton aria-owns={isRoleMenu ? 'menu-role' : null} onClick={onOpen}>
+                    <VerifiedUserIcon/>
+                  </IconButton>
+                </Tooltip>
+                <Menu id="menu-role" anchorEl={anchorElRoleMenu}  open={isRoleMenu} onRequestClose={onClose}>
+                  {textMenu.map((textMenu) => (
+                    <MenuItem key={textMenu.name} onClick={(e) => handleRole(e, textMenu.name)}>
+                    {textMenu.name}
+                    </MenuItem>
+                  ))}
+                </Menu>
+                <Tooltip title="Delete">
+                  <IconButton aria-label="Delete">
+                    <DeleteIcon onClick={handleClickOpen}/>
+                  </IconButton>
+                </Tooltip>
+              </div>
+            ) : (
+              <Tooltip title="Filter list">
+                <IconButton aria-label="Filter list">
+                  <FilterListIcon onClick={handleClickFiltrer}/>
                 </IconButton>
               </Tooltip>
-              <Menu id="menu-role" anchorEl={anchorElRoleMenu}  open={isRoleMenu} onRequestClose={onClose}>
-                {textMenu.map((textMenu) => (
-                  <MenuItem key={textMenu.name} onClick={(e) => handleRole(e, textMenu.name)}>
-                  {textMenu.name}
-                  </MenuItem>
-                ))}
-              </Menu>
-              <Tooltip title="Delete">
-                <IconButton aria-label="Delete">
-                  <DeleteIcon onClick={handleClickDelete}/>
-                </IconButton>
-              </Tooltip>
-            </div>
-          ) : (
-            <Tooltip title="Filter list">
-              <IconButton aria-label="Filter list">
-                <FilterListIcon onClick={handleClickFiltrer}/>
-              </IconButton>
-            </Tooltip>
-          )}
-        </div>
-      </Toolbar>
+            )}
+          </div>
+        </Toolbar>
+      </div>
     )
   }
 }

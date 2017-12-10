@@ -13,6 +13,7 @@ export * from './TableBody';
 export * from './ResetPassword';
 export * from './NumberFormatCustom';
 export * from './SubmitLine';
+export * from './Popup';
 
 //wrapper
 export * from './AppBar';
