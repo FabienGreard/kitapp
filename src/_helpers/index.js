@@ -3,3 +3,4 @@ export * from './history';
 export * from './store';
 export * from './theme';
 export * from './url';
+export * from './setUserInfo';

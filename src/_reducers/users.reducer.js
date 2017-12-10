@@ -20,7 +20,7 @@ export function users(state = {}, action) {
       };
     case userConstants.GETBYID_SUCCESS:
       return {
-        user: action
+        items: action.user
       };
     case userConstants.GETBYID_FAILURE:
       return {
@@ -32,29 +32,25 @@ export function users(state = {}, action) {
       loading: true,
       ...state,
       items: state.items.map(user => (
-        user._id === action.user.id ? { ...user, updating: true } : user
+        user._id === action.user._id ? { ...action.user, updating: true } : user
+      )),
+      temp: state.items.map(user => (
+        user._id === action.user._id ? { ...user} : user
       ))
     };
     case userConstants.UPDATE_SUCCESS:
       return {
         items: state.items.map(user => (
-          user._id === action.user._id ? { ...action.user } : user
+          user._id === action.user._id ? action.user : user
         ))
       };
     case userConstants.UPDATE_FAILURE:
       //remove updating element
       return {
-        ...state,
-        items: state.items.map(user => {
-          if (user._id === action.user.id) {
-            // make copy of user without 'updating:true' property
-            const { updating, ...userCopy } = user;
-            // return copy of user with 'updateError:[error]' property
-            return { ...userCopy, updateError: action.error };
-          }
-
-          return user;
-        })
+        items: state.items.map((user) => (
+          user.updating ? state.temp[0] : user
+        )),
+        error: action.error
       };
     case userConstants.DELETE_REQUEST:
       // add 'deleting:true' property to user being deleted

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { userActions } from '../../_actions';
 import { Loading, AppTable } from '../../_components';
+import { setUserInfo } from '../../_helpers';
 
 //Material-ui import
 import Paper from 'material-ui/Paper';
@@ -21,13 +22,7 @@ const styles = context => ({
 const getUserInfo = (users) => {
   let usersInfo = [];
   users.map((user) => {
-    return usersInfo.push({
-      id: user._id,
-      firstName: user.profile.firstName[0].toUpperCase() + user.profile.firstName.substring(1),
-      lastName: user.profile.lastName[0].toUpperCase() + user.profile.lastName.substring(1),
-      email: user.email,
-      role: user.role
-    })
+    return usersInfo.push(setUserInfo(user));
   });
   return usersInfo.sort((a, b) => ( a.email < b.email ? -1 : 1));
 };
@@ -66,6 +61,8 @@ class UsersAdmin extends Component {
       { id: 'email', numeric: false, disablePadding: true, label: 'Email' },
       { id: 'firstName', numeric: false, disablePadding: true, label: 'Prénom' },
       { id: 'lastName', numeric: false, disablePadding: true, label: 'Nom' },
+      { id: 'phone', numeric: false, disablePadding: true, label: 'Téléphone' },
+      { id: 'gender', numeric: false, disablePadding: true, label: 'Sexe' },
       { id: 'role', numeric: false, disablePadding: true, label: 'Rôle' },
     ];
 

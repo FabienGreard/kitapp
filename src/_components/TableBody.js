@@ -15,7 +15,7 @@ class _TableBody extends Component {
   };
 
   render() {
-    let { data, rowsPerPage, page } = this.props;
+    let { data, rowsPerPage, page, columnData } = this.props;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage)
 
     const handleClick = this.handleClick;
@@ -26,7 +26,7 @@ class _TableBody extends Component {
           const isSelected = this.props.isSelected(n.id);
           return (
             <TableRow
-              key={n.id}
+              key={n._id}
               hover
               onClick={e => handleClick(e, n.id)}
               onKeyDown={e => handleKeyDown(e, n.id)}
@@ -39,10 +39,10 @@ class _TableBody extends Component {
                 <Checkbox checked={isSelected} />
               </TableCell>
 
-              <TableCell padding="none">{n.email}</TableCell>
-              <TableCell padding="none">{n.firstName}</TableCell>
-              <TableCell padding="none">{n.lastName}</TableCell>
-              <TableCell padding="none">{n.role}</TableCell>
+              { columnData.map((key) => (
+                <TableCell key={key.id} padding="none">{n[key.id]}</TableCell>
+              ))
+              }
 
             </TableRow>
           );
@@ -64,6 +64,7 @@ _TableBody.propTypes = {
   page: PropTypes.number.isRequired,
   isSelected: PropTypes.func.isRequired,
   handleKeyDown: PropTypes.func.isRequired,
+  columnData: PropTypes.array.isRequired,
   handleClick: PropTypes.func.isRequired,
 };
 

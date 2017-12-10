@@ -12,6 +12,7 @@ export * from './TableToolbar';
 export * from './TableBody';
 export * from './ResetPassword';
 export * from './NumberFormatCustom';
+export * from './SubmitLine';
 
 //wrapper
 export * from './AppBar';

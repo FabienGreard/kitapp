@@ -5,11 +5,13 @@ import { connect } from 'react-redux';
 import { TabsAccount, Informations, Skills, Wallet } from './';
 import { Loading } from '../../_components';
 import { userActions } from '../../_actions';
+import { setUserInfo, sentUserInfo } from '../../_helpers';
 
 //Material-ui import
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
+import { CircularProgress } from 'material-ui/Progress';
 
 //styles
 const styles = context => ({
@@ -22,31 +24,64 @@ const styles = context => ({
   center: {
     display: 'flex',
     justifyContent: 'center',
-    oveflow: 'auto'
-  }
+    oveflow: 'auto',
+  },
 });
 
 
 class Account extends Component {
   constructor(props) {
     super(props);
-    this.state = { tab: 0, user: { email: "", phone: "", firstName: "", lastName: "", sex: "", password: "" } } ;
+    this.state = {
+      tab: 0,
+      newPassword: "",
+      lastPassword: "",
+      newPasswordCheck: ""
+    };
 
     this.props.dispatch(userActions.getById(props._id));
   }
 
   componentWillReceiveProps(nextProps) {
-    if(typeof nextProps.user !== 'undefined'){
+    if(typeof nextProps.items !== 'undefined' && setUserInfo(nextProps.items[0]) !== this.state.user ){
       this.setState({
-        user: nextProps.user
+        user: setUserInfo(nextProps.items[0])
       });
     }
   }
 
   handleChange = (e) => {
     const { name, value } = e.target;
+    this.setState(prevState => ({
+      user: { ...prevState.user, [name]: value}
+    }));
+  }
+
+  handleChangePassword = (e) => {
+    const { name, value } = e.target;
     this.setState({
-      user: {[name]: value}
+      [name]: value
+    });
+  }
+
+  handleSubmit = (user) => {
+    this.setState(prevState => ({
+      user: { ...prevState.user, [Object.keys(user)[0]]: Object.values(user)[0]}
+    }), () => {
+      this.props.dispatch(userActions.update(sentUserInfo(this.state.user)));
+    });
+
+  }
+
+  handleSubmitPassword = (password) => {
+    this.setState({
+      lastPassword: password.lastPassword,
+      newPassword: password.newPassword,
+      newPasswordCheck: password.newPasswordCheck
+    }, () => {
+      if(password.lastPassword && password.newPassword && password.newPasswordCheck){
+        this.props.dispatch(userActions.updatePassword(sentUserInfo(this.state.user), password));
+      }
     });
   }
 
@@ -59,7 +94,12 @@ class Account extends Component {
     let { loading, classes } = this.props;
 
     const tabChange = this.tabChange;
+
     const handleChange = this.handleChange;
+    const handleSubmit = this.handleSubmit;
+
+    const handleChangePassword = this.handleChangePassword;
+    const handleSubmitPassword= this.handleSubmitPassword;
     return (
       <div>
         { loading &&
@@ -72,12 +112,15 @@ class Account extends Component {
                 <TabsAccount tab={tab} tabChange={tabChange}/>
               </Paper>
             </Grid>
-            <Grid item xs={12}>
-              <Paper className={classes.center}>
-                { tab === 0 && <Informations user={user} handleChange={handleChange}/> }
-                { tab === 1 && <Skills/> }
-                { tab === 2 && <Wallet/> }
-              </Paper>
+            <Grid item xs={12} className={classes.center}>
+              { user ?
+                <Paper>
+                  { tab === 0 &&  <Informations state={this.state} handleChange={handleChange} handleSubmit={handleSubmit} handleChangePassword={handleChangePassword} handleSubmitPassword={handleSubmitPassword} /> }
+                  { tab === 1 && <Skills/> }
+                  { tab === 2 && <Wallet/> }
+                </Paper> :
+                <CircularProgress className={classes.circleLoader}/>
+              }
             </Grid>
           </Grid>
         </div>
@@ -96,11 +139,11 @@ Account.propTypes = {
 function mapStateToProps(state) {
   const { _id } = typeof state.authentication.user.user !== 'undefined' ? state.authentication.user.user : "";
   const { loading } = state.users;
-  const { user } = typeof state.users.user !== 'undefined' ? state.users.user : {};
+  const { items } = typeof state.users !== 'undefined' ? state.users : {};
     return {
         _id,
         loading,
-        user
+        items
     };
 }
 

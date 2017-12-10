@@ -7,6 +7,7 @@ export const userService = {
     getAll,
     getById,
     update,
+    updatePassword,
     delete: _delete,
     resetPsswd
 };
@@ -115,7 +116,24 @@ function update(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(url() + '/users/' + user.id, requestOptions).then(response =>
+    return fetch(url() + '/users/' + user._id, requestOptions).then(response =>
+      response.json().then(json => ({
+        ok: response.ok,
+        json
+      })
+    ))
+    .then(handleResponse);
+}
+
+function updatePassword(user, password) {
+  console.log(password);
+    const requestOptions = {
+        method: 'PUT',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify(password)
+    };
+
+    return fetch(url() + '/users/password/' + user._id, requestOptions).then(response =>
       response.json().then(json => ({
         ok: response.ok,
         json

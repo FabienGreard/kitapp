@@ -23,6 +23,7 @@ import Send from 'material-ui-icons/Send';
 //material-ui-form import
 import { FormControl, FormGroup } from 'material-ui/Form';
 
+//styles
 const styles = context => ({
   root: {
     zIndex: -1,
@@ -213,14 +214,14 @@ class Login extends React.Component {
                       </FormGroup>
                       <FormControl fullWidth className={classes.firstInputControl}>
                         <InputLabel htmlFor="email">Email</InputLabel>
-                        <Input name="email" type="email" value={email} onChange={handleChange} />
+                        <Input name="email" type="email" autoComplete="username" value={email} onChange={handleChange} />
                         {submitted && !email &&
                           <Dialog message="Email is required" style={theme.getRowStyle('primaryColor', '')} type="caption"/>
                         }
                       </FormControl>
                       <FormControl fullWidth className={classes.formControl}>
                         <InputLabel htmlFor="password">Password</InputLabel>
-                        <Input name="password" type={showPassword ? 'text' : 'password'} value={password} onChange={handleChange} endAdornment={
+                        <Input name="password" type={showPassword ? 'text' : 'password'} value={password} autoComplete="password" onChange={handleChange} endAdornment={
                         <InputAdornment position="end">
                           <IconButton onClick={handleClickShowPasssword} onMouseDown={handleMouseDownPassword}>
                             {this.state.showPassword ? <Visibility /> : <VisibilityOff />}

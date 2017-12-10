@@ -156,6 +156,7 @@ class AppTable extends Component {
             <TableBody
               data={data}
               page={page}
+              columnData={columnData}
               rowsPerPage={rowsPerPage}
               handleClick={handleClick}
               handleKeyDown={handleKeyDown}

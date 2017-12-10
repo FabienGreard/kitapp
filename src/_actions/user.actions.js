@@ -10,6 +10,7 @@ export const userActions = {
     getAll,
     getById,
     update,
+    updatePassword,
     delete: _delete,
     resetPsswd
 };
@@ -126,11 +127,11 @@ function _delete(id) {
     function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
   }
 
-  function getById(id) {
+  function updatePassword(user, password) {
     return dispatch => {
-        dispatch(request(id));
+        dispatch(request(user));
 
-        userService.getById(id)
+        userService.updatePassword(user, password)
             .then(
                 user => {
                     dispatch(success(user.user));
@@ -142,7 +143,28 @@ function _delete(id) {
             );
     };
 
-    function request(user) { return { type: userConstants.GETBYID_REQUEST, user} }
+    function request(user) { return { type: userConstants.UPDATE_REQUEST, user} }
+    function success(user) { return { type: userConstants.UPDATE_SUCCESS, user } }
+    function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
+  }
+
+  function getById(id) {
+    return dispatch => {
+        dispatch(request());
+
+        userService.getById(id)
+            .then(
+                user => {
+                    dispatch(success([user.user]));
+                },
+                error => {
+                    dispatch(failure(error));
+                    dispatch(alertActions.error(error));
+                }
+            );
+    };
+
+    function request() { return { type: userConstants.GETBYID_REQUEST } }
     function success(user) { return { type: userConstants.GETBYID_SUCCESS, user } }
     function failure(error) { return { type: userConstants.GETBYID_FAILURE, error } }
   }
