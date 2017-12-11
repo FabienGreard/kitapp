@@ -36,7 +36,7 @@ class _TableHead extends React.Component {
                 padding={column.disablePadding ? 'none' : 'default'}
               >
                 <Tooltip
-                  title="Sort"
+                  title={`Filtrer (${orderBy})`}
                   placement={column.numeric ? 'bottom-end' : 'bottom-start'}
                   enterDelay={300}
                 >

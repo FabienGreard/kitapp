@@ -22,6 +22,10 @@ const styles = context => ({
   menuList: {
     width: 250,
   },
+  inline: {
+    display: 'flex',
+    alignItems: 'center',
+  },
 });
 
 class AppBar extends Component {
@@ -60,7 +64,7 @@ class AppBar extends Component {
     let handleMenu = this.handleMenu;
     let handleMenuRequestClose = this.handleMenuRequestClose;
 
-    let { message, classes, isLoggedIn } = this.props;
+    let { message, classes, isLoggedIn, user } = this.props;
     return (
       <SimpleBar>
         <div className={classes.menuButton}>
@@ -70,7 +74,13 @@ class AppBar extends Component {
           <Dialog className={classes.title} message={message}/>
         </div>
         { isLoggedIn &&
-        <AccountMenu anchorElAccountMenu={anchorElAccountMenu} handleAccountMenu={handleAccountMenu} handleAccountMenuRequestClose={handleAccountMenuRequestClose}/>}
+          <div className={classes.inline}>
+            { user.firstName &&
+              <Dialog className={classes.title} type="body1" message={"Bienvenue " + user.firstName + " " + user.lastName}/>
+            }
+            <AccountMenu anchorElAccountMenu={anchorElAccountMenu} handleAccountMenu={handleAccountMenu} handleAccountMenuRequestClose={handleAccountMenuRequestClose}/>
+          </div>
+        }
       </SimpleBar>
     );
   }
@@ -84,8 +94,10 @@ AppBar.propTypes = {
 
 function mapStateToProps(state) {
     const { isLoggedIn } = state.authentication;
+    const { user } = typeof state.authentication.user !== 'undefined' ? state.authentication.user : '';
     return {
         isLoggedIn,
+        user
     };
 }
 

@@ -26,7 +26,6 @@ const styles = context => ({
 });
 
 class Dashboard extends Component {
-
   render() {
     let { user, classes } = this.props;
     return (
@@ -44,7 +43,7 @@ class Dashboard extends Component {
           </Grid>
           <Grid item xs={6}>
             <Paper className={classes.paper}>
-              <Dialog message="Vos Données" type="title" style={theme.getRowStyle('darkGrey', 'none')}/>
+              <Dialog message="Votre tirelire" type="title" style={theme.getRowStyle('darkGrey', 'none')}/>
             </Paper>
           </Grid>
           <Grid item xs>

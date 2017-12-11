@@ -23,13 +23,13 @@ class _TableBody extends Component {
     return (
       <TableBody>
         { Object.keys(data).length !== 0 && data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
-          const isSelected = this.props.isSelected(n.id);
+          const isSelected = this.props.isSelected(n._id);
           return (
             <TableRow
               key={n._id}
               hover
-              onClick={e => handleClick(e, n.id)}
-              onKeyDown={e => handleKeyDown(e, n.id)}
+              onClick={e => handleClick(e, n._id)}
+              onKeyDown={e => handleKeyDown(e, n._id)}
               role="checkbox"
               aria-checked={isSelected}
               tabIndex={-1}
@@ -40,7 +40,7 @@ class _TableBody extends Component {
               </TableCell>
 
               { columnData.map((key) => (
-                <TableCell key={key.id} padding="none">{n[key.id]}</TableCell>
+                <TableCell key={key.id} padding={key.disablePadding ? 'none' : 'default'} numeric={key.numeric}>{n[key.id]}</TableCell>
               ))
               }
 

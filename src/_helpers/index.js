@@ -4,3 +4,4 @@ export * from './store';
 export * from './theme';
 export * from './url';
 export * from './setUserInfo';
+export * from './setEngineInfo';

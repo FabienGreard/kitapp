@@ -59,7 +59,7 @@ class AppTable extends Component {
 
   handleSelectAllClick = (e, checked) => {
     if (checked) {
-      this.setState({ selected: this.state.data.map(n => n.id).slice(this.state.rowsPerPage * this.state.page, this.state.rowsPerPage * (this.state.page + 1)) });
+      this.setState({ selected: this.state.data.map(n => n._id).slice(this.state.rowsPerPage * this.state.page, this.state.rowsPerPage * (this.state.page + 1)) });
       return;
     }
     this.setState({ selected: [] });
@@ -115,9 +115,9 @@ class AppTable extends Component {
     });
   }
 
-  handleClickUpdate = (e, role) => {
+  handleClickUpdateRole = (e, role) => {
     this.setState({
-      selected : this.state.selected.filter(id => this.props.update(e, this.state.data.filter(user => id === user.id ? user.role = role : null)[0]))
+      selected : this.state.selected.filter(id => this.props.updateRole(e, this.state.data.filter(user => id === user._id ? user.role = role : null)[0]))
     });
   }
 
@@ -138,10 +138,12 @@ class AppTable extends Component {
     const isSelected = this.isSelected;
     const handleClickFiltrer = this.handleClickFiltrer;
     const handleClickDelete = this.handleClickDelete;
-    const handleClickUpdate = this.handleClickUpdate;
+
+    //user table specific
+    const handleClickUpdateRole = this.handleClickUpdateRole;
     return (
       <div>
-        <TableToolbar tableName={tableName} numSelected={selected.length} handleClickFiltrer={handleClickFiltrer} handleClickDelete={handleClickDelete} handleClickUpdate={handleClickUpdate}/>
+        <TableToolbar tableName={tableName} numSelected={selected.length} handleClickFiltrer={handleClickFiltrer} handleClickDelete={handleClickDelete} handleClickUpdaterole={handleClickUpdateRole}/>
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             <TableHead
@@ -187,7 +189,7 @@ AppTable.propTypes = {
   columnData: PropTypes.array.isRequired,
   classes: PropTypes.object.isRequired,
   delete: PropTypes.func.isRequired,
-  update: PropTypes.func.isRequired,
+  updateRole: PropTypes.func,
   data: PropTypes.array,
 }
 

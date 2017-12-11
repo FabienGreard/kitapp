@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { userActions } from '../../_actions';
 import { Loading, AppTable } from '../../_components';
-import { setUserInfo } from '../../_helpers';
+import { setUserInfo, sentUserInfo } from '../../_helpers';
 
 //Material-ui import
 import Paper from 'material-ui/Paper';
@@ -46,7 +46,7 @@ class UsersAdmin extends Component {
   }
 
   updateUser = (e, user) => {
-    this.props.dispatch(userActions.update(user));
+    this.props.dispatch(userActions.update(sentUserInfo(user)));
   }
 
   deleteUser = (e, id) => {
@@ -77,7 +77,7 @@ class UsersAdmin extends Component {
           <Grid container spacing={24}>
             <Grid item xs>
               <Paper>
-                <AppTable tableName="Utilisateurs" columnData={columnData} data={data} update={updateUser} delete={deleteUser}/>
+                <AppTable tableName="Utilisateurs" columnData={columnData} data={data} updateRole={updateUser} delete={deleteUser}/>
               </Paper>
             </Grid>
           </Grid>

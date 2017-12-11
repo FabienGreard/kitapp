@@ -2,12 +2,14 @@ import { combineReducers } from 'redux';
 
 import { authentication } from './authentification.reducer';
 import { registration } from './registration.reducer';
+import { engines } from './engines.reducer';
 import { users } from './users.reducer';
 import { alert } from './alert.reducer';
 
 const rootReducer = combineReducers({
   authentication,
   registration,
+  engines,
   users,
   alert
 });
