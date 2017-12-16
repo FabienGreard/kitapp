@@ -32,21 +32,21 @@ class App extends Component {
       case '/':
         return '';
       case '/login':
-        return '- Connexion';
+        return 'Connexion';
       case '/register':
-        return '- Inscription';
+        return 'Inscription';
       case '/engine':
-        return '- Machines';
+        return 'Machines';
       case '/account':
-        return '- compte';
+        return 'compte';
       case '/order':
-        return '- Commandes';
+        return 'Commandes';
       case '/skill':
-        return '- Compétences';
+        return 'Compétences';
       case '/admin/users':
-        return '- Admin - Utilisateurs';
+        return 'Admin - Utilisateurs';
       case '/admin/engines':
-        return '- Admin - Machines';
+        return 'Admin - Machines';
       default:
         return '';
     }
@@ -54,7 +54,10 @@ class App extends Component {
 
   render() {
     let { alert } = this.props;
-    let message = 'KitApp ' + this.switch(history.location.pathname);
+    //width
+    let w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
+    let message = w > 550 ? 'KitApp - ' + this.switch(history.location.pathname) : this.switch(history.location.pathname);
     return(
       <MuiThemeProvider theme={theme.renderTheme}>
         <AppBar message={message}/>

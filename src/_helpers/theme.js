@@ -29,7 +29,7 @@ class theme {
       case 'darkPrimaryColor':
         return this.renderTheme.palette.primary[700];
       case 'lightPrimaryColor':
-        return this.renderTheme.palette.primary[100];
+        return this.renderTheme.palette.primary[50];
       case 'secondaryColor':
         return this.renderTheme.palette.secondary[500];
       case 'white':

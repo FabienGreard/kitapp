@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import keycode from 'keycode';
 
-import { TableHead, TableToolbar, TableBody } from '../';
+import { TableHead, TableToolbar, TableBody, TableAdd } from '../';
 
 //material-ui import
 import Table, { TableFooter, TablePagination, TableRow } from 'material-ui/Table';
@@ -121,8 +121,18 @@ class AppTable extends Component {
     });
   }
 
+  handleClickAddEngine = (e) =>{
+    this.setState({
+      openAdd: true
+    });
+  }
+
+  handleAddEngine = (e, engine) => {
+    this.props.addEngine(e, engine);
+  }
+
   render() {
-    let { order, orderBy, selected, data, page, rowsPerPage } = this.state;
+    let { order, orderBy, selected, data, page, rowsPerPage, openAdd } = this.state;
 
     let { columnData, classes, tableName } = this.props;
 
@@ -141,9 +151,16 @@ class AppTable extends Component {
 
     //user table specific
     const handleClickUpdateRole = this.handleClickUpdateRole;
+
+    //engine table specific
+    const handleClickAddEngine = this.handleClickAddEngine;
     return (
       <div>
-        <TableToolbar tableName={tableName} numSelected={selected.length} handleClickFiltrer={handleClickFiltrer} handleClickDelete={handleClickDelete} handleClickUpdaterole={handleClickUpdateRole}/>
+        {
+          openAdd &&
+          <TableAdd columnData={columnData}/>
+        }
+        <TableToolbar tableName={tableName} numSelected={selected.length} handleClickFiltrer={handleClickFiltrer} handleClickDelete={handleClickDelete} handleClickUpdaterole={handleClickUpdateRole} handleClickAddEngine={handleClickAddEngine}/>
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             <TableHead
@@ -173,6 +190,7 @@ class AppTable extends Component {
                   onChangePage={handleChangePage}
                   onChangeRowsPerPage={handleChangeRowsPerPage}
                   labelRowsPerPage="Ligne par page"
+                  labelDisplayedRows={({ from, to, count }) => `${from}-${to} sur ${count}`}
                 />
               </TableRow>
             </TableFooter>
@@ -189,8 +207,9 @@ AppTable.propTypes = {
   columnData: PropTypes.array.isRequired,
   classes: PropTypes.object.isRequired,
   delete: PropTypes.func.isRequired,
-  updateRole: PropTypes.func,
   data: PropTypes.array,
+  updateRole: PropTypes.func,
+  addEngine: PropTypes.func,
 }
 
 const AppTableWithStyles = withStyles(styles)(AppTable);

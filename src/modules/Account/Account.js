@@ -24,7 +24,7 @@ const styles = context => ({
   center: {
     display: 'flex',
     justifyContent: 'center',
-    oveflow: 'auto',
+    overflow: 'auto',
   },
 });
 
@@ -119,7 +119,7 @@ class Account extends Component {
                   { tab === 1 && <Skills/> }
                   { tab === 2 && <Wallet/> }
                 </Paper> :
-                <CircularProgress className={classes.circleLoader}/>
+                <CircularProgress />
               }
             </Grid>
           </Grid>

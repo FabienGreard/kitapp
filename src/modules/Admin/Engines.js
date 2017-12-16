@@ -50,6 +50,10 @@ class EnginesAdmin extends Component {
     this.props.dispatch(engineActions.delete(id));
   }
 
+  addEngine = (e, engine) => {
+    this.props.dispatch(engineActions.create(engine));
+  }
+
   render() {
     let { classes, loading } = this.props;
     let { data } = this.state;
@@ -63,6 +67,7 @@ class EnginesAdmin extends Component {
     ];
 
     const deleteEngine = this.deleteEngine;
+    const addEngine = this.addEngine;
     return (
       <div>
         { loading &&
@@ -72,7 +77,7 @@ class EnginesAdmin extends Component {
           <Grid container spacing={24}>
             <Grid item xs>
               <Paper>
-                <AppTable tableName="Machines" columnData={columnData} data={data} delete={deleteEngine}/>
+                <AppTable tableName="Machines" columnData={columnData} data={data} delete={deleteEngine} addEngine={addEngine}/>
               </Paper>
             </Grid>
           </Grid>

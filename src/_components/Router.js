@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import { PrivateRoute } from './';
 
 import { Account } from '../modules/Account'
-import Engine from '../modules/Engine/index'
+import { Engine } from '../modules/Engine/'
 import { Dashboard } from '../modules/Dashboard/index';
 import { Login } from '../modules/Login';
 import Order from '../modules/Order/index';

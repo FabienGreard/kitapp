@@ -60,6 +60,9 @@ class AppBar extends Component {
     let handleAccountMenu = this.handleAccountMenu;
     let handleAccountMenuRequestClose = this.handleAccountMenuRequestClose;
 
+    //width
+    let w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
     //NavMenu consts
     let handleMenu = this.handleMenu;
     let handleMenuRequestClose = this.handleMenuRequestClose;
@@ -75,7 +78,7 @@ class AppBar extends Component {
         </div>
         { isLoggedIn &&
           <div className={classes.inline}>
-            { user.firstName &&
+            { (user.firstName && w > 550) &&
               <Dialog className={classes.title} type="body1" message={"Bienvenue " + user.firstName + " " + user.lastName}/>
             }
             <AccountMenu anchorElAccountMenu={anchorElAccountMenu} handleAccountMenu={handleAccountMenu} handleAccountMenuRequestClose={handleAccountMenuRequestClose}/>

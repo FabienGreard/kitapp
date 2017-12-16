@@ -10,10 +10,15 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import Tooltip from 'material-ui/Tooltip';
+import Menu, { MenuItem } from 'material-ui/Menu';
+
+//material-ui-icon import
 import DeleteIcon from 'material-ui-icons/Delete';
 import VerifiedUserIcon from 'material-ui-icons/VerifiedUser';
 import FilterListIcon from 'material-ui-icons/FilterList';
-import Menu, { MenuItem } from 'material-ui/Menu';
+import AddIcon from 'material-ui-icons/Add';
+import EditIcon from 'material-ui-icons/Edit';
+import ClearIcon from 'material-ui-icons/Clear';
 
 const styles = context => ({
   root: {
@@ -48,6 +53,10 @@ class TableToolbar extends React.Component {
     super(props);
     this.state = { anchorElRoleMenu: null, open: false };
   }
+
+    handleClickAdd = (e) => {
+      this.props.handleClickAddEngine(e);
+    }
 
     handleRole = (e, role) => {
       this.props.handleClickUpdateRole(e, role);
@@ -91,6 +100,11 @@ class TableToolbar extends React.Component {
     let isRoleMenu = Boolean(anchorElRoleMenu);
 
     const handleRole = this.handleRole;
+
+    //engine table specific
+    let isEngine = tableName === 'Machines' ? true : false;
+
+    const handleClickAdd = this.handleClickAdd;
     return(
       <div>
         <Popup open={open} action={handleClickDelete} handleRequestClose={handleRequestClose} title={"Supprimer ?"} message={"Attention, cette action ne peut être annulée."}/>
@@ -110,7 +124,7 @@ class TableToolbar extends React.Component {
           <div className={classes.actions}>
             {numSelected > 0 ? (
               <div className={classes.tooltip}>
-                { isUser &&
+                { isUser ?
                   <div>
                     <Tooltip title="Rôle">
                       <IconButton aria-owns={isRoleMenu ? 'menu-role' : null} onClick={onOpen}>
@@ -125,6 +139,19 @@ class TableToolbar extends React.Component {
                       ))}
                     </Menu>
                   </div>
+                  :
+                  <div className={classes.tooltip}>
+                    <Tooltip title="Modifier">
+                      <IconButton aria-label="Edit">
+                        <EditIcon/>
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Annuler la réservation">
+                      <IconButton aria-label="Cancel">
+                        <ClearIcon/>
+                      </IconButton>
+                    </Tooltip>
+                  </div>
                 }
                 <Tooltip title="Supprimer">
                   <IconButton aria-label="Delete">
@@ -133,11 +160,21 @@ class TableToolbar extends React.Component {
                 </Tooltip>
               </div>
             ) : (
-              <Tooltip title="Filtre par defaut">
-                <IconButton aria-label="Filter list">
-                  <FilterListIcon onClick={handleClickFiltrer}/>
-                </IconButton>
-              </Tooltip>
+              <div className={classes.tooltip}>
+                {
+                  isEngine &&
+                  <Tooltip title="Ajouter">
+                    <IconButton aria-label="Add">
+                      <AddIcon onClick={handleClickAdd}/>
+                    </IconButton>
+                  </Tooltip>
+                }
+                <Tooltip title="Filtre par defaut">
+                  <IconButton aria-label="Filter list">
+                    <FilterListIcon onClick={handleClickFiltrer}/>
+                  </IconButton>
+                </Tooltip>
+              </div>
             )}
           </div>
         </Toolbar>
@@ -153,6 +190,7 @@ TableToolbar.propTypes = {
   handleClickFiltrer: PropTypes.func.isRequired,
   handleClickDelete: PropTypes.func.isRequired,
   handleClickUpdateRole: PropTypes.func,
+  handleClickAddEngine: PropTypes.func,
 };
 
 TableToolbar = withStyles(styles)(TableToolbar);
