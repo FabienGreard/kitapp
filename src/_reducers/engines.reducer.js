@@ -66,10 +66,7 @@ export function engines(state = {}, action) {
         items: state.items.map(engine => {
           engine._id === action.engine._id && action.engine.reserved.push(action.reservation);
           return engine._id === action.engine._id ? { ...action.engine, updating: true } : engine
-        }),
-        temp: state.items.map(engine => (
-          engine._id === action.engine._id ? { ...engine} : engine
-        ))
+        })
       };
     case engineConstants.RESERVATION_SUCCESS:
       return {
@@ -80,9 +77,12 @@ export function engines(state = {}, action) {
     case engineConstants.RESERVATION_FAILURE:
       //remove updating element
       return {
-        items: state.items.map((engine) => (
-          engine.updating ? state.temp[0] : engine
-        )),
+        items: state.items.map((engine) => {
+          if(engine.updating){
+            engine.reserved.pop()
+          }
+          return engine
+        }),
         error: action.error
       };
     case engineConstants.UPDATE_REQUEST:

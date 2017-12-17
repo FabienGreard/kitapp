@@ -63,7 +63,7 @@ class EnginesAdmin extends Component {
       { id: 'price', numeric: true, disablePadding: false, label: 'Prix' },
       { id: 'level', numeric: false, disablePadding: true, label: 'Niveau requis' },
       { id: 'comments', numeric: false, disablePadding: true, label: 'Commentaires' },
-      { id: 'reserved', numeric: false, disablePadding: true, label: 'Réservations' },
+      { id: 'location', numeric: false, disablePadding: true, label: 'Lieux' },
     ];
 
     const deleteEngine = this.deleteEngine;

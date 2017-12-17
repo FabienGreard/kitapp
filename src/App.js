@@ -30,7 +30,7 @@ class App extends Component {
   switch = (pathname) => {
     switch(pathname.toLowerCase()){
       case '/':
-        return '';
+        return 'Tableau de bord';
       case '/login':
         return 'Connexion';
       case '/register':

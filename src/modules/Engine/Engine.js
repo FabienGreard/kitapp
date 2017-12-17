@@ -118,7 +118,7 @@ class Engine extends Component {
         <div className={classes.root}>
           <Grid container spacing={24}>
             <Grid item xs={12}>
-              <Paper className={classes.toolbar} style={theme.getRowStyle('white', 'secondaryColor')}>
+              <Paper className={classes.toolbar} style={theme.getRowStyle('white', 'black')}>
                 <Search style={{ color: '#757575', backgroundColor: '#FFFFFF', border: '1px solid #f9fbe7', borderRadius: '2px'}} filtrer={filtrerCard} placeholder={"Trouver une machine"}/>
                 <div className={classes.toolbar}>
                   {

@@ -9,9 +9,9 @@ import Dialog, {
   DialogContentText,
   DialogTitle,
 } from 'material-ui/Dialog';
+import { red } from 'material-ui/colors';
 import { withStyles } from 'material-ui/styles';
 import { DateTimePicker } from 'material-ui-pickers';
-import moment from 'moment'
 import 'moment/locale/fr';
 
 
@@ -28,6 +28,17 @@ const styles = context => ({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  flexC: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'column',
+    maxHeight: 50,
+    overflow: 'auto',
+  },
+  error: {
+    color: red[500],
+  }
 });
 
 class AskForReservation extends React.Component {
@@ -78,13 +89,17 @@ class AskForReservation extends React.Component {
             <DialogContentText>
               Veuillez indiquer la date de réservation de la machine {card.name}. (Prix de la réservation : {card.price})
             </DialogContentText>
+          </DialogContent>
+          <DialogContent>
+            <DialogContentText>
+              Réserver :
+            </DialogContentText>
             <div className={classes.flex}>
               <DialogContentText>
                 Du
               </DialogContentText>
               <DateTimePicker
                 shouldDisableDate={(date: Moment) => {
-                  console.log(date);
                   return date.days() === 0 || date.days() === 6;
                 }}
                 ampm={false}
@@ -101,7 +116,6 @@ class AskForReservation extends React.Component {
               </DialogContentText>
               <DateTimePicker
                 shouldDisableDate={(date: Moment) => {
-                  console.log(date);
                   return date.days() === 0 || date.days() === 6;
                 }}
                 ampm={false}
@@ -113,6 +127,30 @@ class AskForReservation extends React.Component {
                 timeIcon={<AccessTimeIcon />}
                 format={'llll'}
               />
+            </div>
+          </DialogContent>
+          <DialogContent>
+            <DialogContentText>
+              Créneaux indisponible :
+            </DialogContentText>
+            <div className={classes.flexC}>
+              {
+                typeof card.reserved[0] !== 'undefined' ?
+                  card.reserved.map((value, key) => {
+                  if(new Date(value.dateStart).toLocaleString() < new Date(selectedDateTimeStart).toLocaleString() && new Date(value.dateEnd).toLocaleString() < new Date(selectedDateTimeStart).toLocaleString()){
+                    return <DialogContentText key={key}>Du {new Date(value.dateStart).toLocaleString()} Au {new Date(value.dateEnd).toLocaleString()}</DialogContentText>
+                  }else{
+                    if(new Date(value.dateStart).toLocaleString() > new Date(selectedDateTimeStart).toLocaleString() && new Date(value.dateStart).toLocaleString() > new Date(selectedDateTimeEnd).toLocaleString()){
+                      return <DialogContentText key={key}>Du {new Date(value.dateStart).toLocaleString()} Au {new Date(value.dateEnd).toLocaleString()}</DialogContentText>
+                    }else{
+                    return <DialogContentText key={key} className={classes.error}>Créneaux déjà utilisé Du {new Date(value.dateStart).toLocaleString()} Au {new Date(value.dateEnd).toLocaleString()}</DialogContentText>
+                    }
+                  }
+                }) :
+              <DialogContentText>
+                Tous les créneaux sont disponible.
+              </DialogContentText>
+            }
             </div>
           </DialogContent>
           <DialogActions>

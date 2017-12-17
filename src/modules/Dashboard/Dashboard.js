@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { Dialog } from '../../_components';
 import { theme } from '../../_helpers';
+import { recordActions } from '../../_actions';
 
 //Material-ui import
 import { withStyles } from 'material-ui/styles';
@@ -25,7 +26,29 @@ const styles = context => ({
     },
 });
 
+const getRecordsInfo = (records) =>{
+  console.log(records)
+}
+
 class Dashboard extends Component {
+  constructor(props) {
+    super(props);
+
+    this.props.dispatch(recordActions.getByUserId(props.user));
+
+    this.state = {
+      records: []
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.records !== this.props.records && typeof nextProps.records !== 'undefined'){
+      this.setState({
+        data: getRecordsInfo(nextProps.records)
+      });
+    }
+  }
+
   render() {
     let { user, classes } = this.props;
     return (
@@ -69,8 +92,10 @@ Dashboard.propTypes = {
 
 function mapStateToProps(state) {
     const { user } = typeof state.authentication.user !== 'undefined' ? state.authentication.user : { user: {} };
+    const { records } = typeof state.records.records !== 'undefined' ? state.records.records : { records: {} };
     return {
-        user
+        user,
+        records
     };
 }
 

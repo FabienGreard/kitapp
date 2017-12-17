@@ -101,6 +101,7 @@ function _delete(id) {
             .then(
                 engine => {
                     dispatch(success(engine.engine));
+                    dispatch(alertActions.success("Votre réservation à été pris en compte."));
                 },
                 error => {
                     dispatch(failure(error));

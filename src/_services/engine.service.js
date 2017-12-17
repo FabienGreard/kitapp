@@ -73,7 +73,7 @@ function update(engine) {
 
 function create(engine) {
   const requestOptions = {
-      method: 'PUT',
+      method: 'POST',
       headers: { ...authHeader(), 'Content-Type': 'application/json' },
       body: JSON.stringify(engine)
   };
