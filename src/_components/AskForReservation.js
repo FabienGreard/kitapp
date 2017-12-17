@@ -12,6 +12,7 @@ import Dialog, {
 import { red } from 'material-ui/colors';
 import { withStyles } from 'material-ui/styles';
 import { DateTimePicker } from 'material-ui-pickers';
+import { TimePicker } from 'material-ui-pickers';
 import 'moment/locale/fr';
 
 
@@ -25,16 +26,24 @@ import AccessTimeIcon  from 'material-ui-icons/AccessTime';
 const styles = context => ({
   flex:{
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   flexC: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'space-arround',
     alignItems: 'center',
     flexDirection: 'column',
     maxHeight: 50,
     overflow: 'auto',
+  },
+  date: {
+    width: 175,
+    padding: '0px 8px',
+  },
+  time: {
+    width: 42,
+    padding: '0px 8px',
   },
   error: {
     color: red[500],
@@ -45,8 +54,8 @@ class AskForReservation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedDateTimeStart: new Date(),
-      selectedDateTimeEnd: new Date()
+      date: new Date().setSeconds(0),
+      duration: new Date().setHours(0,0,0,0)
      };
   }
   handleRequestClose = () => {
@@ -55,33 +64,33 @@ class AskForReservation extends React.Component {
   };
 
   handleRequestValidate = () => {
-    this.props.handleRequestClose(this.state.selectedDateTimeStart, this.state.selectedDateTimeEnd, this.props.card);
+    this.props.handleRequestClose(this.state.date, this.state.duration, this.props.card);
     this.reset();
   }
 
   reset = () => {
     this.setState({
-       selectedDateTimeStart: new Date(),
-       selectedDateTimeEnd: new Date()
+       date: new Date().setSeconds(0),
+       duration: new Date().setHours(0,0,0,0)
     });
   }
 
-  handleDateTimeChangeStart = dateTime => {
-    this.setState({ selectedDateTimeStart: dateTime })
+  handleDate = dateTime => {
+    this.setState({ date: dateTime })
   }
 
-  handleDateTimeChangeEnd = dateTime => {
-    this.setState({ selectedDateTimeEnd: dateTime })
+  handleDuration = dateTime => {
+    this.setState({ duration: dateTime })
   }
 
   render() {
     let { open, card, classes } = this.props;
-    let { selectedDateTimeStart, selectedDateTimeEnd } = this.state;
+    let { date, duration } = this.state;
 
     const handleRequestClose = this.handleRequestClose;
     const handleRequestValidate = this.handleRequestValidate;
-    const handleDateTimeChangeStart = this.handleDateTimeChangeStart;
-    const handleDateTimeChangeEnd = this.handleDateTimeChangeEnd;
+    const handleDate = this.handleDate;
+    const handleDuration = this.handleDuration;
     return (
         <Dialog open={open} onRequestClose={handleRequestClose}>
           <DialogTitle>Valider la réservation ({card.name})</DialogTitle>
@@ -96,15 +105,13 @@ class AskForReservation extends React.Component {
             </DialogContentText>
             <div className={classes.flex}>
               <DialogContentText>
-                Du
+                Le
               </DialogContentText>
               <DateTimePicker
-                shouldDisableDate={(date: Moment) => {
-                  return date.days() === 0 || date.days() === 6;
-                }}
+                className={classes.date}
                 ampm={false}
-                value={selectedDateTimeStart}
-                onChange={handleDateTimeChangeStart}
+                value={date}
+                onChange={handleDate}
                 leftArrowIcon={<NavigateBeforeIcon />}
                 rightArrowIcon={<NavigateNextIcon />}
                 dateRangeIcon={<DateRangeIcon />}
@@ -112,21 +119,18 @@ class AskForReservation extends React.Component {
                 format={'llll'}
               />
               <DialogContentText>
-                au
+                Durée
               </DialogContentText>
-              <DateTimePicker
-                shouldDisableDate={(date: Moment) => {
-                  return date.days() === 0 || date.days() === 6;
-                }}
+              <TimePicker
+                className={classes.time}
                 ampm={false}
-                value={selectedDateTimeEnd}
-                onChange={handleDateTimeChangeEnd}
-                leftArrowIcon={<NavigateBeforeIcon />}
-                rightArrowIcon={<NavigateNextIcon />}
-                dateRangeIcon={<DateRangeIcon />}
-                timeIcon={<AccessTimeIcon />}
-                format={'llll'}
+                value={duration}
+                onChange={handleDuration}
+                format={'LT'}
               />
+              <DialogContentText>
+                h
+              </DialogContentText>
             </div>
           </DialogContent>
           <DialogContent>
@@ -137,20 +141,24 @@ class AskForReservation extends React.Component {
               {
                 typeof card.reserved[0] !== 'undefined' ?
                   card.reserved.map((value, key) => {
-                  if(new Date(value.dateStart).toLocaleString() < new Date(selectedDateTimeStart).toLocaleString() && new Date(value.dateEnd).toLocaleString() < new Date(selectedDateTimeStart).toLocaleString()){
-                    return <DialogContentText key={key}>Du {new Date(value.dateStart).toLocaleString()} Au {new Date(value.dateEnd).toLocaleString()}</DialogContentText>
-                  }else{
-                    if(new Date(value.dateStart).toLocaleString() > new Date(selectedDateTimeStart).toLocaleString() && new Date(value.dateStart).toLocaleString() > new Date(selectedDateTimeEnd).toLocaleString()){
-                      return <DialogContentText key={key}>Du {new Date(value.dateStart).toLocaleString()} Au {new Date(value.dateEnd).toLocaleString()}</DialogContentText>
+                    const dateDuration = new Date(new Date(value.date).getTime() + (new Date(value.duration).getHours() * 60 + new Date(value.duration).getMinutes()) * 60000 ).toLocaleString();
+
+                    const dateDurationUser = new Date(new Date(date).getTime() + (new Date(duration).getHours() * 60 + new Date(duration).getMinutes()) * 60000 ).toLocaleString();
+
+                    if(new Date(value.date).toLocaleString() < new Date(date).toLocaleString() && dateDuration <= new Date(date).toLocaleString()){
+                      return <DialogContentText key={key}>le {new Date(value.date).toLocaleString().slice(0, -3)} Durée {new Date(value.duration).toLocaleTimeString().slice(0, -3)} h</DialogContentText>
                     }else{
-                    return <DialogContentText key={key} className={classes.error}>Créneaux déjà utilisé Du {new Date(value.dateStart).toLocaleString()} Au {new Date(value.dateEnd).toLocaleString()}</DialogContentText>
+                      if(new Date(value.date).toLocaleString() > new Date(date).toLocaleString() && new Date(value.date).toLocaleString() >= dateDurationUser){
+                        return <DialogContentText key={key}>le {new Date(value.date).toLocaleString().slice(0, -3)} Durée {new Date(value.duration).toLocaleTimeString().slice(0, -3)} h</DialogContentText>
+                      }else{
+                      return <DialogContentText key={key} className={classes.error}>Créneaux déjà utilisé le {new Date(value.date).toLocaleString().slice(0, -3)} Durée {new Date(value.duration).toLocaleTimeString().slice(0, -3)} h, termine le {dateDuration}</DialogContentText>
+                      }
                     }
-                  }
-                }) :
-              <DialogContentText>
-                Tous les créneaux sont disponible.
-              </DialogContentText>
-            }
+                  }) :
+                <DialogContentText>
+                  Tous les créneaux sont disponible.
+                </DialogContentText>
+              }
             </div>
           </DialogContent>
           <DialogActions>

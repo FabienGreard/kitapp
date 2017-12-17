@@ -19,11 +19,11 @@ import NavigateNextIcon from 'material-ui-icons/NavigateNext';
 import NavigateBeforeIcon from 'material-ui-icons/NavigateBefore';
 
 const getEnginesInfo = (engines) => {
-  let EnginesInfo = [];
+  let enginesInfo = [];
   engines.map((engine) => {
-    return EnginesInfo.push(setEngineInfo(engine));
+    return enginesInfo.push(setEngineInfo(engine));
   });
-  return EnginesInfo;
+  return enginesInfo;
 }
 
 //styles

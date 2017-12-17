@@ -21,13 +21,13 @@ function update(record) {
     .then(handleResponse);
 }
 
-function getByUserId(user) {
+function getByUserId(id) {
   const requestOptions = {
       method: 'GET',
       headers: { ...authHeader(), 'Content-Type': 'application/json' },
   };
 
-    return fetch(url() + '/records/' + user._id, requestOptions).then(response =>
+    return fetch(url() + '/records/' + id, requestOptions).then(response =>
       response.json().then(json => ({
         ok: response.ok,
         json

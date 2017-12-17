@@ -5,3 +5,4 @@ export * from './theme';
 export * from './url';
 export * from './setUserInfo';
 export * from './setEngineInfo';
+export * from './setRecordInfo';

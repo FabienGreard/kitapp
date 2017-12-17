@@ -89,9 +89,9 @@ class _CardContent extends Component {
   }
 
   //this should not be there, error in case of localstorage not found etcccc
-  handleRequesAskForReservation = (selectedDateTimeStart = false, selectedDateTimeEnd = false, card = false) => {
-    if(selectedDateTimeStart && selectedDateTimeEnd && card){
-      this.props.dispatch(engineActions.reservation(card, {dateStart: selectedDateTimeStart, dateEnd: selectedDateTimeEnd, from: this.props.user._id}));
+  handleRequesAskForReservation = (selectedDateTime = false, selectedDuration = false, card = false) => {
+    if(selectedDateTime && selectedDuration && card){
+      this.props.dispatch(engineActions.reservation(card, {date: selectedDateTime, duration: selectedDuration, from: this.props.user._id}));
     }
 
     this.setState({

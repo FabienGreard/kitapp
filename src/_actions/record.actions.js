@@ -7,11 +7,11 @@ export const recordActions = {
     update
 };
 
-function getByUserId(user) {
+function getByUserId(id) {
     return dispatch => {
         dispatch(request());
 
-        recordService.getByUserId(user)
+        recordService.getByUserId(id)
             .then(
                 records => { dispatch(success(records.records));
                 },
