@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
+import { AskForReservation } from './';
+
 //material-ui import
 import { withStyles } from 'material-ui/styles';
 import { CardActions, CardContent } from 'material-ui/Card';
@@ -73,30 +75,47 @@ const Stars = ({level, classes}) => {
 class _CardContent extends Component {
   constructor(props) {
     super(props);
-    this.state = { expanded: false };
+    this.state = { expanded: false, askForReservation: false };
   }
 
   handleExpandClick = () => {
     this.setState({ expanded: !this.state.expanded });
   };
 
+  handleClickAskForReservation = (e) => {
+    this.setState({ askForReservation: !this.state.askForReservation });
+  }
+
+  handleRequesAskForReservation = (selectedDateTimeStart = false, selectedDateTimeEnd = false, card = false) => {
+    if(selectedDateTimeStart && selectedDateTimeEnd && card){
+      //this.props.dispatch(userActions.resetPsswd(email));
+      console.log(selectedDateTimeStart, selectedDateTimeEnd, card)
+    }
+
+    this.setState({
+      askForReservation: false
+    });
+  }
+
   render() {
-    let { classes, level, comments } = this.props;
-    let { expanded } = this.state;
+    let { classes, card } = this.props;
+    let { expanded, askForReservation } = this.state;
+    let { level, comments } = card;
 
     const handleExpandClick = this.handleExpandClick;
+    const handleClickAskForReservation = this.handleClickAskForReservation;
+    const handleRequesAskForReservation = this.handleRequesAskForReservation;
     return (
       <div>
+        <AskForReservation open={askForReservation} handleRequestClose={handleRequesAskForReservation} card={card}/>
         <CardActions disableActionSpacing>
           <Tooltip title="Réserver" placement='bottom' enterDelay={300}>
-            <IconButton aria-label="Date-picker">
+            <IconButton aria-label="Date-picker" onClick={handleClickAskForReservation}>
               <DateRangeIcon />
             </IconButton>
           </Tooltip>
           <div className={classes.flexGrow} />
-
-            <Stars level={level} classes={classes}/>
-
+          <Stars level={level} classes={classes}/>
           <Tooltip title="En savoir plus" placement='bottom' enterDelay={300}>
             <IconButton
               className={classnames(classes.expand, {
@@ -124,8 +143,7 @@ class _CardContent extends Component {
 
 _CardContent.defaultProps = {
   classes: PropTypes.object.isRequired,
-  level: PropTypes.number.isRequired,
-  comments: PropTypes.string.isRequired,
+  card: PropTypes.object.isRequired,
 };
 
 const CardContentWithStyles = withStyles(styles)(_CardContent);

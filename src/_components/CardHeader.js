@@ -36,11 +36,11 @@ const _CardHeader = ({title, image, location, price, classes}) => (
   <div className={classes.flex}>
     <CardContent className={classes.header}>
       <div>
-        <Typography type="headline" style={theme.getRowStyle('primaryColor','')}>{title}</Typography>
+        <Typography type="headline" style={theme.getRowStyle('black','')}>{title}</Typography>
         <Typography type="subheading" style={theme.getRowStyle('darkGrey','none')}>{location}</Typography>
       </div>
       <div>
-        <Typography type="subheading" className={classes.price} style={theme.getRowStyle('primaryColor','')}>
+        <Typography type="subheading" className={classes.price} style={theme.getRowStyle('darkPrimaryColor','')}>
           <SettingsIcon/>
           {price}
         </Typography>

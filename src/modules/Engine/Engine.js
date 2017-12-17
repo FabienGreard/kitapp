@@ -122,17 +122,17 @@ class Engine extends Component {
         <div className={classes.root}>
           <Grid container spacing={24}>
             <Grid item xs={12}>
-              <Paper className={classes.toolbar} style={theme.getRowStyle('white', 'none')}>
-                <Search style={{ color: '#757575' ,backgroundColor: '#f9fbe7'}} filtrer={filtrerCard}/>
+              <Paper className={classes.toolbar} style={theme.getRowStyle('white', 'secondaryColor')}>
+                <Search style={{ color: '#757575', backgroundColor: '#FFFFFF', border: '1px solid #f9fbe7', borderRadius: '2px'}} filtrer={filtrerCard} placeholder={"Trouver une machine"}/>
                 <div className={classes.toolbar}>
                   {
                     w > 550 &&
-                    <Typography style={theme.getRowStyle('darkGrey', 'none')}>{cards}-{totalPageCards} sur {data.length}</Typography>
+                    <Typography style={theme.getRowStyle('white', 'none')}>{cards}-{totalPageCards} sur {data.length}</Typography>
                   }
-                  <IconButton style={theme.getRowStyle('darkGrey', 'none')} onClick={handlePrevPage}>
+                  <IconButton style={theme.getRowStyle('white', 'none')} onClick={handlePrevPage}>
                     <NavigateBeforeIcon/>
                   </IconButton>
-                  <IconButton style={theme.getRowStyle('darkGrey', 'none')} onClick={handleNextPage}>
+                  <IconButton style={theme.getRowStyle('white', 'none')} onClick={handleNextPage}>
                     <NavigateNextIcon/>
                   </IconButton>
                 </div>

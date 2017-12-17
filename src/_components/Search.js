@@ -20,8 +20,8 @@ const styles = context => ({
   },
 });
 
-const Search = ({classes, style, filtrer}) => (
-  <Input disableUnderline className={classes.input} style={style} name="Search" type="text" onChange={filtrer}
+const Search = ({classes, style, filtrer, placeholder}) => (
+  <Input disableUnderline className={classes.input} style={style} name="Search" type="text" onChange={filtrer} placeholder={placeholder}
     startAdornment={
     <InputAdornment position="start" className={classes.icon}>
       <SearchIcon/>
@@ -32,6 +32,7 @@ Search.propTypes = {
   classes: PropTypes.object.isRequired,
   style: PropTypes.object.isRequired,
   filtrer: PropTypes.func.isRequired,
+  placeholder: PropTypes.string.isRequired,
 };
 
 const SearchWithStyles = withStyles(styles)(Search);

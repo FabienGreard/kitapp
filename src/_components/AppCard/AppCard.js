@@ -36,7 +36,7 @@ class AppCard extends Component {
             <Card key={card._id} className={classes.card}>
               <CardHeader title={card.name} price={card.price} image={card.image}
               location={card.location}/>
-              <CardContent level={card.level} comments={card.comments}/>
+              <CardContent card={card}/>
             </Card>
           )
         })

@@ -18,6 +18,7 @@ export * from './Popup';
 export * from './CardHeader';
 export * from './CardContent';
 export * from './Search';
+export * from './AskForReservation';
 
 //wrapper
 export * from './AppBar';
