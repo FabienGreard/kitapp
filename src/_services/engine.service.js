@@ -4,7 +4,8 @@ export const engineService = {
     getAll,
     update,
     create,
-    delete: _delete
+    delete: _delete,
+    reservation
 };
 
 function getAll() {
@@ -30,6 +31,22 @@ function _delete(id) {
     };
 
     return fetch(url() + '/engines/' + id, requestOptions).then(response =>
+      response.json().then(json => ({
+        ok: response.ok,
+        json
+      })
+    ))
+    .then(handleResponse);
+}
+
+function reservation(engine, reservation) {
+  const requestOptions = {
+      method: 'PUT',
+      headers: { ...authHeader(), 'Content-Type': 'application/json' },
+      body: JSON.stringify(reservation)
+  };
+
+    return fetch(url() + '/engines/reservation/' + engine._id, requestOptions).then(response =>
       response.json().then(json => ({
         ok: response.ok,
         json

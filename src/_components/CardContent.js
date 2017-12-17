@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { connect } from 'react-redux';
 
 import { AskForReservation } from './';
+import { engineActions } from '../_actions';
 
 //material-ui import
 import { withStyles } from 'material-ui/styles';
@@ -82,14 +84,14 @@ class _CardContent extends Component {
     this.setState({ expanded: !this.state.expanded });
   };
 
-  handleClickAskForReservation = (e) => {
+  handleClickAskForReservation = () => {
     this.setState({ askForReservation: !this.state.askForReservation });
   }
 
+  //this should not be there, error in case of localstorage not found etcccc
   handleRequesAskForReservation = (selectedDateTimeStart = false, selectedDateTimeEnd = false, card = false) => {
     if(selectedDateTimeStart && selectedDateTimeEnd && card){
-      //this.props.dispatch(userActions.resetPsswd(email));
-      console.log(selectedDateTimeStart, selectedDateTimeEnd, card)
+      this.props.dispatch(engineActions.reservation(card, {dateStart: selectedDateTimeStart, dateEnd: selectedDateTimeEnd, from: this.props.user._id}));
     }
 
     this.setState({
@@ -146,5 +148,13 @@ _CardContent.defaultProps = {
   card: PropTypes.object.isRequired,
 };
 
-const CardContentWithStyles = withStyles(styles)(_CardContent);
-export { CardContentWithStyles as CardContent };
+function mapStateToProps(state) {
+  const { user } = typeof state.authentication.user !== 'undefined' ? state.authentication.user : "";
+    return {
+        user
+    };
+}
+
+const connectedCardContent = connect(mapStateToProps)(_CardContent);
+const connectedCardContentWithStyles = withStyles(styles)(connectedCardContent);
+export { connectedCardContentWithStyles as CardContent };

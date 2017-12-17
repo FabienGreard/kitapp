@@ -63,10 +63,6 @@ class Engine extends Component {
       this.setState({
         data: getEnginesInfo(nextProps.items)
       });
-    }else{
-      this.setState({
-        data: []
-      });
     }
   }
 
@@ -140,7 +136,7 @@ class Engine extends Component {
             </Grid>
             <Grid item xs={12} className={classes.center}>
               {
-                (data && !loading) ?
+                data ?
                   <AppCard data={renderCards(data, cards, totalPageCards)}/> :
                   <CircularProgress />
               }

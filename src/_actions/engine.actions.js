@@ -7,6 +7,7 @@ export const engineActions = {
     update,
     getAll,
     delete: _delete,
+    reservation,
 };
 
 function getAll() {
@@ -54,7 +55,7 @@ function _delete(id) {
     return dispatch => {
         dispatch(request(engine));
 
-        engineService.delete(engine)
+        engineService.update(engine)
             .then(
                 engine => {
                     dispatch(success(engine.engine));
@@ -75,7 +76,7 @@ function _delete(id) {
     return dispatch => {
         dispatch(request(engine));
 
-        engineService.delete(engine)
+        engineService.create(engine)
             .then(
                 engine => {
                     dispatch(success(engine));
@@ -90,4 +91,25 @@ function _delete(id) {
     function request(engine) { return { type: engineConstants.CREATE_REQUEST, engine } }
     function success(engine) { return { type: engineConstants.CREATE_SUCCESS, engine } }
     function failure(error) { return { type: engineConstants.CREATE_FAILURE, error } }
+  }
+
+  function reservation(engine, reservation){
+    return dispatch => {
+        dispatch(request(engine, reservation));
+
+        engineService.reservation(engine, reservation)
+            .then(
+                engine => {
+                    dispatch(success(engine.engine));
+                },
+                error => {
+                    dispatch(failure(error));
+                    dispatch(alertActions.error(error));
+                }
+            );
+    };
+
+    function request(engine, reservation) { return { type: engineConstants.RESERVATION_REQUEST, engine, reservation } }
+    function success(engine) { return { type: engineConstants.RESERVATION_SUCCESS, engine } }
+    function failure(error) { return { type: engineConstants.RESERVATION_FAILURE, error } }
   }

@@ -58,18 +58,45 @@ export function engines(state = {}, action) {
           return engine;
         })
       };
+    case engineConstants.RESERVATION_REQUEST:
+      // add 'updating:true' property to engine being updated
+      return {
+        loading: true,
+        ...state,
+        items: state.items.map(engine => {
+          engine._id === action.engine._id && action.engine.reserved.push(action.reservation);
+          return engine._id === action.engine._id ? { ...action.engine, updating: true } : engine
+        }),
+        temp: state.items.map(engine => (
+          engine._id === action.engine._id ? { ...engine} : engine
+        ))
+      };
+    case engineConstants.RESERVATION_SUCCESS:
+      return {
+        items: state.items.map(engine => {
+          return engine._id === action.engine._id ? action.engine : engine
+        })
+      };
+    case engineConstants.RESERVATION_FAILURE:
+      //remove updating element
+      return {
+        items: state.items.map((engine) => (
+          engine.updating ? state.temp[0] : engine
+        )),
+        error: action.error
+      };
     case engineConstants.UPDATE_REQUEST:
-    // add 'updating:true' property to engine being updated
-    return {
-      loading: true,
-      ...state,
-      items: state.items.map(engine => (
-        engine._id === action.engine._id ? { ...action.engine, updating: true } : engine
-      )),
-      temp: state.items.map(engine => (
-        engine._id === action.engine._id ? { ...engine} : engine
-      ))
-    };
+      // add 'updating:true' property to engine being updated
+      return {
+        loading: true,
+        ...state,
+        items: state.items.map(engine => (
+          engine._id === action.engine._id ? { ...action.engine, updating: true } : engine
+        )),
+        temp: state.items.map(engine => (
+          engine._id === action.engine._id ? { ...engine} : engine
+        ))
+      };
     case engineConstants.UPDATE_SUCCESS:
       return {
         items: state.items.map(engine => (
