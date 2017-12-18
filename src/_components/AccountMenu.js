@@ -40,7 +40,7 @@ class AccountMenu extends Component {
 
     const textMenu = [
       { name: 'Mon Profile', link: '/account'},
-      { name: 'Mes Réservations', link: '/order'},
+      { name: 'Mes Réservations', link: '/'},
       { name: 'Se Déconnecter', link: '/'},
     ];
     return(

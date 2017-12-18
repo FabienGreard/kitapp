@@ -7,7 +7,6 @@ import { Account } from '../modules/Account'
 import { Engine } from '../modules/Engine/'
 import { Dashboard } from '../modules/Dashboard/index';
 import { Login } from '../modules/Login';
-import Order from '../modules/Order/index';
 import { Register } from '../modules/Register';
 import Skill from '../modules/Skill/index';
 import { EnginesAdmin, UsersAdmin } from '../modules/Admin/index';
@@ -20,7 +19,6 @@ const Router = () => (
     <Route exact path='/register' component={Register}/>
     <PrivateRoute path='/engine' component={Engine}/>
     <PrivateRoute path='/account' component={Account}/>
-    <PrivateRoute path='/order' component={Order}/>
     <PrivateRoute path='/skill' component={Skill}/>
     <PrivateRoute path='/admin/users' isAdmin={true} component={UsersAdmin}/>
     <PrivateRoute path='/admin/engines' isAdmin={true} component={EnginesAdmin}/>
