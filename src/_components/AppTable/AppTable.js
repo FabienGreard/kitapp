@@ -160,7 +160,7 @@ class AppTable extends Component {
           openAdd &&
           <TableAdd columnData={columnData}/>
         }
-        <TableToolbar tableName={tableName} numSelected={selected.length} handleClickFiltrer={handleClickFiltrer} handleClickDelete={handleClickDelete} handleClickUpdaterole={handleClickUpdateRole} handleClickAddEngine={handleClickAddEngine}/>
+        <TableToolbar tableName={tableName} numSelected={selected.length} handleClickFiltrer={handleClickFiltrer} handleClickDelete={handleClickDelete} handleClickUpdateRole={handleClickUpdateRole} handleClickAddEngine={handleClickAddEngine}/>
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             <TableHead

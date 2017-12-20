@@ -22,6 +22,7 @@ const getEnginesInfo = (engines) => {
   let enginesInfo = [];
   engines.map((engine) => {
     return enginesInfo.push(setEngineInfo(engine));
+
   });
   return enginesInfo;
 }
@@ -61,7 +62,7 @@ class Engine extends Component {
   componentWillReceiveProps(nextProps) {
     if(nextProps.items !== this.props.items && typeof nextProps.items !== 'undefined'){
       this.setState({
-        data: getEnginesInfo(nextProps.items)
+        data: getEnginesInfo(nextProps.items, this.props)
       });
     }
   }

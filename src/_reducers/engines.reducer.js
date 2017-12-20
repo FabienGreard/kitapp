@@ -27,6 +27,60 @@ export function engines(state = {}, action) {
       return {
         error: action.error
       };
+    case engineConstants.GET_IMAGE_BY_ID_REQUEST:
+      return {
+        ...state,
+        items: state.items.map(engine =>
+          engine._id === action.engine._id
+            ? { ...engine, loading: true }
+            : engine
+        )
+      };
+    case engineConstants.GET_IMAGE_BY_ID_SUCCESS:
+      return {
+        ...state,
+        items: state.items.map(engine =>
+          engine._id === action.engine._id
+            ? { ...action.engine }
+            : engine
+        )
+      };
+    case engineConstants.GET_IMAGE_BY_ID_FAILURE:
+      return {
+        items: state.items.map(engine =>
+          engine._id === action.engine._id
+            ? { ...engine }
+            : engine
+        ),
+        error: action.error
+      };
+    case engineConstants.UPDATE_IMAGE_BY_ID_REQUEST:
+      return {
+        ...state,
+        items: state.items.map(engine =>
+          engine._id === action.engine._id
+            ? { ...engine, loading: true }
+            : engine
+        )
+      };
+    case engineConstants.UPDATE_IMAGE_BY_ID_SUCCESS:
+      return {
+        ...state,
+        items: state.items.map(engine =>
+          engine._id === action.engine._id
+            ? { ...action.engine }
+            : engine
+        )
+      };
+    case engineConstants.UPDATE_IMAGE_BY_ID_FAILURE:
+    return {
+      items: state.items.map(engine =>
+        engine._id === action.engine._id
+          ? { ...engine }
+          : engine
+      ),
+      error: action.error
+    };
     case engineConstants.DELETE_REQUEST:
       // add 'deleting:true' property to engine being deleted
       return {
@@ -56,7 +110,8 @@ export function engines(state = {}, action) {
           }
 
           return engine;
-        })
+        }),
+        error: action.error
       };
     case engineConstants.RESERVATION_REQUEST:
       // add 'updating:true' property to engine being updated

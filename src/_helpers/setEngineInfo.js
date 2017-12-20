@@ -7,7 +7,7 @@ export const setEngineInfo = (engine) => {
     comments: engine.comments || "Aucun commentaires",
     location: engine.location,
     reserved: engine.reserved,
-    image: "https://orig00.deviantart.net/5370/f/2017/239/7/d/steam_engine_by_pajunen-dblibu5.jpg",
+    image: engine.img,
     level: engine.level,
   };
 };

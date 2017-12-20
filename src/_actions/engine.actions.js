@@ -8,6 +8,8 @@ export const engineActions = {
     getAll,
     delete: _delete,
     reservation,
+    updateImageById,
+    getImageById
 };
 
 function getAll() {
@@ -91,6 +93,48 @@ function _delete(id) {
     function request(engine) { return { type: engineConstants.CREATE_REQUEST, engine } }
     function success(engine) { return { type: engineConstants.CREATE_SUCCESS, engine } }
     function failure(error) { return { type: engineConstants.CREATE_FAILURE, error } }
+  }
+
+  function updateImageById(engine, img){
+    return dispatch => {
+        dispatch(request(engine, img));
+
+        engineService.updateImageById(engine, img)
+            .then(
+                engine => {
+                    dispatch(success(engine));
+                },
+                error => {
+                    dispatch(failure(error));
+                    dispatch(alertActions.error(error));
+                }
+            );
+    };
+
+    function request(engine, img) { return { type: engineConstants.UPDATE_IMAGE_BY_ID_REQUEST, engine, img } }
+    function success(engine) { return { type: engineConstants.UPDATE_IMAGE_BY_ID_SUCCESS, engine } }
+    function failure(error) { return { type: engineConstants.UPDATE_IMAGE_BY_ID_FAILURE, error } }
+  }
+
+  function getImageById(engine){
+    return dispatch => {
+        dispatch(request(engine));
+
+        engineService.getImageById(engine)
+            .then(
+                engine => {
+                    dispatch(success(engine));
+                },
+                error => {
+                    dispatch(failure(error));
+                    dispatch(alertActions.error(error));
+                }
+            );
+    };
+
+    function request(engine) { return { type: engineConstants.GET_IMAGE_BY_ID_REQUEST, engine } }
+    function success(engine) { return { type: engineConstants.GET_IMAGE_BY_ID_SUCCESS, engine } }
+    function failure(error) { return { type: engineConstants.GET_IMAGE_BY_ID_FAILURE, error } }
   }
 
   function reservation(engine, reservation){

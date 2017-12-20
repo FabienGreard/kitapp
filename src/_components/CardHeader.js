@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { theme } from '../_helpers';
 //material-ui impor
-import { CardContent , CardMedia } from 'material-ui/Card';
+import { CardContent } from 'material-ui/Card';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
+import { CircularProgress } from 'material-ui/Progress';
 
 //material-ui-icon import
 import SettingsIcon from 'material-ui-icons/Settings';
@@ -19,8 +20,18 @@ const styles = context => ({
     padding: context.spacing.unit,
     minHeight: 72
   },
+  mediaContainer: {
+    overflow: 'hidden',
+  },
   media: {
     height: 194,
+    width: 300,
+  },
+  loading: {
+    display: 'flex',
+    height: 200,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   price: {
     alignItems: 'center',
@@ -32,32 +43,43 @@ const styles = context => ({
   }
 });
 
-const _CardHeader = ({title, image, location, price, classes}) => (
-  <div className={classes.flex}>
-    <CardContent className={classes.header}>
-      <div>
-        <Typography type="headline" style={theme.getRowStyle('black','')}>{title}</Typography>
-        <Typography type="subheading" style={theme.getRowStyle('darkGrey','none')}>{location}</Typography>
-      </div>
-      <div>
-        <Typography type="subheading" className={classes.price} style={theme.getRowStyle('darkPrimaryColor','')}>
-          <SettingsIcon/>
-          {price}
-        </Typography>
+class _CardHeader extends Component {
+  render() {
+    let { title, image, location, price, classes } = this.props;
+    let thumb = new Buffer(image.data).toString('base64');
 
+    return (
+      <div className={classes.flex}>
+        <CardContent className={classes.header}>
+          <div>
+            <Typography type="headline" style={theme.getRowStyle('black','')}>{title}</Typography>
+            <Typography type="subheading" style={theme.getRowStyle('darkGrey','none')}>{location}</Typography>
+          </div>
+          <div>
+            <Typography type="subheading" className={classes.price} style={theme.getRowStyle('darkPrimaryColor','')}>
+              <SettingsIcon/>
+              {price}
+            </Typography>
+
+          </div>
+        </CardContent>
+        { image.loading ?
+          <div className={classes.loading}>
+            <CircularProgress />
+          </div> :
+          <div className={classes.mediaContainer}>
+            <img src={"data:image/png;base64," + thumb} className={classes.media} title="engine" alt="engine"/>
+          </div>
+        }
       </div>
-    </CardContent>
-    <CardMedia
-      className={classes.media}
-      image={image}
-      title={title}
-    />
-  </div>
-);
+    );
+  }
+
+}
 
 _CardHeader.propTypes = {
   title: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
+  image: PropTypes.object.isRequired,
   price: PropTypes.number.isRequired,
   location: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,

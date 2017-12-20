@@ -5,7 +5,9 @@ export const engineService = {
     update,
     create,
     delete: _delete,
-    reservation
+    reservation,
+    getImageById,
+    updateImageById
 };
 
 function getAll() {
@@ -15,6 +17,22 @@ function getAll() {
     };
 
     return fetch(url() + '/engines/all', requestOptions).then(response =>
+      response.json().then(json => ({
+        ok: response.ok,
+        error: "Mauvais token, Reconnectez vous.",
+        json
+      })
+    ))
+    .then(handleResponse);
+}
+
+function getImageById(engine) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    return fetch(url() + '/engines/img' + engine._id, requestOptions).then(response =>
       response.json().then(json => ({
         ok: response.ok,
         error: "Mauvais token, Reconnectez vous.",
@@ -63,6 +81,22 @@ function update(engine) {
   };
 
     return fetch(url() + '/engines/' + engine._id, requestOptions).then(response =>
+      response.json().then(json => ({
+        ok: response.ok,
+        json
+      })
+    ))
+    .then(handleResponse);
+}
+
+function updateImageById(engine, img) {
+  const requestOptions = {
+      method: 'PUT',
+      headers: { ...authHeader(), 'Content-Type': 'application/json' },
+      file: img
+  };
+
+    return fetch(url() + '/engines/img/' + engine._id, requestOptions).then(response =>
       response.json().then(json => ({
         ok: response.ok,
         json
