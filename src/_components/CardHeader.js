@@ -6,7 +6,6 @@ import { theme } from '../_helpers';
 import { CardContent } from 'material-ui/Card';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
-import { CircularProgress } from 'material-ui/Progress';
 
 //material-ui-icon import
 import SettingsIcon from 'material-ui-icons/Settings';
@@ -46,8 +45,6 @@ const styles = context => ({
 class _CardHeader extends Component {
   render() {
     let { title, image, location, price, classes } = this.props;
-    let thumb = new Buffer(image.data).toString('base64');
-
     return (
       <div className={classes.flex}>
         <CardContent className={classes.header}>
@@ -63,14 +60,9 @@ class _CardHeader extends Component {
 
           </div>
         </CardContent>
-        { image.loading ?
-          <div className={classes.loading}>
-            <CircularProgress />
-          </div> :
-          <div className={classes.mediaContainer}>
-            <img src={"data:image/png;base64," + thumb} className={classes.media} title="engine" alt="engine"/>
-          </div>
-        }
+        <div className={classes.mediaContainer}>
+          <img src={"data:image/png;base64," + image} className={classes.media} title="engine" alt="engine"/>
+        </div>
       </div>
     );
   }
@@ -79,7 +71,7 @@ class _CardHeader extends Component {
 
 _CardHeader.propTypes = {
   title: PropTypes.string.isRequired,
-  image: PropTypes.object.isRequired,
+  image: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   location: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,

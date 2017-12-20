@@ -18,7 +18,6 @@ import VerifiedUserIcon from 'material-ui-icons/VerifiedUser';
 import FilterListIcon from 'material-ui-icons/FilterList';
 import AddIcon from 'material-ui-icons/Add';
 import EditIcon from 'material-ui-icons/Edit';
-import ClearIcon from 'material-ui-icons/Clear';
 
 const styles = context => ({
   root: {
@@ -140,18 +139,11 @@ class TableToolbar extends React.Component {
                     </Menu>
                   </div>
                   :
-                  <div className={classes.tooltip}>
-                    <Tooltip title="Modifier">
-                      <IconButton aria-label="Edit">
-                        <EditIcon/>
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Annuler la réservation">
-                      <IconButton aria-label="Cancel">
-                        <ClearIcon/>
-                      </IconButton>
-                    </Tooltip>
-                  </div>
+                  <Tooltip title="Modifier">
+                    <IconButton aria-label="Edit">
+                      <EditIcon/>
+                    </IconButton>
+                  </Tooltip>
                 }
                 <Tooltip title="Supprimer">
                   <IconButton aria-label="Delete">

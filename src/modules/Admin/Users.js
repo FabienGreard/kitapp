@@ -58,12 +58,12 @@ class UsersAdmin extends Component {
     let { data } = this.state;
 
     const columnData = [
-      { id: 'email', numeric: false, disablePadding: true, label: 'Email' },
-      { id: 'firstName', numeric: false, disablePadding: true, label: 'Prénom' },
-      { id: 'lastName', numeric: false, disablePadding: true, label: 'Nom' },
-      { id: 'phone', numeric: false, disablePadding: true, label: 'Téléphone' },
-      { id: 'gender', numeric: false, disablePadding: true, label: 'Sexe' },
-      { id: 'role', numeric: false, disablePadding: true, label: 'Rôle' },
+      { id: 'email', image: false, numeric: false, disablePadding: true, label: 'Email' },
+      { id: 'firstName', image: false, numeric: false, disablePadding: true, label: 'Prénom' },
+      { id: 'lastName', image: false, numeric: false, disablePadding: true, label: 'Nom' },
+      { id: 'phone', image: false, numeric: false, disablePadding: true, label: 'Téléphone' },
+      { id: 'gender', image: false, numeric: false, disablePadding: true, label: 'Sexe' },
+      { id: 'role', image: false, numeric: false, disablePadding: true, label: 'Rôle' },
     ];
 
     const deleteUser = this.deleteUser;

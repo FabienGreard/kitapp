@@ -59,11 +59,12 @@ class EnginesAdmin extends Component {
     let { data } = this.state;
 
     const columnData = [
-      { id: 'name', numeric: false, disablePadding: true, label: 'Nom' },
-      { id: 'price', numeric: true, disablePadding: false, label: 'Prix' },
-      { id: 'level', numeric: false, disablePadding: true, label: 'Niveau requis' },
-      { id: 'comments', numeric: false, disablePadding: true, label: 'Commentaires' },
-      { id: 'location', numeric: false, disablePadding: true, label: 'Lieux' },
+      { id: 'name', image: false, numeric: false, disablePadding: false, label: 'Nom' },
+      { id: 'image', image: true, numeric: false, disablePadding: true, label: 'Image' },
+      { id: 'price', image: false, numeric: true, disablePadding: false, label: 'Prix' },
+      { id: 'level', image: false, numeric: false, disablePadding: true, label: 'Niveau requis' },
+      { id: 'comments', image: false, numeric: false, disablePadding: true, label: 'Commentaires' },
+      { id: 'location', image: false, numeric: false, disablePadding: true, label: 'Lieux' },
     ];
 
     const deleteEngine = this.deleteEngine;
