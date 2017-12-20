@@ -25,17 +25,17 @@ const styles = context => ({
 class SubmitLine extends Component {
   constructor(props) {
     super(props);
-    this.state = { user: props.reset };
+    this.state = { object: props.reset };
   }
 
   handleSubmit = (e, reset = false) =>{
     e.preventDefault();
     if(!reset){
       this.setState({
-        user: this.props.reset
+        object: this.props.reset
       });
     }
-    this.props.handleSubmit(Object.keys(this.state.user)[0], reset ? this.state.user : this.props.user);
+    this.props.handleSubmit(Object.keys(this.state.object)[0], reset ? this.state.object : this.props.object);
   }
 
   render() {

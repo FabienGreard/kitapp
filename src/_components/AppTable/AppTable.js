@@ -29,6 +29,7 @@ class AppTable extends Component {
       data: props.data,
       page: 0,
       rowsPerPage: 5,
+      openAdd: false,
     }
   }
 
@@ -156,10 +157,7 @@ class AppTable extends Component {
     const handleClickAddEngine = this.handleClickAddEngine;
     return (
       <div>
-        {
-          openAdd &&
-          <TableAdd columnData={columnData}/>
-        }
+        <TableAdd columnData={columnData} open={openAdd}/>
         <TableToolbar tableName={tableName} numSelected={selected.length} handleClickFiltrer={handleClickFiltrer} handleClickDelete={handleClickDelete} handleClickUpdateRole={handleClickUpdateRole} handleClickAddEngine={handleClickAddEngine}/>
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>

@@ -13,6 +13,7 @@ export * from './TableBody';
 export * from './TableAdd';
 export * from './ResetPassword';
 export * from './NumberFormatCustom';
+export * from './PriceFormatCustom';
 export * from './SubmitLine';
 export * from './Popup';
 export * from './CardHeader';

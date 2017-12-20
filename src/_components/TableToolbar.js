@@ -146,8 +146,8 @@ class TableToolbar extends React.Component {
                   </Tooltip>
                 }
                 <Tooltip title="Supprimer">
-                  <IconButton aria-label="Delete">
-                    <DeleteIcon onClick={handleClickOpen}/>
+                  <IconButton aria-label="Delete" onClick={handleClickOpen}>
+                    <DeleteIcon />
                   </IconButton>
                 </Tooltip>
               </div>
@@ -156,14 +156,14 @@ class TableToolbar extends React.Component {
                 {
                   isEngine &&
                   <Tooltip title="Ajouter">
-                    <IconButton aria-label="Add">
-                      <AddIcon onClick={handleClickAdd}/>
+                    <IconButton aria-label="Add" onClick={handleClickAdd}>
+                      <AddIcon/>
                     </IconButton>
                   </Tooltip>
                 }
                 <Tooltip title="Filtre par defaut">
-                  <IconButton aria-label="Filter list">
-                    <FilterListIcon onClick={handleClickFiltrer}/>
+                  <IconButton aria-label="Filter list" onClick={handleClickFiltrer}>
+                    <FilterListIcon />
                   </IconButton>
                 </Tooltip>
               </div>
