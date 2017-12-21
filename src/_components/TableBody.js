@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { Stars } from './';
+
 //material-ui import
 import { TableBody, TableCell, TableRow } from 'material-ui/Table';
 import Checkbox from 'material-ui/Checkbox';
@@ -40,7 +42,11 @@ class _TableBody extends Component {
               </TableCell>
 
               { columnData.map((key) => (
-                <TableCell key={key.id} padding={key.disablePadding ? 'none' : 'default'} numeric={key.numeric}>{key.image ? <img src={"data:image/png;base64," + n[key.id]} style={{ width: 25, height: 25 }} title="engine" alt="engine"/> : n[key.id]}</TableCell>
+                <TableCell key={key.id} padding={key.disablePadding ? 'none' : 'default'} numeric={key.numeric}>
+                  { key.image && <img src={"data:image/png;base64," + n[key.id]} style={{ width: 25, height: 25 }} title="engine" alt="engine"/> }
+                  { key.id === 'level' && <Stars level={n[key.id]} /> }
+                  { !key.image && key.id !== 'level' && n[key.id] }
+                </TableCell>
               ))
               }
 

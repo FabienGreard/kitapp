@@ -53,8 +53,8 @@ class TableToolbar extends React.Component {
     this.state = { anchorElRoleMenu: null, open: false };
   }
 
-    handleClickAdd = (e) => {
-      this.props.handleClickAddEngine(e);
+    handleClickAddModify = (e) => {
+      this.props.handleClickAddModify(e);
     }
 
     handleRole = (e, role) => {
@@ -103,7 +103,7 @@ class TableToolbar extends React.Component {
     //engine table specific
     let isEngine = tableName === 'Machines' ? true : false;
 
-    const handleClickAdd = this.handleClickAdd;
+    const handleClickAddModify = this.handleClickAddModify;
     return(
       <div>
         <Popup open={open} action={handleClickDelete} handleRequestClose={handleRequestClose} title={"Supprimer ?"} message={"Attention, cette action ne peut être annulée."}/>
@@ -153,10 +153,9 @@ class TableToolbar extends React.Component {
               </div>
             ) : (
               <div className={classes.tooltip}>
-                {
-                  isEngine &&
+                { isEngine &&
                   <Tooltip title="Ajouter">
-                    <IconButton aria-label="Add" onClick={handleClickAdd}>
+                    <IconButton aria-label="Add" onClick={handleClickAddModify}>
                       <AddIcon/>
                     </IconButton>
                   </Tooltip>
@@ -182,7 +181,7 @@ TableToolbar.propTypes = {
   handleClickFiltrer: PropTypes.func.isRequired,
   handleClickDelete: PropTypes.func.isRequired,
   handleClickUpdateRole: PropTypes.func,
-  handleClickAddEngine: PropTypes.func,
+  handleClickAddModifyModify: PropTypes.func,
 };
 
 TableToolbar = withStyles(styles)(TableToolbar);

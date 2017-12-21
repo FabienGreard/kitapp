@@ -20,6 +20,7 @@ export * from './CardHeader';
 export * from './CardContent';
 export * from './Search';
 export * from './AskForReservation';
+export * from './Stars';
 
 //wrapper
 export * from './AppBar';

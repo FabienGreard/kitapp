@@ -62,7 +62,7 @@ class EnginesAdmin extends Component {
       { id: 'name', image: false, numeric: false, disablePadding: false, label: 'Nom', required: true, multiline: false },
       { id: 'image', image: true, numeric: false, disablePadding: true, label: 'Image', required: false, multiline: false },
       { id: 'price', image: false, numeric: true, disablePadding: false, label: 'Prix', required: true, multiline: false },
-      { id: 'level', image: false, numeric: false, disablePadding: true, label: 'Niveau requis', required: true, multiline: false },
+      { id: 'level', image: false, numeric: false, disablePadding: false, label: 'Niveau', required: true, multiline: false },
       { id: 'comments', image: false, numeric: false, disablePadding: true, label: 'Commentaires', required: false, multiline: true },
       { id: 'location', image: false, numeric: false, disablePadding: true, label: 'Lieux', required: false, multiline: false },
     ];

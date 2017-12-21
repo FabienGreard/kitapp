@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 
-import { AskForReservation } from './';
+import { AskForReservation, Stars } from './';
 import { engineActions } from '../_actions';
 
 //material-ui import
@@ -12,16 +12,12 @@ import { CardActions, CardContent } from 'material-ui/Card';
 import Collapse from 'material-ui/transitions/Collapse';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
-import { yellow } from 'material-ui/colors';
 import Divider from 'material-ui/Divider';
 import Tooltip from 'material-ui/Tooltip';
 
 //material-ui-icons import
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import DateRangeIcon from 'material-ui-icons/DateRange';
-import StarBorderIcon from 'material-ui-icons/StarBorder';
-import StarIcon from 'material-ui-icons/Star';
-import StarHalfIcon from 'material-ui-icons/StarHalf';
 
 //styles
 const styles = context => ({
@@ -37,42 +33,11 @@ const styles = context => ({
   flexGrow:{
     flex: '1 0 auto',
   },
-  stars: {
-    color: yellow['A700'],
-  },
-  star: {
-    height: 24,
-    cursor: 'pointer',
-  },
   more: {
     overflow: 'auto',
     height: 120,
   }
 });
-
-const Stars = ({level, classes}) => {
-  let stars = Array(3);
-  let numberOfStars = Math.floor(level / 2);
-  let numberOfHalfStars = level % 2;
-
-  stars.fill(<StarIcon />, 0, numberOfStars);
-  stars.fill(<StarHalfIcon />, numberOfStars, (numberOfStars + numberOfHalfStars));
-  stars.fill(<StarBorderIcon/>, (numberOfStars + numberOfHalfStars), 3);
-
-  return (
-    <Tooltip title={`Niveau ${level > 2 ? level > 4 ? 'Confirmé': 'Intermédiaire': 'Débutant'}`} placement='bottom' enterDelay={300}>
-      <div className={classes.stars}>
-        {
-          stars.map((value, key) => (
-            <span className={classes.star} key={key}>{value}</span>
-          ))
-        }
-      </div>
-    </Tooltip>
-  )
-};
-
-
 
 class _CardContent extends Component {
   constructor(props) {
@@ -117,7 +82,7 @@ class _CardContent extends Component {
             </IconButton>
           </Tooltip>
           <div className={classes.flexGrow} />
-          <Stars level={level} classes={classes}/>
+          <Stars level={level} />
           <Tooltip title="En savoir plus" placement='bottom' enterDelay={300}>
             <IconButton
               className={classnames(classes.expand, {

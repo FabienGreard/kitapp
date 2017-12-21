@@ -15,6 +15,7 @@ function update(record) {
     return fetch(url() + '/records/' + record._id, requestOptions).then(response =>
       response.json().then(json => ({
         ok: response.ok,
+        error: "Mauvais token, Reconnectez vous.",
         json
       })
     ))
@@ -30,6 +31,7 @@ function getByUserId(id) {
     return fetch(url() + '/records/' + id, requestOptions).then(response =>
       response.json().then(json => ({
         ok: response.ok,
+        error: "Mauvais token, Reconnectez vous.",
         json
       })
     ))

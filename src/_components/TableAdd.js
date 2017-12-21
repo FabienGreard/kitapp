@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import { SubmitLine, PriceFormatCustom } from './';
+import { SubmitLine, PriceFormatCustom, Stars } from './';
 import { theme } from '../_helpers';
 
 //material-ui import
@@ -39,8 +39,8 @@ const styles = context => ({
     margin: 'auto',
     marginRight: context.spacing.unit,
   },
-  button: {
-    flex: '1 1 auto'
+  flex: {
+    marginRight: 'auto',
   },
   rightIcon: {
     marginLeft: context.spacing.unit,
@@ -55,6 +55,7 @@ class TableAdd extends Component {
     super(props);
     this.state = {
       object: Object.keys(props.columnData).reduce((o, key) => Object.assign(o, {[props.columnData[key].id]: ''}), {}),
+      submitObject: Object.keys(this.props.columnData).reduce((o, key) => Object.assign(o, {[this.props.columnData[key].id]: ''}), {}),
       touched: {},
       open: false,
       submitted: false,
@@ -62,12 +63,32 @@ class TableAdd extends Component {
 
   }
 
+  reset = () => {
+    this.setState({
+      object: Object.keys(this.props.columnData).reduce((o, key) => Object.assign(o, {[this.props.columnData[key].id]: ''}), {}),
+      submitObject: Object.keys(this.props.columnData).reduce((o, key) => Object.assign(o, {[this.props.columnData[key].id]: ''}), {}),
+      touched: {},
+      open: false,
+      submitted: false,
+    });
+  }
+
   componentWillReceiveProps(nextProps) {
-    if(nextProps.open){
+    if(nextProps.open !== this.state.open){
       this.setState({
         open: nextProps.open
       });
     }
+  }
+
+  checkForm = () => {
+    let check = true;
+    this.props.columnData.map(value => {
+      if(value.required && this.state.submitObject[value.id] === ''){
+        check = false;
+      }
+    });
+    return check;
   }
 
   handleTouched = (name, bool = true) => {
@@ -92,36 +113,60 @@ class TableAdd extends Component {
     });
   }
 
-  handleSubmit = (name, object = this.state.object) => {
+  handleLevelChange = (value) => {
+    this.handleTouched('level');
 
+    this.setState({
+      object: {
+        ...this.state.object,
+        level: value
+      }
+    });
+  }
+
+  handleSubmit = (name, object = this.state.object) => {
       this.setState({
-        submitted : true,
+        submitObject: {
+          ...this.state.submitObject,
+          [name]: object[name]
+        },
         object: {
           ...this.state.object,
           [name]: object[name]
         }
       });
-
-    console.log(object);
-    //this.props.handleSubmit(user);
     this.handleTouched(name, false);
   }
 
-  handleClose = () => {
-    this.setState({ open: false });
+  handleSubmitObject = () => {
+    this.setState({
+      submitted : true,
+    });
+
+    if(this.checkForm()){
+      console.log('AMAZING');
+      //this.props.handleSubmit(object);
+    }
+  }
+
+  handleClose = (e) => {
+    this.reset();
+    this.props.handleClickAddModify(e);
   };
 
   render() {
-    let { touched, object, submitted } = this.state;
+    let { touched, object, submitObject, submitted, open } = this.state;
     let { classes, columnData } = this.props;
 
     const handleChange = this.handleChange;
     const handleSubmit = this.handleSubmit;
+    const handleSubmitObject = this.handleSubmitObject;
     const handleClose = this.handleClose;
+    const handleLevelChange = this.handleLevelChange;
     return (
       <Dialog
-        open={this.state.open}
-        onClose={this.handleClose}
+        open={open}
+        onRequestClose={handleClose}
         aria-labelledby="table-form-add"
       >
         <DialogTitle id="table-form-title">Formulaire d'ajout</DialogTitle>
@@ -132,34 +177,39 @@ class TableAdd extends Component {
               <div key={data.id} className={classes.column}>
                 <div className={classes.line}>
                   { data.image &&
-                    <label htmlFor="upload" className={classes.button}>
+                    <label htmlFor="upload" className={classes.flex}>
                       <Button raised component="span">
                         Upload <FileUpload className={classes.rightIcon} />
                       </Button>
                     </label>
                   }
-                  <Input
-                    className={classnames(classes.input, {
-                      [classes.upload]: data.image
-                    })}
-                  style={theme.getRowStyle('darkGrey', 'none')}
-                  name={data.id}
-                  value={object[data.id]}
-                  onChange={handleChange}
-                  id={data.image ? "upload" : data.id}
-                  type={data.image ? "file" : "text"}
-                  placeholder={data.label}
-                  multiline={data.multiline}
-                  rows={data.multiline ? 4 : 0}
-                  inputComponent={data.numeric && PriceFormatCustom}
-                  endAdornment={
-                    <InputAdornment position="start" className={classes.icon}>
-                      { data.numeric && <SettingsIcon /> }
-                    </InputAdornment>}
-                  />
+                  { data.id !== 'level' ?
+                      <Input
+                      className={classnames(classes.input, {
+                        [classes.upload]: data.image
+                      })}
+                    style={theme.getRowStyle('darkGrey', 'none')}
+                    name={data.id}
+                    value={object[data.id]}
+                    onChange={handleChange}
+                    id={data.image ? "upload" : data.id}
+                    type={data.image ? "file" : "text"}
+                    placeholder={data.label}
+                    multiline={data.multiline}
+                    rows={data.multiline ? 4 : 0}
+                    inputComponent={data.numeric && PriceFormatCustom}
+                    endAdornment={
+                      <InputAdornment position="start" className={classes.icon}>
+                        { data.numeric && <SettingsIcon /> }
+                      </InputAdornment>}
+                    /> :
+                    <div className={classes.flex}>
+                      <Stars level={object[data.id] === '' ? 0 : object[data.id]} handleLevelChange={handleLevelChange}/>
+                    </div>
+                  }
                   <SubmitLine touched={touched[data.id] && true} handleSubmit={handleSubmit} reset={{[data.id]: object[data.id]}}/>
                 </div>
-              {submitted && !object[data.id] && data.required &&
+              {submitted && !submitObject[data.id] && data.required &&
                 <Typography style={theme.getRowStyle('primaryColor', 'none')} type="caption">
                   {data.label} est requis
                 </Typography>
@@ -172,7 +222,7 @@ class TableAdd extends Component {
           <Button onClick={handleClose} raised color="primary">
             Annuler
           </Button>
-          <Button onClick={handleSubmit} raised color="accent">
+          <Button onClick={handleSubmitObject} raised color="accent">
             Confirmer
           </Button>
         </DialogActions>
@@ -186,6 +236,7 @@ TableAdd.defaultProps = {
   columnData: PropTypes.array.isRequired,
   classes: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,
+  handleClickAddModify: PropTypes.func,
 };
 
 const TableAddWithStyles = withStyles(styles)(TableAdd);

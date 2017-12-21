@@ -29,7 +29,7 @@ class AppTable extends Component {
       data: props.data,
       page: 0,
       rowsPerPage: 5,
-      openAdd: false,
+      openAddModify: false,
     }
   }
 
@@ -122,10 +122,10 @@ class AppTable extends Component {
     });
   }
 
-  handleClickAddEngine = (e) =>{
-    this.setState({
-      openAdd: true
-    });
+  handleClickAddModify = (e) => {
+    this.setState(prevState => ({
+      openAddModify: !prevState.openAddModify
+    }));
   }
 
   handleAddEngine = (e, engine) => {
@@ -133,7 +133,7 @@ class AppTable extends Component {
   }
 
   render() {
-    let { order, orderBy, selected, data, page, rowsPerPage, openAdd } = this.state;
+    let { order, orderBy, selected, data, page, rowsPerPage, openAddModify } = this.state;
 
     let { columnData, classes, tableName } = this.props;
 
@@ -154,11 +154,11 @@ class AppTable extends Component {
     const handleClickUpdateRole = this.handleClickUpdateRole;
 
     //engine table specific
-    const handleClickAddEngine = this.handleClickAddEngine;
+    const handleClickAddModify = this.handleClickAddModify;
     return (
       <div>
-        <TableAdd columnData={columnData} open={openAdd}/>
-        <TableToolbar tableName={tableName} numSelected={selected.length} handleClickFiltrer={handleClickFiltrer} handleClickDelete={handleClickDelete} handleClickUpdateRole={handleClickUpdateRole} handleClickAddEngine={handleClickAddEngine}/>
+        <TableAdd columnData={columnData} open={openAddModify} handleClickAddModify={handleClickAddModify}/>
+        <TableToolbar tableName={tableName} numSelected={selected.length} handleClickFiltrer={handleClickFiltrer} handleClickDelete={handleClickDelete} handleClickUpdateRole={handleClickUpdateRole} handleClickAddModify={handleClickAddModify}/>
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             <TableHead
