@@ -10,7 +10,7 @@ export * from './Alert';
 export * from './TableHead';
 export * from './TableToolbar';
 export * from './TableBody';
-export * from './TableAdd';
+export * from './TableAddModify';
 export * from './ResetPassword';
 export * from './NumberFormatCustom';
 export * from './PriceFormatCustom';

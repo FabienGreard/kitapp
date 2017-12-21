@@ -29,7 +29,7 @@ const styles = context => ({
 class Stars extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { stars: this.calcStars(props.level), curleft: 0};
+    this.state = { stars: this.calcStars(props.level), curleft: 0, isListening: false};
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -65,17 +65,24 @@ class Stars extends React.Component {
     this.props.handleLevelChange(Math.round(((e.pageX - this.state.curleft) / 12) -32));
   }
 
+  startListening = () => {
+    this.setState(prevState => ({
+      isListening: !prevState.isListening
+    }));
+  }
+
   render() {
-    let { stars } = this.state;
+    let { stars, isListening } = this.state;
     let { classes, level, handleLevelChange } = this.props;
 
     const handleChange = this.handleChange;
     const findPos = this.findPos;
+    const startListening = this.startListening;
     return (
       <Tooltip title={`Niveau ${level > 2 ? level > 4 ? 'Confirmé': 'Intermédiaire': 'Débutant'}`} placement='bottom' enterDelay={300}>
         <div className={classnames(classes.stars, {
         [classes.padding]  : Boolean(handleLevelChange),
-        })} onMouseEnter={findPos} onMouseOver={(e) => Boolean(handleLevelChange) && handleChange(e)}>
+      })} onMouseEnter={findPos} onMouseOver={(e) => Boolean(handleLevelChange) && isListening  && handleChange(e)} onClick={startListening}>
           {
             stars.map((value, key) => (
               <span className={classes.star} key={key}>

@@ -41,16 +41,21 @@ const styles = context => ({
   },
   flex: {
     marginRight: 'auto',
+    display: 'flex',
+    alignItems: 'center',
   },
   rightIcon: {
     marginLeft: context.spacing.unit,
   },
   upload: {
     display: 'none',
+  },
+  imageString: {
+    marginLeft: context.spacing.unit,
   }
 });
 
-class TableAdd extends Component {
+class TableAddModify extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -79,6 +84,29 @@ class TableAdd extends Component {
         open: nextProps.open
       });
     }
+
+    if(nextProps.data){
+      this.setState({
+        object: {
+          ...this.state.object,
+          _id: nextProps.data[0]._id,
+          name: nextProps.data[0].name,
+          price: nextProps.data[0].price,
+          level: nextProps.data[0].level,
+          comments: nextProps.data[0].comments,
+          location: nextProps.data[0].location,
+        },
+        submitObject: {
+          ...this.state.object,
+          _id: nextProps.data[0]._id,
+          name: nextProps.data[0].name,
+          price: nextProps.data[0].price,
+          level: nextProps.data[0].level,
+          comments: nextProps.data[0].comments,
+          location: nextProps.data[0].location,
+        }
+      });
+    }
   }
 
   checkForm = () => {
@@ -87,6 +115,7 @@ class TableAdd extends Component {
       if(value.required && this.state.submitObject[value.id] === ''){
         check = false;
       }
+      return check;
     });
     return check;
   }
@@ -169,7 +198,7 @@ class TableAdd extends Component {
         onRequestClose={handleClose}
         aria-labelledby="table-form-add"
       >
-        <DialogTitle id="table-form-title">Formulaire d'ajout</DialogTitle>
+        <DialogTitle id="table-form-title">Formulaire {this.props.data ? 'd\'édition' : 'de création'}</DialogTitle>
         <DialogContent>
           <DialogContentText></DialogContentText>
           {
@@ -181,6 +210,7 @@ class TableAdd extends Component {
                       <Button raised component="span">
                         Upload <FileUpload className={classes.rightIcon} />
                       </Button>
+                      <Typography style={theme.getRowStyle('darkGrey', 'none')} type="caption" className={classes.imageString}>{object[data.id] !== '' ? object[data.id]: 'Nouvelle image ?'}</Typography>
                     </label>
                   }
                   { data.id !== 'level' ?
@@ -232,12 +262,13 @@ class TableAdd extends Component {
 
 }
 
-TableAdd.defaultProps = {
+TableAddModify.defaultProps = {
   columnData: PropTypes.array.isRequired,
   classes: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,
   handleClickAddModify: PropTypes.func,
+  data: PropTypes.object,
 };
 
-const TableAddWithStyles = withStyles(styles)(TableAdd);
-export { TableAddWithStyles as TableAdd };
+const TableAddModifyWithStyles = withStyles(styles)(TableAddModify);
+export { TableAddModifyWithStyles as TableAddModify };

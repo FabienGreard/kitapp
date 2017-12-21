@@ -53,8 +53,8 @@ class TableToolbar extends React.Component {
     this.state = { anchorElRoleMenu: null, open: false };
   }
 
-    handleClickAddModify = (e) => {
-      this.props.handleClickAddModify(e);
+    handleClickAddModify = (e, edit = false) => {
+      this.props.handleClickAddModify(e, edit);
     }
 
     handleRole = (e, role) => {
@@ -139,11 +139,13 @@ class TableToolbar extends React.Component {
                     </Menu>
                   </div>
                   :
-                  <Tooltip title="Modifier">
-                    <IconButton aria-label="Edit">
-                      <EditIcon/>
-                    </IconButton>
-                  </Tooltip>
+                  numSelected === 1 && (
+                    <Tooltip title="Modifier">
+                      <IconButton aria-label="Edit" onClick={(e) => handleClickAddModify(e, true)}>
+                        <EditIcon/>
+                      </IconButton>
+                    </Tooltip>
+                  )
                 }
                 <Tooltip title="Supprimer">
                   <IconButton aria-label="Delete" onClick={handleClickOpen}>

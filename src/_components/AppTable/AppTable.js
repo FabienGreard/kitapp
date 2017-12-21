@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import keycode from 'keycode';
 
-import { TableHead, TableToolbar, TableBody, TableAdd } from '../';
+import { TableHead, TableToolbar, TableBody, TableAddModify } from '../';
 
 //material-ui import
 import Table, { TableFooter, TablePagination, TableRow } from 'material-ui/Table';
@@ -30,6 +30,7 @@ class AppTable extends Component {
       page: 0,
       rowsPerPage: 5,
       openAddModify: false,
+      edit: false
     }
   }
 
@@ -122,9 +123,10 @@ class AppTable extends Component {
     });
   }
 
-  handleClickAddModify = (e) => {
+  handleClickAddModify = (e, edit = false) => {
     this.setState(prevState => ({
-      openAddModify: !prevState.openAddModify
+      openAddModify: !prevState.openAddModify,
+      edit: edit
     }));
   }
 
@@ -133,7 +135,7 @@ class AppTable extends Component {
   }
 
   render() {
-    let { order, orderBy, selected, data, page, rowsPerPage, openAddModify } = this.state;
+    let { order, orderBy, selected, data, page, rowsPerPage, openAddModify, edit } = this.state;
 
     let { columnData, classes, tableName } = this.props;
 
@@ -157,7 +159,7 @@ class AppTable extends Component {
     const handleClickAddModify = this.handleClickAddModify;
     return (
       <div>
-        <TableAdd columnData={columnData} open={openAddModify} handleClickAddModify={handleClickAddModify}/>
+        <TableAddModify columnData={columnData} data={edit && data.filter(data => data._id === selected[0])} open={openAddModify} handleClickAddModify={handleClickAddModify}/>
         <TableToolbar tableName={tableName} numSelected={selected.length} handleClickFiltrer={handleClickFiltrer} handleClickDelete={handleClickDelete} handleClickUpdateRole={handleClickUpdateRole} handleClickAddModify={handleClickAddModify}/>
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
