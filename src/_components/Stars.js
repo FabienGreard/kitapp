@@ -16,6 +16,8 @@ import StarHalfIcon from 'material-ui-icons/StarHalf';
 const styles = context => ({
   stars: {
     color: yellow['A700'],
+    display: 'flex',
+    flexWrap: 'nowrap',
   },
   padding: {
     padding: 10,
@@ -55,14 +57,16 @@ class Stars extends React.Component {
   	if (obj.offsetParent) {
   		do {
   			curleft += obj.offsetLeft;
-  		} while (obj === obj.offsetParent);
+        obj = obj.offsetParent
+  		} while (obj);
   	}
 
   	this.setState({ curleft: curleft });
   }
 
   handleChange = (e) => {
-    this.props.handleLevelChange(Math.round(((e.pageX - this.state.curleft) / 12) -32));
+    console.log(this.state.curleft, Math.round((e.pageX - this.state.curleft) / 12))
+    this.props.handleLevelChange(Math.round((e.pageX - this.state.curleft) / 12));
   }
 
   startListening = () => {
