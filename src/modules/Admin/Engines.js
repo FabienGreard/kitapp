@@ -51,7 +51,13 @@ class EnginesAdmin extends Component {
   }
 
   addEngine = (e, engine) => {
-    this.props.dispatch(engineActions.create(engine));
+    console.log(engine);
+    //this.props.dispatch(engineActions.create(engine));
+  }
+
+  editEngine = (e, engine) => {
+    console.log(engine);
+    //this.props.dispatch(engineActions.create(engine));
   }
 
   render() {
@@ -69,6 +75,7 @@ class EnginesAdmin extends Component {
 
     const deleteEngine = this.deleteEngine;
     const addEngine = this.addEngine;
+    const editEngine = this.editEngine;
     return (
       <div>
         { loading &&
@@ -78,7 +85,7 @@ class EnginesAdmin extends Component {
           <Grid container spacing={24}>
             <Grid item xs>
               <Paper>
-                <AppTable tableName="Machines" columnData={columnData} data={data} delete={deleteEngine} addEngine={addEngine}/>
+                <AppTable tableName="Machines" columnData={columnData} data={data} delete={deleteEngine} addEngine={addEngine} editEngine={editEngine}/>
               </Paper>
             </Grid>
           </Grid>

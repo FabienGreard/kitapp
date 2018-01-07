@@ -167,14 +167,13 @@ class TableAddModify extends Component {
     this.handleTouched(name, false);
   }
 
-  handleSubmitObject = () => {
+  handleSubmitObject = (e) => {
     this.setState({
       submitted : true,
     });
 
     if(this.checkForm()){
-      console.log('AMAZING');
-      //this.props.handleSubmit(object);
+      this.props.handleSubmit(e, this.state.submitObject);
     }
   }
 

@@ -130,8 +130,13 @@ class AppTable extends Component {
     }));
   }
 
-  handleAddEngine = (e, engine) => {
-    this.props.addEngine(e, engine);
+  handleAddModify = (e, engine) => {
+    if(this.state.edit){
+      this.props.addEngine(e, engine);
+    }else{
+      this.props.editEngine(e, engine);
+    }
+
   }
 
   render() {
@@ -157,9 +162,10 @@ class AppTable extends Component {
 
     //engine table specific
     const handleClickAddModify = this.handleClickAddModify;
+    const handleAddModify = this.handleAddModify;
     return (
       <div>
-        <TableAddModify columnData={columnData} data={edit && data.filter(data => data._id === selected[0])} open={openAddModify} handleClickAddModify={handleClickAddModify}/>
+        <TableAddModify columnData={columnData} data={edit && data.filter(data => data._id === selected[0])} open={openAddModify} handleClickAddModify={handleClickAddModify} handleSubmit={handleAddModify}/>
         <TableToolbar tableName={tableName} numSelected={selected.length} handleClickFiltrer={handleClickFiltrer} handleClickDelete={handleClickDelete} handleClickUpdateRole={handleClickUpdateRole} handleClickAddModify={handleClickAddModify}/>
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
@@ -210,6 +216,7 @@ AppTable.propTypes = {
   data: PropTypes.array,
   updateRole: PropTypes.func,
   addEngine: PropTypes.func,
+  editEngine: PropTypes.func,
 }
 
 const AppTableWithStyles = withStyles(styles)(AppTable);

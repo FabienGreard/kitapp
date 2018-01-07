@@ -65,7 +65,6 @@ class Stars extends React.Component {
   }
 
   handleChange = (e) => {
-    console.log(this.state.curleft, Math.round((e.pageX - this.state.curleft) / 12))
     this.props.handleLevelChange(Math.round((e.pageX - this.state.curleft) / 12));
   }
 
