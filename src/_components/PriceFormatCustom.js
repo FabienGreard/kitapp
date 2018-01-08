@@ -14,7 +14,6 @@ class PriceFormatCustom extends React.Component {
             },
           });
         }}
-        thousandSeparator
       />
     );
   }

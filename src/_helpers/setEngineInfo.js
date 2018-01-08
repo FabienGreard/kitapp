@@ -7,7 +7,7 @@ export const setEngineInfo = (engine) => {
     comments: engine.comments || "Aucun commentaires",
     location: engine.location,
     reserved: engine.reserved,
-    image: new Buffer(engine.img.data).toString('base64'),
+    img: engine.img.data ? new Buffer(engine.img.data).toString('base64') : '',
     level: engine.level,
   };
 };

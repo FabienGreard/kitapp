@@ -173,6 +173,7 @@ class TableAddModify extends Component {
     });
 
     if(this.checkForm()){
+      this.reset();
       this.props.handleSubmit(e, this.state.submitObject);
     }
   }

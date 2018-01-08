@@ -51,12 +51,11 @@ class EnginesAdmin extends Component {
   }
 
   addEngine = (e, engine) => {
-    console.log(engine);
-    //this.props.dispatch(engineActions.create(engine));
+    this.props.dispatch(engineActions.create(engine));
   }
 
   editEngine = (e, engine) => {
-    console.log(engine);
+    console.log('edit', engine);
     //this.props.dispatch(engineActions.create(engine));
   }
 
@@ -66,7 +65,7 @@ class EnginesAdmin extends Component {
 
     const columnData = [
       { id: 'name', image: false, numeric: false, disablePadding: false, label: 'Nom', required: true, multiline: false },
-      { id: 'image', image: true, numeric: false, disablePadding: true, label: 'Image', required: false, multiline: false },
+      { id: 'img', image: true, numeric: false, disablePadding: true, label: 'Image', required: false, multiline: false },
       { id: 'price', image: false, numeric: true, disablePadding: false, label: 'Prix', required: true, multiline: false },
       { id: 'level', image: false, numeric: false, disablePadding: false, label: 'Niveau', required: true, multiline: false },
       { id: 'comments', image: false, numeric: false, disablePadding: true, label: 'Commentaires', required: false, multiline: true },

@@ -81,7 +81,7 @@ function _delete(id) {
         engineService.create(engine)
             .then(
                 engine => {
-                    dispatch(success(engine));
+                    dispatch(success(engine.engine));
                 },
                 error => {
                     dispatch(failure(error));

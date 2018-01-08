@@ -5,15 +5,19 @@ export function engines(state = {}, action) {
     case engineConstants.CREATE_REQUEST:
       return {
         loading: true,
-        items: state.items.push(action.engine)
+        items: [...state.items, { _id: 'temp', ...action.engine, creating: true }]
       };
     case engineConstants.CREATE_SUCCESS:
       return {
-        items: state.items
+        items: state.items.map(engine =>
+          engine.creating
+            ? action.engine
+            : engine
+        )
       };
     case engineConstants.CREATE_FAILURE:
       return {
-        items: state.items.pop()
+        items: state.items.filter(engine => engine.creating !== true)
       };
     case engineConstants.GETALL_REQUEST:
       return {

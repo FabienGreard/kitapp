@@ -42,12 +42,12 @@ class _TableBody extends Component {
               </TableCell>
 
               { columnData.map((key) => (
-                <TableCell key={key.id} padding={key.disablePadding ? 'none' : 'default'} numeric={key.numeric}>
-                  { key.image && <img src={"data:image/png;base64," + n[key.id]} style={{ width: 25, height: 25 }} title="engine" alt="engine"/> }
-                  { key.id === 'level' && <Stars level={n[key.id]} /> }
-                  { !key.image && key.id !== 'level' && n[key.id] }
-                </TableCell>
-              ))
+                  <TableCell key={key.id} padding={key.disablePadding ? 'none' : 'default'} numeric={key.numeric}>
+                    { key.image && <img src={"data:image/png;base64," + n[key.id]} style={{ width: 25, height: 25 }} title="engine" alt="engine"/> }
+                    { key.id === 'level' && <Stars level={n[key.id]} /> }
+                    { !key.image && key.id !== 'level' && n[key.id] }
+                  </TableCell>
+                ))
               }
 
             </TableRow>
