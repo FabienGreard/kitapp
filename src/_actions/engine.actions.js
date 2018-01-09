@@ -105,12 +105,11 @@ function _delete(id) {
         engineService.updateImageById(engine, img)
             .then(
                 engine => {
-                    dispatch(success(engine));
+                    dispatch(success(engine.engine));
                 },
                 error => {
                     dispatch(failure(error));
-                    console.log(error);
-                    //dispatch(alertActions.error(error));
+                    dispatch(alertActions.error(error));
                 }
             );
     };

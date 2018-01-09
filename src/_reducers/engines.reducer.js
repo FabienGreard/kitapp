@@ -68,7 +68,7 @@ export function engines(state = {}, action) {
       return {
         items: state.items.map(engine =>
           engine._id === action.engine._id
-            ? { ...action.engine }
+            ?  { ...action.engine }
             : engine
         )
       };

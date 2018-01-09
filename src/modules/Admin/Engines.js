@@ -39,6 +39,7 @@ class EnginesAdmin extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps.items);
     if(nextProps.items !== this.props.items && typeof nextProps.items !== 'undefined'){
       this.setState({
         data: getEnginesInfo(nextProps.items)
