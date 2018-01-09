@@ -34,7 +34,7 @@ class AppCard extends Component {
         {data.map(card => {
           return (
             <Card key={card._id} className={classes.card}>
-              <CardHeader title={card.name} price={card.price} image={card.image}
+              <CardHeader title={card.name} price={card.price} image={card.img}
               location={card.location}/>
               <CardContent card={card}/>
             </Card>

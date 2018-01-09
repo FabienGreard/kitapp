@@ -82,7 +82,7 @@ function _delete(id) {
             .then(
                 engine => {
                     dispatch(success(engine.engine));
-                    if(img !== ''){
+                    if(img !== undefined){
                       dispatch(updateImageById(engine.engine, img));
                     }
                 },

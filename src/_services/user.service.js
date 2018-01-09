@@ -126,7 +126,6 @@ function update(user) {
 }
 
 function updatePassword(user, password) {
-  console.log(password);
     const requestOptions = {
         method: 'PUT',
         headers: { ...authHeader(), 'Content-Type': 'application/json' },
