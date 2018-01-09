@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import socketIOClient from "socket.io-client";
 
 import { engineActions } from '../../_actions';
 import { Loading, AppCard, Search } from '../../_components';
@@ -55,11 +56,23 @@ class Engine extends Component {
     this.state = {
       data: [],
       page: 0,
-      CardPerPage: 8
+      CardPerPage: 8,
+      endpoint: "http://localhost:8000/"
     }
   }
 
+  componentDidMount() {
+    const { endpoint } = this.state;
+    const socket = socketIOClient(endpoint);
+    socket.on("FromAPI", data => {
+      this.setState({
+        data: getEnginesInfo(data.engines)
+      });
+    });
+  }
+
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
     if(nextProps.items !== this.props.items && typeof nextProps.items !== 'undefined'){
       this.setState({
         data: getEnginesInfo(nextProps.items, this.props)
