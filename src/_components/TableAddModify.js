@@ -88,6 +88,8 @@ class TableAddModify extends Component {
       });
     }
 
+    console.log(nextProps.data);
+
     if(nextProps.data){
       this.setState({
         object: {
@@ -192,7 +194,7 @@ class TableAddModify extends Component {
     });
 
     if(this.checkForm()){
-      this.reset();
+      this.handleClose(e);
       this.props.handleSubmit(e, this.state.submitObject);
     }
   }
@@ -287,6 +289,7 @@ TableAddModify.defaultProps = {
   open: PropTypes.bool.isRequired,
   handleClickAddModify: PropTypes.func,
   data: PropTypes.object,
+  handleSubmit: PropTypes.func,
 };
 
 const TableAddModifyWithStyles = withStyles(styles)(TableAddModify);

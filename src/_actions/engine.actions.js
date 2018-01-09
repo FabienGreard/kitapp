@@ -53,7 +53,7 @@ function _delete(id) {
     function failure(error) { return { type: engineConstants.DELETE_FAILURE, error } }
   }
 
-  function update(engine){
+  function update(engine, img){
     return dispatch => {
         dispatch(request(engine));
 
@@ -61,6 +61,9 @@ function _delete(id) {
             .then(
                 engine => {
                     dispatch(success(engine.engine));
+                    if(img !== undefined){
+                      dispatch(updateImageById(engine.engine, img));
+                    }
                 },
                 error => {
                     dispatch(failure(error));

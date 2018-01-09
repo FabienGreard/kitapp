@@ -55,8 +55,7 @@ class EnginesAdmin extends Component {
   }
 
   editEngine = (e, engine) => {
-    console.log('edit', engine);
-    //this.props.dispatch(engineActions.create(engine));
+    this.props.dispatch(engineActions.update(engine, engine.file));
   }
 
   render() {

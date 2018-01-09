@@ -131,10 +131,6 @@ class AppTable extends Component {
   }
 
   handleAddModify = (e, engine) => {
-    this.setState(prevState => ({
-      openAddModify: !prevState.openAddModify,
-    }));
-
     if(!this.state.edit){
       this.props.addEngine(e, engine);
     }else{
