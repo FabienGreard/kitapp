@@ -92,8 +92,8 @@ function update(engine) {
 function updateImageById(engine, img) {
   const requestOptions = {
       method: 'PUT',
-      headers: { ...authHeader(), 'Content-Type': 'application/json' },
-      file: img
+      headers: { ...authHeader() },
+      body: img
   };
 
     return fetch(url() + '/engines/img/' + engine._id, requestOptions).then(response =>
@@ -109,7 +109,7 @@ function create(engine) {
   const requestOptions = {
       method: 'POST',
       headers: { ...authHeader(), 'Content-Type': 'application/json' },
-      body: JSON.stringify(engine)
+      body: JSON.stringify(engine),
   };
 
     return fetch(url() + '/engines/create', requestOptions).then(response =>

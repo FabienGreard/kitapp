@@ -51,7 +51,7 @@ class EnginesAdmin extends Component {
   }
 
   addEngine = (e, engine) => {
-    this.props.dispatch(engineActions.create(engine));
+    this.props.dispatch(engineActions.create(engine, engine.file));
   }
 
   editEngine = (e, engine) => {

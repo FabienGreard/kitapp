@@ -33,7 +33,6 @@ export function engines(state = {}, action) {
       };
     case engineConstants.GET_IMAGE_BY_ID_REQUEST:
       return {
-        ...state,
         items: state.items.map(engine =>
           engine._id === action.engine._id
             ? { ...engine, loading: true }
@@ -42,7 +41,6 @@ export function engines(state = {}, action) {
       };
     case engineConstants.GET_IMAGE_BY_ID_SUCCESS:
       return {
-        ...state,
         items: state.items.map(engine =>
           engine._id === action.engine._id
             ? { ...action.engine }
@@ -60,7 +58,6 @@ export function engines(state = {}, action) {
       };
     case engineConstants.UPDATE_IMAGE_BY_ID_REQUEST:
       return {
-        ...state,
         items: state.items.map(engine =>
           engine._id === action.engine._id
             ? { ...engine, loading: true }
@@ -69,7 +66,6 @@ export function engines(state = {}, action) {
       };
     case engineConstants.UPDATE_IMAGE_BY_ID_SUCCESS:
       return {
-        ...state,
         items: state.items.map(engine =>
           engine._id === action.engine._id
             ? { ...action.engine }
@@ -78,8 +74,9 @@ export function engines(state = {}, action) {
       };
     case engineConstants.UPDATE_IMAGE_BY_ID_FAILURE:
     return {
+      ...state,
       items: state.items.map(engine =>
-        engine._id === action.engine._id
+        engine.loading
           ? { ...engine }
           : engine
       ),

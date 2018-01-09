@@ -74,7 +74,7 @@ function _delete(id) {
     function failure(error) { return { type: engineConstants.UPDATE_FAILURE, error } }
   }
 
-  function create(engine){
+  function create(engine, img){
     return dispatch => {
         dispatch(request(engine));
 
@@ -82,6 +82,9 @@ function _delete(id) {
             .then(
                 engine => {
                     dispatch(success(engine.engine));
+                    if(img !== ''){
+                      dispatch(updateImageById(engine.engine, img));
+                    }
                 },
                 error => {
                     dispatch(failure(error));
@@ -106,7 +109,8 @@ function _delete(id) {
                 },
                 error => {
                     dispatch(failure(error));
-                    dispatch(alertActions.error(error));
+                    console.log(error);
+                    //dispatch(alertActions.error(error));
                 }
             );
     };

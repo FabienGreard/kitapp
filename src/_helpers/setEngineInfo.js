@@ -5,7 +5,7 @@ export const setEngineInfo = (engine) => {
     name: engine.name,
     price: engine.price,
     comments: engine.comments || "Aucun commentaires",
-    location: engine.location,
+    location: engine.location || "FabLab Aix",
     reserved: engine.reserved,
     img: engine.img.data ? new Buffer(engine.img.data).toString('base64') : '',
     level: engine.level,

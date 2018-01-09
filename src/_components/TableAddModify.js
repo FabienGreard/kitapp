@@ -52,6 +52,9 @@ const styles = context => ({
   },
   imageString: {
     marginLeft: context.spacing.unit,
+    width: '92px',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
   }
 });
 
@@ -132,14 +135,29 @@ class TableAddModify extends Component {
   handleChange = (e) => {
     let { name, value } = e.target;
 
+
+
+    if(e.target.files){
+      const data = new FormData();
+      data.append('file', e.target.files[0]);
+      this.setState({
+        object: {
+          ...this.state.object,
+          file: data,
+          [name]: value,
+        }
+      });
+    }else{
+      this.setState({
+        object: {
+          ...this.state.object,
+          [name]: value,
+        }
+      });
+    }
+
     this.handleTouched(name); //set touched value
 
-    this.setState({
-      object: {
-        ...this.state.object,
-        [name]: value
-      }
-    });
   }
 
   handleLevelChange = (value) => {
@@ -157,6 +175,7 @@ class TableAddModify extends Component {
       this.setState({
         submitObject: {
           ...this.state.submitObject,
+          file: object['file'],
           [name]: object[name]
         },
         object: {
@@ -210,7 +229,7 @@ class TableAddModify extends Component {
                       <Button raised component="span">
                         Upload <FileUpload className={classes.rightIcon} />
                       </Button>
-                      <Typography style={theme.getRowStyle('darkGrey', 'none')} type="caption" className={classes.imageString}>{object[data.id] !== '' ? object[data.id]: 'Nouvelle image ?'}</Typography>
+                      <Typography style={theme.getRowStyle('darkGrey', 'none')} type="caption" className={classes.imageString} title={object[data.id] !== '' ? object[data.id]: 'Nouvelle image ?'}>{object[data.id] !== '' ? object[data.id]: 'Nouvelle image ?'}</Typography>
                     </label>
                   }
                   { data.id !== 'level' ?
