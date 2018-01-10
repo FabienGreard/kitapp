@@ -88,8 +88,6 @@ class TableAddModify extends Component {
       });
     }
 
-    console.log(nextProps.data);
-
     if(nextProps.data){
       this.setState({
         object: {

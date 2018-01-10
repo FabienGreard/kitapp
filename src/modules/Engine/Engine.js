@@ -72,10 +72,9 @@ class Engine extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     if(nextProps.items !== this.props.items && typeof nextProps.items !== 'undefined'){
       this.setState({
-        data: getEnginesInfo(nextProps.items, this.props)
+        data: getEnginesInfo(nextProps.items)
       });
     }
   }

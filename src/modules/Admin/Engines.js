@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import socketIOClient from "socket.io-client";
 
 import { engineActions } from '../../_actions';
 import { Loading, AppTable } from '../../_components';
@@ -34,7 +35,8 @@ class EnginesAdmin extends Component {
     this.props.dispatch(engineActions.getAll());
 
     this.state = {
-      data: []
+      data: [],
+      endpoint: "http://localhost:8000/"
     }
   }
 
@@ -48,14 +50,23 @@ class EnginesAdmin extends Component {
 
   deleteEngine = (e, id) => {
     this.props.dispatch(engineActions.delete(id));
+    this.emitChange();
   }
 
   addEngine = (e, engine) => {
     this.props.dispatch(engineActions.create(engine, engine.file));
+    this.emitChange();
   }
 
   editEngine = (e, engine) => {
     this.props.dispatch(engineActions.update(engine, engine.file));
+    this.emitChange();
+  }
+
+  emitChange = () =>{
+    const { endpoint } = this.state;
+    const socket = socketIOClient(endpoint);
+    socket.emit('engines', { for: 'everyone' });
   }
 
   render() {
